@@ -1,7 +1,7 @@
 mjolnir._asm.compat_51
 ======================
 
-Provides Lua 5.1 compatibility features left out of the Lua 5.2 library included with Mjolnir.
+Provides Lua 5.1 compatibility features left out of the Lua 5.2 library included with [Mjolnir](http://mjolnir.io).
 Because new code should be written to the 5.2 (or even the 5.3) specification, you should probably
 only enable these functions as required, and disable them when testing new code.
 
@@ -25,7 +25,7 @@ The following Lua 5.1 functions and variables are "created" when the `enable` fu
 See (http://www.lua.org/manual/5.2/manual.html#8) for more details.
 
 ### Install
-Soon, this should be available via luarocks at (https://rocks.moonscript.org/), but for now, clone this repo and execute the following:
+Soon, this should be available via luarocks at (https://rocks.moonscript.org/), but for now, clone this repository and execute the following:
 
 ~~~bash
 $ luarocks [--tree=mjolnir] make
@@ -48,7 +48,7 @@ lua51.status -- Boolean variable indicating whether or not Lua 5.1 compatibility
 ~~~
 
 ### Caveats
-I have not yet tested any Lua 5.1 modules or luarocks which require the C side of the functions, but they are included in the [Homebrew](http://brew.sh) version of Lua 5.2, so the include files should provide the appropriate macros and hopefully require minimal additions here... I will update as I come across this.
+I have not yet tested any Lua 5.1 modules or luarocks which require the C side of the functions, but they are included in the [Homebrew](http://brew.sh) version of Lua 5.2, so the include files *should* provide the appropriate macros and hopefully require minimal additions here... I will update as I come across this.
 
 In the meantime, let me know how your experiences go.
 

@@ -1,7 +1,7 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.toolkit"
+package = "mjolnir._asm.modules"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
@@ -13,7 +13,7 @@ version = "0.1-1"
 -- General metadata:
 
 local url = "github.com/asmagill/mjolnir_asm"
-local desc = "Useful tools used by modules for Mjolnir in the _asm namespace."
+local desc = "Module versioning for Mjolnir."
 
 source = {url = "git://" .. url}
 description = {
@@ -28,6 +28,7 @@ description = {
 supported_platforms = {"macosx"}
 dependencies = {
   "lua >= 5.2",
+  "mjolnir._asm.compat_51",
 }
 
 -- Build rules:
@@ -35,7 +36,6 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.toolkit"] = "toolkit.lua",
-    ["mjolnir._asm.toolkit.internal"] = "toolkit.m",
+    ["mjolnir._asm.modules"] = "modules.lua",
   },
 }
