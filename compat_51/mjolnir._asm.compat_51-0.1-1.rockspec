@@ -12,7 +12,7 @@ version = "0.1-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir._asm.compat_51"
+local url = "github.com/asmagill/mjolnir_asm"
 local desc = "Provide Lua 5.1 compatibility functions in Mjolnir"
 
 source = {url = "git://" .. url}

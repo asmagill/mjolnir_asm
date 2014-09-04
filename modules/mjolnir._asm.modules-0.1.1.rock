@@ -12,7 +12,7 @@ version = "0.1-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir._asm.toolkit"
+local url = "github.com/asmagill/mjolnir_asm"
 local desc = "Useful tools used by modules for Mjolnir in the _asm namespace."
 
 source = {url = "git://" .. url}
