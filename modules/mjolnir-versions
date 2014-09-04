@@ -1,0 +1,23 @@
+#! /usr/bin/env lua
+
+-- Update package.path and package.cpath to support mjolnir luarocks
+
+package.path =  os.getenv("HOME") .. "/.mjolnir/rocks/share/lua/5.2/?.lua;" ..
+                os.getenv("HOME") .. "/.mjolnir/rocks/share/lua/5.2/?/init.lua;" ..
+                package.path .. ";./?/init.lua"
+package.cpath = os.getenv("HOME") .. "/.mjolnir/rocks/lib/lua/5.2/?.so;" .. package.cpath
+
+local check = require("mjolnir._asm.modules")
+local line_fmt = "%-30s  %-10s  %-10s  %-10s  %-10s" 
+local results, t = {}, {}
+
+print(string.format(line_fmt, "Module", "Installed", "Available", "Local-Only", "Upgradable"))
+print(string.rep("-", 78))
+
+results = check.versions(...)
+for i, _ in pairs(results) do table.insert(t, i) end
+table.sort(t)
+
+for _, i in ipairs(t) do
+print(string.format(line_fmt, i, results[i].installed, results[i].available, results[i].local_only, results[i].upgrade))
+end

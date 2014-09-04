@@ -17,17 +17,15 @@ local module = {
 }
 
 local mjolnir_mod_name = "_asm.modules"
---local c_library = "internal"
-
--- integration with C functions ------------------------------------------
-
-if c_library then
-	for i,v in pairs(require("mjolnir."..mjolnir_mod_name.."."..c_library)) do module[i] = v end
-end
 
 -- private variables and methods -----------------------------------------
 
-local lua51 = require("mjolnir._asm.compat_51")
+local lua51
+if _G.module and _G.package.seeall then
+    lua51 = { enable = function() end, disable = function() end }
+else
+    lua51 = require("mjolnir._asm.compat_51")
+end
 
 lua51.enable()
 local lr_cfg = require("luarocks.cfg")
@@ -146,9 +144,3 @@ end
 -- Return Module Object --------------------------------------------------
 
 return module
-
---    query = luarocks.search.make_query("")
---    query.exact_name = false
---    luarocks.search.search_repos(query)
-
-
