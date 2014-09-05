@@ -91,9 +91,17 @@ Tries to install the specified module into the specified tree (defaults to mjoln
 If other arguments are provided after tree, they are passed into luarocks as is,
 so format accordingly. Returns the name and version of the module installed, if successful.
 
+~~~lua
+mjolnir._asm.modules.sorted_versions(manifestdata [, desc]) -> table
+~~~
+
+Returns a sorted array of the versions available in the manifest data provided.
+This manifest data is a specific module's result value from a search.  If desc
+is true return the list in descending order; otherwise in ascending order.
+
 ### Command Line
 The `mjolnir-tools` file is a command-line tool which is installed into your tree bin
-directory (~/.mjolnir/rocks/bin, if you use the mjolnir tree as shown above).  To use
+directory (`~/.mjolnir/rocks/bin`, if you use the mjolnir tree as shown above).  To use
 this utility, make sure that the directory is in your shell's PATH or copy/link the file
 to somewhere that is.
 
@@ -112,7 +120,7 @@ $ mjolnir-tool report
     mjolnir.hotkey                  0.2-1       0.3-1       outdated  
     mjolnir.lb.spotify                          0.1-1       available 
 
-See `mjolnir-tool help` for more examples.
+See `mjolnir-tool help` and `mjolnir-tool examples` for more examples.
 
 ### Notes
 This module does require `mjolnir._asm.compat_51`.

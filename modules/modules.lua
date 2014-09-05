@@ -73,7 +73,7 @@ end
 --- mjolnir._asm.modules.sorted_versions(manifestdata [, desc]) -> table
 --- Function
 --- Returns a sorted array of the versions available in the manifest data provided.
---- The manifest data is a specific module's result value from a search.  If desc
+--- This manifest data is a specific module's result value from a search.  If desc
 --- is true return the list in descending order; otherwise in ascending order.
 modules.sorted_versions = function(data, desc)
     local t = {}
