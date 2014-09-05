@@ -38,4 +38,7 @@ build = {
   modules = {
     ["mjolnir._asm.modules"] = "modules.lua",
   },
+  install = {
+    bin = { "mjolnir-tool" },
+  },
 }

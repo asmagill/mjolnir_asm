@@ -1,0 +1,253 @@
+#! /usr/bin/env lua
+
+-- Update package.path and package.cpath to support mjolnir luarocks
+
+if not string.match(package.path, ";?"..os.getenv("HOME").."/%.mjolnir/rocks/") then
+    package.path =  os.getenv("HOME").."/.mjolnir/rocks/share/lua/5.2/?.lua;"..
+                    os.getenv("HOME").."/.mjolnir/rocks/share/lua/5.2/?/init.lua;"..
+                    package.path
+    package.cpath = os.getenv("HOME").."/.mjolnir/rocks/lib/lua/5.2/?.so;"..package.cpath
+end
+
+local tools = require("mjolnir._asm.modules")
+
+local latest_version = function(data)
+    local t = tools.sorted_versions(data)
+
+    return t[#t]
+
+end
+
+function show_help()
+print([[
+Usage:
+
+    available [<term>|--all]
+        Show available modules/luarocks and versions which contain <term> in
+        their name.  If <term> is --all, then return all available modules.
+        If <term> is not present, use "mjolnir".
+    
+    help
+        Display this help information
+        
+    install <name> [<tree> ...]
+        Install the latest version of <name> into tree <tree> (default
+        "mjolnir") Any other arguments after tree are passed into Luarocks
+        as is, so format accordingly.
+
+    installed [<tree>|--all]
+        Show installed modules/luarocks and versions for the specified tree
+        or all trees (default "mjolnir")
+        
+    report [<tree>|--all] [-q] [-c|o|a|l]
+        Generate a report for the specified <tree> (default "mjolnir") or
+        all trees, if -all specified. If -q is specified, only the name of
+        modules/luarocks which meet the report criteria will be displayed.
+        If no criteria is specified, then -coal is the default.  The criteria
+        is defined as follows:
+            -c      display modules which are current
+            -o      display modules which are outdated
+            -a      display modules which are available (and contain "mjolnir"
+                    in the name -- see `available` if you want others)
+            -l      display modules which are local only (modules which are
+                    not found in the remote repositories)
+                    
+    remove <name> [<tree> ...]
+        Remove <name> from <tree> (default "mjolnir") Any other arguments
+        after tree are passed into Luarocks as is, so format accordingly.
+        
+    trees
+        List the defined trees and their path.
+]])
+end
+
+function install_module(...) 
+    local results = table.pack(tools.install(...))
+    for _,i in ipairs(results) do
+        print(i)
+    end
+    return true
+end
+
+function remove_module(...)
+    local results = table.pack(tools.remove(...))
+    for _,i in ipairs(results) do
+        print(i)
+    end
+    return true
+end
+
+function module_report(...)
+    local args = table.pack(...)
+    local tree
+    local flags = ""
+    
+    for _, i in ipairs(args) do
+        if i == "--all" then
+            tree = "--all"
+        elseif string.match(i,"^[^-].+$") then
+            tree = i
+        else
+            flags = flags..string.match(i,"^-(.+)$")
+        end
+    end
+    
+    if flags == "" then flags = "coal" end
+    if not tree then tree = "mjolnir" end
+    
+    local line_fmt = "%-30s  %-10s  %-10s  %-10s" 
+    local results, available, t = {}, {}, {}
+
+    if not flags:match("q") then
+        print("Tree: "..tree.." Flags: "..flags)
+        print(string.format(line_fmt, "Module", "Installed", "Latest", "Status"))
+        print(string.rep("-", 66))
+    end
+    
+    results = tools.versions(tree)
+    
+    available = tools.available("mjolnir")
+    for i,v in pairs(available) do
+        if not results[i] then
+            results[i] = {
+                available = latest_version(v),
+                installed = "",
+                local_only = false,
+                upgrade = false,
+            }
+        end
+    end
+    
+    for i, _ in pairs(results) do table.insert(t, i) end
+    table.sort(t)
+
+    for _, i in ipairs(t) do
+        local do_i_print, status = false, ""
+        if flags:match("l") and results[i].local_only then
+            do_i_print = true
+            status = "local"
+        elseif flags:match("o") and results[i].upgrade then
+            do_i_print = true
+            status = "outdated"
+        elseif flags:match("a") and results[i].installed == "" then
+            do_i_print = true
+            status = "available"
+        elseif flags:match("c") and results[i].installed == results[i].available then
+            do_i_print = true
+            status = "current"
+        end
+        
+        if do_i_print then
+            if flags:match("q") then
+                print(i)
+            else
+                print(string.format(line_fmt, i, results[i].installed, results[i].available, status))
+            end
+        end
+    end
+    return true
+end
+
+function available_modules(...)
+    local results, count = {}, table.pack(...).n
+    if count == 0 then
+        results = tools.available("mjolnir")
+    elseif count == 1 and table.pack(...)[1] == "--all" then
+        results = tools.available("")
+    else
+        results = tools.available(...)
+    end
+    
+    local names, value = {} , {}
+    
+    for i,v in pairs(results) do
+        table.insert(names, i)
+        value[i] = v
+    end
+    
+    if #names > 0 then
+        table.sort(names)
+        for i,v in ipairs(names) do
+            local versions = tools.sorted_versions(value[v])
+            
+            print(v, table.unpack(versions))
+        end
+    else
+        print("No results matched your query")
+    end
+    return true
+end
+
+function installed_modules(...)
+    local results = {}
+    if table.pack(...).n ~= 0 then
+        results = tools.installed(...)
+    else
+        results = tools.installed("mjolnir")
+    end
+    
+    local names, value = {} , {}
+    
+    for i,v in pairs(results) do
+        table.insert(names, i)
+        value[i] = v
+    end
+    
+    if #names > 0 then
+        table.sort(names)
+        for i,v in ipairs(names) do
+            local versions = tools.sorted_versions(value[v])
+            
+            print(v, table.unpack(versions))
+        end
+    else
+        print("No results matched your query")
+    end
+    return true
+end
+
+function list_trees(...)
+    local results = tools.trees()
+    local names, paths = {}, {} 
+    
+    for _,i in ipairs(results) do
+        table.insert(names, i.name)
+        paths[i.name] = i.root
+    end
+    
+    table.sort(names)
+    for _,i in ipairs(names) do
+        print(i, paths[i])
+    end
+    return true
+end
+
+function print_versions(...)
+    local line_fmt = "%-30s  %-10s  %-10s  %-10s  %-10s" 
+    local results, t = {}, {}
+    print(string.format(line_fmt, "Module", "Installed", "Latest", "Local-Only", "Upgradable"))
+    print(string.rep("-", 78))
+
+    results = tools.versions(...)
+    for i, _ in pairs(results) do table.insert(t, i) end
+    table.sort(t)
+
+    for _, i in ipairs(t) do
+        print(string.format(line_fmt, i, results[i].installed, results[i].available, results[i].local_only, results[i].upgrade))
+    end
+end
+
+local commands = {
+    help = show_help,
+    install = install_module,
+    report = module_report,
+    remove = remove_module,
+    available = available_modules,
+    installed = installed_modules,
+    trees = list_trees,
+}
+
+local args = table.pack(...)
+local cmd = table.remove(args,1)
+
+return commands[cmd] and commands[cmd](table.unpack(args)) or commands["help"]()

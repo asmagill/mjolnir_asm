@@ -8,13 +8,13 @@ local modules = {
 
 --- === mjolnir._asm.modules ===
 ---
---- Functions to capture information from luarocks about installed mjolnir modules.
+--- Functions to capture information about, install and remove luarocks for mjolnir modules.
 --- While it is tailored specifically to use with the mjolnir modules, it should
 --- work with luarocks in general.
 ---
---- This is very basic, and does not support specifying a specific version for removal,
---- if multiple versions are installed, or installing a specific version.  This may
---- change in the future.
+--- This is very basic, and experimental. Note that any luarocks compatible arguments
+--- specified after the tree for remove and install are passed in as is, so format
+--- accordingly, and very few cases have been tested so far, so it's still very beta!
 ---
 --- Note that this ends up loading practically all of the luarocks modules into memory
 --- and may leave Mjolnir in an inconsistent state concerning available modules.  You
@@ -50,6 +50,8 @@ local compare_versions = function(a,b)
     local averp, arsp = {}, {}
     local bverp, brsp = {}, {}
 
+    aver, ars, bver, brs = aver or "", ars or "", bver or "", brs or ""
+    
     for p in aver:gmatch("(%d+)") do table.insert(averp, tonumber(p)) end
     for p in bver:gmatch("(%d+)") do table.insert(bverp, tonumber(p)) end
     for p in ars:gmatch("(%d+)") do table.insert(arsp, tonumber(p)) end
@@ -68,11 +70,22 @@ local compare_versions = function(a,b)
     return false
 end
 
-local latest_version = function(data)
+--- mjolnir._asm.modules.sorted_versions(manifestdata) -> table
+--- Function
+--- Returns a sorted array of the versions available in the manifest data provided.
+--- The manifest data is a specific module's result value from a search. 
+modules.sorted_versions = function(data)
     local t = {}
     for i,v in pairs(data) do table.insert(t,i) end
 
     table.sort(t, compare_versions)
+
+    return t
+
+end
+
+local latest_version = function(data)
+    local t = modules.sorted_versions(data)
 
     return t[#t]
 
@@ -156,7 +169,7 @@ modules.versions = function(tree)
         remote = modules.available(name, true)
         results[name] = { installed = latest_version(data) }
         if not remote[name] then
-            results[name].available = results[name].installed
+            results[name].available = ""
             results[name].local_only = true
         else
             results[name].available = latest_version(remote[name])
@@ -167,15 +180,17 @@ modules.versions = function(tree)
     return results
 end
 
---- mjolnir._asm.modules.remove(name, [tree]) -> boolean [, error]
+--- mjolnir._asm.modules.remove(name [, tree [, ... ]]) -> boolean [, error]
 --- Function
 --- Tries to remove the specified module from the specified tree (defaults to mjolnir).
---- Returns true or false indicating success or failure.
-modules.remove = function(name, tree)
+--- If other arguments are provided after tree, they are passed into luarocks as is,
+--- so format accordingly. Returns true or false indicating success or failure.
+modules.remove = function(name, tree, ...)
     local _, remove = lua51.pcall(function() return require("luarocks.remove") end)
     tree = tree or "mjolnir"
     local results = {}
-    local trees = m.trees(tree)
+    local trees = modules.trees(tree)
+    local extraArgs = table.pack(...)
     
     if #trees ~= 1 then
         return nil, "Tree '"..tostring(tree).."' does not exist."
@@ -183,7 +198,7 @@ modules.remove = function(name, tree)
     
     path.use_tree(trees[1])
 
-    results = table.pack(lua51.pcall(function() return remove.run("--tree="..tree, name) end))
+    results = table.pack(lua51.pcall(function() return remove.run("--tree="..tree, name, table.unpack(extraArgs)) end))
     if results[1] then
         if type(results[2]) == "nil" then results[2] = false end
         table.remove(results, 1)
@@ -193,23 +208,25 @@ modules.remove = function(name, tree)
     end
 end
 
---- mjolnir._asm.modules.install(name, [tree]) -> name, version | false, error
+--- mjolnir._asm.modules.install(name [, tree [, ... ]]) -> name, version | false, error
 --- Function
 --- Tries to install the specified module into the specified tree (defaults to mjolnir).
---- Returns the name and version of the module installed, if successful.
-modules.install = function(name, tree)
+--- If other arguments are provided after tree, they are passed into luarocks as is, so
+--- format accordingly. Returns the name and version of the module installed, if successful.
+modules.install = function(name, tree, ...)
     local _, install = lua51.pcall(function() return require("luarocks.install") end)
     tree = tree or "mjolnir"
     local results = {}
-    local trees = m.trees(tree)
-    
+    local trees = modules.trees(tree)
+    local extraArgs = table.pack(...)
+
     if #trees ~= 1 then
         return nil, "Tree '"..tostring(tree).."' does not exist."
     end
     
     path.use_tree(trees[1])
 
-    results = table.pack(lua51.pcall(function() return install.run("--tree="..tree, name) end))
+    results = table.pack(lua51.pcall(function() return install.run("--tree="..tree, name, table.unpack(extraArgs)) end))
     if results[1] then
         if type(results[2]) == "nil" then results[2] = false end
         table.remove(results, 1)

@@ -2,8 +2,8 @@ mjolnir._asm.compat_51
 ======================
 
 Provides Lua 5.1 compatibility features left out of the Lua 5.2 library included with [Mjolnir](http://mjolnir.io).
-Because new code should be written to the 5.2 (or even the 5.3) specification, you should probably
-only enable these functions as required, and disable them when testing new code.
+Because new code should be written to the 5.2 specification, you should probably
+only enable these functions as required, and disable them when not absolutely necessary.
 
 ### Details
 The Lua 5.2 engine included with [Mjolnir](http://mjolnir.io) does not include the Lua 5.1 deprecated functions in it's build.  I actually agree with this because new code should be written to a current standard and updates should be encouraged.
