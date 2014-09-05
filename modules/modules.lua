@@ -20,6 +20,11 @@ local modules = {
 --- and may leave Mjolnir in an inconsistent state concerning available modules.  You
 --- should probably only require this module when you specifically want it, and then
 --- run mjolnir.reload() when done.
+---
+--- "mjolnir-tools" is a command-line tool which is installed into your tree bin
+--- directory (~/.mjolnir/rocks/bin, if you use the mjolnir tree as shown above). To use
+--- this utility, make sure that the directory is in your shell's PATH or copy/link the
+--- file to somewhere that is.
 
     ]],
 --]=]
