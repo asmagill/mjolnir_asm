@@ -1,7 +1,7 @@
 local module = {
 --[=[
     _NAME        = 'mjolnir._asm.compat_51',
-    _VERSION     = 'the 1st digit of Pi/0',
+    _VERSION     = 'the 2nd digit of Pi/0',
     _URL         = 'https://github.com/asmagill/mjolnir._asm.compat_51',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
@@ -39,7 +39,7 @@ local setfunction = function(key_path, value)
                 root[part] = root[part] or {}
                 root = root[part]
             else
-                error("Unable to traverse "..key_path.." for some reason.", 2)
+                mjolnir.showerror("Unable to traverse "..key_path.." for some reason.")
                 return nil
             end
         else
@@ -74,6 +74,19 @@ module.disable = function()
         setfunction(key, nil)
     end
     rawset(module,"status",false)
+end
+
+--- mjolnir._asm.compat_51.pcall(f, ...) -> bool [,...]
+--- Function
+--- Similar to pcall, but with Lua 5.1 compatibility functions enabled for the call only.
+module.pcall = function(f, ...)
+    local incoming_status = module.status
+    
+    if not incoming_status then module.enable() end
+    local results = table.pack(pcall(function(...) return f(...) end))
+    if not incoming_status then module.disable() end
+    
+    return table.unpack(results)
 end
 
 -- Return Module Object --------------------------------------------------

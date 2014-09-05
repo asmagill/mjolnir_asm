@@ -40,6 +40,7 @@ local lua51 = require("mjolnir._asm.compat_51")
 ~~~lua
 lua51.enable() -- Enable Lua 5.1 Compatibility features by adding the appropriate functions into the expected globals.
 lua51.disable() -- Disable Lua 5.1 Compatibility features by removing them from the global namespace.
+lua51.pcall(f,...) -- Perform pcall in a Lua 5.1 compatible environment.  Lua 5.1 compatibility remains the same as it was prior to the call when it is completed (i.e. if it was already on, it stays on, if it was off, it's turned back off.)
 ~~~
 
 ### Variables
