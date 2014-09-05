@@ -1,13 +1,10 @@
 #! /usr/bin/env lua
 
--- Update package.path and package.cpath to support mjolnir luarocks
+local cfg = require("luarocks.cfg")
+local lr_path, lr_cpath = cfg.package_paths()
+package.path = luarocks.util.remove_path_dupes(lr_path..";"..package.path, ";")
+package.cpath = luarocks.util.remove_path_dupes(lr_path..";"..package.cpath, ";")
 
-if not string.match(package.path, ";?"..os.getenv("HOME").."/%.mjolnir/rocks/") then
-    package.path =  os.getenv("HOME").."/.mjolnir/rocks/share/lua/5.2/?.lua;"..
-                    os.getenv("HOME").."/.mjolnir/rocks/share/lua/5.2/?/init.lua;"..
-                    package.path
-    package.cpath = os.getenv("HOME").."/.mjolnir/rocks/lib/lua/5.2/?.so;"..package.cpath
-end
 
 local tools = require("mjolnir._asm.modules")
 
@@ -19,14 +16,17 @@ local latest_version = function(data)
 end
 
 function show_help()
-print([[
-Usage:
+    print([[
+Usage: mjolnir-tool command [...]
 
     available [<term>|--all]
         Show available modules/luarocks and versions which contain <term> in
         their name.  If <term> is --all, then return all available modules.
         If <term> is not present, use "mjolnir".
-    
+
+    examples
+        Show some examples of the usage of mjolnir-tools.
+        
     help
         Display this help information
         
@@ -34,7 +34,7 @@ Usage:
         Install the latest version of <name> into tree <tree> (default
         "mjolnir") Any other arguments after tree are passed into Luarocks
         as is, so format accordingly.
-
+        
     installed [<tree>|--all]
         Show installed modules/luarocks and versions for the specified tree
         or all trees (default "mjolnir")
@@ -43,7 +43,7 @@ Usage:
         Generate a report for the specified <tree> (default "mjolnir") or
         all trees, if -all specified. If -q is specified, only the name of
         modules/luarocks which meet the report criteria will be displayed.
-        If no criteria is specified, then -coal is the default.  The criteria
+        If no criteria is specified, then -oal is the default.  The criteria
         is defined as follows:
             -c      display modules which are current
             -o      display modules which are outdated
@@ -59,6 +59,36 @@ Usage:
     trees
         List the defined trees and their path.
 ]])
+    return true
+end
+
+function show_examples()
+    print([[
+Examples:
+
+    mjolnir-tool install inspect system
+        Install the inspect module into the system tree.
+    
+    mjolnir-tool install mjolnir.hotkey
+        Install mjolnir.hotkey into the mjolnir tree.
+        
+    mjolnir-tool install mjolnir.hotkey mjolnir 0.2-1 --keep
+        Install version 0.2-1 of mjolnir.hotkey into the mjolnir tree,
+        keeping any other versions around.
+        
+    mjolnir-tool remove mjolnir.hotkey mjolnir 0.2-1
+        Remove mjolnir.hotkey version 0.2-1 specifically, leaving other
+        versions (if they exist) intact.
+        
+    mjolnir-tool report --all -coal
+        Show installed modules/luarocks for all repositories, showing
+        current, outdated, available (mjolnir), and local only rocks.
+        
+    mjolnir-tool report -q -o
+        Provide just a list of outdated modules in the mjolnir tree,
+        perhaps for use with another command or script.
+]])
+    return true
 end
 
 function install_module(...) 
@@ -92,14 +122,14 @@ function module_report(...)
         end
     end
     
-    if flags == "" then flags = "coal" end
+    if flags == "" then flags = "oal" end
     if not tree then tree = "mjolnir" end
     
     local line_fmt = "%-30s  %-10s  %-10s  %-10s" 
     local results, available, t = {}, {}, {}
 
     if not flags:match("q") then
-        print("Tree: "..tree.." Flags: "..flags)
+        print("Tree: "..tree.."   Flags: -"..flags)
         print(string.format(line_fmt, "Module", "Installed", "Latest", "Status"))
         print(string.rep("-", 66))
     end
@@ -150,6 +180,8 @@ end
 
 function available_modules(...)
     local results, count = {}, table.pack(...).n
+    local line_fmt = "%-30s  %s" 
+
     if count == 0 then
         results = tools.available("mjolnir")
     elseif count == 1 and table.pack(...)[1] == "--all" then
@@ -168,9 +200,9 @@ function available_modules(...)
     if #names > 0 then
         table.sort(names)
         for i,v in ipairs(names) do
-            local versions = tools.sorted_versions(value[v])
+            local versions = tools.sorted_versions(value[v], true)
             
-            print(v, table.unpack(versions))
+            print(string.format(line_fmt, v, table.concat(versions,", ")))
         end
     else
         print("No results matched your query")
@@ -180,6 +212,8 @@ end
 
 function installed_modules(...)
     local results = {}
+    local line_fmt = "%-30s  %s" 
+
     if table.pack(...).n ~= 0 then
         results = tools.installed(...)
     else
@@ -196,12 +230,12 @@ function installed_modules(...)
     if #names > 0 then
         table.sort(names)
         for i,v in ipairs(names) do
-            local versions = tools.sorted_versions(value[v])
+            local versions = tools.sorted_versions(value[v], true)
             
-            print(v, table.unpack(versions))
+            print(string.format(line_fmt, v, table.concat(versions, ", ")))
         end
     else
-        print("No results matched your query")
+        print("No modules in specified tree")
     end
     return true
 end
@@ -245,6 +279,7 @@ local commands = {
     available = available_modules,
     installed = installed_modules,
     trees = list_trees,
+    examples = show_examples,
 }
 
 local args = table.pack(...)

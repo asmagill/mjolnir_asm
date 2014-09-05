@@ -70,18 +70,25 @@ local compare_versions = function(a,b)
     return false
 end
 
---- mjolnir._asm.modules.sorted_versions(manifestdata) -> table
+--- mjolnir._asm.modules.sorted_versions(manifestdata [, desc]) -> table
 --- Function
 --- Returns a sorted array of the versions available in the manifest data provided.
---- The manifest data is a specific module's result value from a search. 
-modules.sorted_versions = function(data)
+--- The manifest data is a specific module's result value from a search.  If desc
+--- is true return the list in descending order; otherwise in ascending order.
+modules.sorted_versions = function(data, desc)
     local t = {}
+    desc = desc or false
     for i,v in pairs(data) do table.insert(t,i) end
 
-    table.sort(t, compare_versions)
+    table.sort(t, function(a,b)
+        if desc then
+            return compare_versions(b, a)
+        else
+            return compare_versions(a, b)
+        end
+    end)
 
     return t
-
 end
 
 local latest_version = function(data)

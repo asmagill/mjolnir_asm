@@ -25,11 +25,6 @@ something like the following is in your `~/.luarocks/config.lua` file:
             { name = [[system]], root = [[/usr/local]] },
     }
 
-The `mjolnir-tools` file is a command-line tool which is installed into your tree bin
-directory (~/.mjolnir/rocks/bin, if you use the mjolnir tree as shown here).  To use
-this utility, make sure that the directory is in your shell's PATH or copy/link the file
-to somewhere that is.
-
 ### Install
 Soon, this should be available via luarocks at (https://rocks.moonscript.org/), but for now, clone this repository and execute the following in the modules directory:
 
@@ -96,8 +91,31 @@ Tries to install the specified module into the specified tree (defaults to mjoln
 If other arguments are provided after tree, they are passed into luarocks as is,
 so format accordingly. Returns the name and version of the module installed, if successful.
 
+### Command Line
+The `mjolnir-tools` file is a command-line tool which is installed into your tree bin
+directory (~/.mjolnir/rocks/bin, if you use the mjolnir tree as shown above).  To use
+this utility, make sure that the directory is in your shell's PATH or copy/link the file
+to somewhere that is.
+
+~~~bash
+$ mjolnir-tool report
+~~~
+
+    Tree: mjolnir   Flags: -oal
+    Module                          Installed   Latest      Status    
+    ------------------------------------------------------------------
+    mjolnir.7bits.mjomatic                      0.1-1       available 
+    mjolnir._asm.compat_51          0.1-1                   local     
+    mjolnir._asm.modules            0.1-1                   local     
+    mjolnir._asm.toolkit            0.1-1                   local     
+    mjolnir.cmsj.caffeinate                     0.1-1       available 
+    mjolnir.hotkey                  0.2-1       0.3-1       outdated  
+    mjolnir.lb.spotify                          0.1-1       available 
+
+See `mjolnir-tool help` for more examples.
+
 ### Notes
-This does require `mjolnir._asm.compat_51`.
+This module does require `mjolnir._asm.compat_51`.
 
 ### License
 
