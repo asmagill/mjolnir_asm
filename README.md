@@ -5,6 +5,8 @@ Luarocks for mjolnir._asm
 
 Details coming soon.
 
+Also, see README.md in each modules directory.
+
 ### License
 
 > Released under MIT license.

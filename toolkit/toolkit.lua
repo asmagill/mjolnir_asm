@@ -238,7 +238,7 @@ module.mt_tools = {
                     root[part] = root[part] or {}
                     root = root[part]
                 else
-                    error("Part "..part.." of "..key_path.." either exists and is not a table, or does not exist and build not set to true.", 2)
+                    mjolnir.showerror("Part "..part.." of "..key_path.." either exists and is not a table, or does not exist and build not set to true.")
                     return nil
                 end
             else
