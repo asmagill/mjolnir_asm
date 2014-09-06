@@ -154,21 +154,37 @@ function module_report(...)
 
     for _, i in ipairs(t) do
         local do_i_print, status = false, ""
-        if flags:match("l") and results[i].local_only then
-            do_i_print = true
-            status = "local"
-        elseif flags:match("o") and results[i].upgrade then
-            do_i_print = true
-            status = "outdated"
-        elseif flags:match("a") and results[i].installed == "" then
-            do_i_print = true
-            status = "available"
-        elseif flags:match("c") and not (results[i].local_only or results[i].upgrade) then
-            do_i_print = true
-            if results[i].installed == results[i].available then
-                status = "current"
-            else
+
+        if results[i].upgrade then
+            if flags:match("o") then
+                do_i_print = true
+                status = "outdated"
+            end
+        end
+        
+        if results[i].local_only then
+            if flags:match("l") then
+                do_i_print = true
                 status = "local"
+            end
+        end
+        
+        if not (results[i].local_only or results[i].upgrade) then
+            if results[i].installed == results[i].available then
+                if flags:match("c") then
+                    do_i_print = true
+                    status = "current"
+                end
+            elseif results[i].installed == "" then
+                if flags:match("a") then
+                    do_i_print = true
+                    status = "available"
+                end
+            else
+                if flags:match("l") then
+                    do_i_print = true
+                    status = "local"
+                end
             end
         end
         
