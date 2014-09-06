@@ -61,7 +61,7 @@ local search = require("luarocks.search")
 local path = require("luarocks.path")
 lua51.disable()
 
-compare_versions = function(a,b)
+local compare_versions = function(a,b)
 --
 -- luarocks version format: x(%.y)*-z
 --      x and y are probably numbers... but maybe not... z is a number
