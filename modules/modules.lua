@@ -8,7 +8,7 @@ local modules = {
 
 --- === mjolnir._asm.modules ===
 ---
---- Home: https://github.com/asmagill/mjolnir_asm/tree/published/compat_51
+--- Home: https://github.com/asmagill/mjolnir_asm/tree/published/modules
 ---
 --- Functions to capture information about, install and remove luarocks for mjolnir modules.
 --- While it is tailored specifically to use with the mjolnir modules, it should
