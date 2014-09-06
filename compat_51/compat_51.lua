@@ -8,6 +8,8 @@ local module = {
     
 --- === mjolnir._asm.compat_51 ===
 ---
+--- Home: https://github.com/asmagill/mjolnir_asm/tree/published/compat_51
+---
 --- The Lua 5.2 engine included with [Mjolnir](http://mjolnir.io) does not include the
 --- Lua 5.1 deprecated functions in it's build.  I actually agree with this because new
 --- code should be written to a current standard and updates should be encouraged.
