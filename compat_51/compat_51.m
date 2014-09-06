@@ -136,17 +136,11 @@ LUALIB_API void luaL_openlib (lua_State *L, const char *libname,
 
 /* Define actual functions which will be available to Lua */
 
-/// mjolnir._asm.compat_51.math_log10(x) -> #
-/// Function
-/// Returns the base 10 logarithm of x.
 static int math_log10 (lua_State *L) {
   lua_pushnumber(L, l_mathop(log10)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-/// mjolnir._asm.compat_51.table_maxn(table) -> #
-/// Function
-/// Returns the userdata object as a binary string.
 static int table_maxn (lua_State *L) {
   lua_Number max = 0;
   luaL_checktype(L, 1, LUA_TTABLE);
@@ -162,9 +156,6 @@ static int table_maxn (lua_State *L) {
   return 1;
 }
 
-/// mjolnir._asm.compat_51.module()
-/// Function
-/// 
 static int ll_module (lua_State *L) {
   const char *modname = luaL_checkstring(L, 1);
   int lastarg = lua_gettop(L);  /* last parameter */
@@ -183,9 +174,6 @@ static int ll_module (lua_State *L) {
   return 1;
 }
 
-/// mjolnir._asm.compat_51.package_seeall()
-/// Function
-/// 
 static int ll_seeall (lua_State *L) {
   luaL_checktype(L, 1, LUA_TTABLE);
   if (!lua_getmetatable(L, 1)) {

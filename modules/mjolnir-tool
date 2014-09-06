@@ -49,8 +49,9 @@ Usage: mjolnir-tool command [...]
             -o      display modules which are outdated
             -a      display modules which are available (and contain "mjolnir"
                     in the name -- see `available` if you want others)
-            -l      display modules which are local only (modules which are
-                    not found in the remote repositories)
+            -l      display modules which are local only or for which the
+                    local version is newer than what is found in the remote
+                    repositories.
                     
     remove <name> [<tree> ...]
         Remove <name> from <tree> (default "mjolnir") Any other arguments
@@ -82,7 +83,7 @@ Examples:
         
     mjolnir-tool report --all -coal
         Show installed modules/luarocks for all repositories, showing
-        current, outdated, available (mjolnir), and local only rocks.
+        current, outdated, available (mjolnir), and local modules.
         
     mjolnir-tool report -q -o
         Provide just a list of outdated modules in the mjolnir tree,
@@ -162,9 +163,13 @@ function module_report(...)
         elseif flags:match("a") and results[i].installed == "" then
             do_i_print = true
             status = "available"
-        elseif flags:match("c") and results[i].installed == results[i].available then
+        elseif flags:match("c") and not (results[i].local_only or results[i].upgrade) then
             do_i_print = true
-            status = "current"
+            if results[i].installed == results[i].available then
+                status = "current"
+            else
+                status = "local"
+            end
         end
         
         if do_i_print then

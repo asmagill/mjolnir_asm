@@ -10,11 +10,6 @@ This is very basic, and experimental. Note that any luarocks compatible argument
 specified after the tree for remove and install are passed in as is, so format
 accordingly, and very few cases have been tested so far, so it's still very beta!
 
-Note that this ends up loading practically all of the luarocks modules into memory
-and may leave Mjolnir in an inconsistent state concerning available modules.  You
-should probably only require this module when you specifically want it, and then
-run mjolnir.reload() when done.
-
 These tools assume a default Luarocks tree named "mjolnir" exists.  You can always
 specify a different tree name if you wish.  To use the "mjolnir" tree, make sure
 something like the following is in your `~/.luarocks/config.lua` file:
@@ -24,6 +19,11 @@ something like the following is in your `~/.luarocks/config.lua` file:
             { name = [[mjolnir]], root = home..[[/.mjolnir/rocks]] },
             { name = [[system]], root = [[/usr/local]] },
     }
+
+Note that this ends up loading practically all of the luarocks modules into memory
+and may leave Mjolnir in an inconsistent state concerning available modules.  You
+should probably only require this module when you specifically want it, and then
+run mjolnir.reload() when done.
 
 ### Install
 Soon, this should be available via luarocks at (https://rocks.moonscript.org/), but for now, clone this repository and execute the following in the modules directory:

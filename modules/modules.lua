@@ -8,6 +8,8 @@ local modules = {
 
 --- === mjolnir._asm.modules ===
 ---
+--- Home: https://github.com/asmagill/mjolnir_asm/tree/published/modules
+---
 --- Functions to capture information about, install and remove luarocks for mjolnir modules.
 --- While it is tailored specifically to use with the mjolnir modules, it should
 --- work with luarocks in general.
@@ -15,6 +17,16 @@ local modules = {
 --- This is very basic, and experimental. Note that any luarocks compatible arguments
 --- specified after the tree for remove and install are passed in as is, so format
 --- accordingly, and very few cases have been tested so far, so it's still very beta!
+---
+--- These tools assume a default Luarocks tree named "mjolnir" exists.  You can always
+--- specify a different tree name if you wish.  To use the "mjolnir" tree, make sure
+--- something like the following is in your `~/.luarocks/config.lua` file:
+---
+---    rocks_trees = {
+---            { name = [[user]], root = home..[[/.luarocks]] },
+---            { name = [[mjolnir]], root = home..[[/.mjolnir/rocks]] },
+---            { name = [[system]], root = [[/usr/local]] },
+---    }
 ---
 --- Note that this ends up loading practically all of the luarocks modules into memory
 --- and may leave Mjolnir in an inconsistent state concerning available modules.  You
