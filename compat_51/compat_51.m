@@ -136,7 +136,7 @@ LUALIB_API void luaL_openlib (lua_State *L, const char *libname,
 
 /* Define actual functions which will be available to Lua */
 
-/// mjolnir._asm.toolkit.compat_51.math_log10(x) -> #
+/// mjolnir._asm.compat_51.math_log10(x) -> #
 /// Function
 /// Returns the base 10 logarithm of x.
 static int math_log10 (lua_State *L) {
@@ -144,7 +144,7 @@ static int math_log10 (lua_State *L) {
   return 1;
 }
 
-/// mjolnir._asm.toolkit.compat_51.table_maxn(table) -> #
+/// mjolnir._asm.compat_51.table_maxn(table) -> #
 /// Function
 /// Returns the userdata object as a binary string.
 static int table_maxn (lua_State *L) {
@@ -162,7 +162,7 @@ static int table_maxn (lua_State *L) {
   return 1;
 }
 
-/// mjolnir._asm.toolkit.compat_51.module()
+/// mjolnir._asm.compat_51.module()
 /// Function
 /// 
 static int ll_module (lua_State *L) {
@@ -183,7 +183,7 @@ static int ll_module (lua_State *L) {
   return 1;
 }
 
-/// mjolnir._asm.toolkit.compat_51.package_seeall()
+/// mjolnir._asm.compat_51.package_seeall()
 /// Function
 /// 
 static int ll_seeall (lua_State *L) {
