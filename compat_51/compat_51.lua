@@ -52,6 +52,8 @@ lua51["unpack"] = table.unpack
 lua51["package_loaders"] = package.searchers
 lua51["loadstring"] = load
 
+local backup = {}
+
 local setfunction = function(key_path, value)
     local root = _G
     local pathPart, keyPart
@@ -66,6 +68,7 @@ local setfunction = function(key_path, value)
                 return nil
             end
         else
+            backup[key_path] = root[part]
             root[part] = value
             return root[part]
         end
@@ -83,6 +86,7 @@ module.status = false
 --- Function
 --- Enable Lua 5.1 Compatibility features by adding the appropriate functions into the expected globals.
 module.enable = function()
+    if module.status == true then return end
     for key, value in pairs(lua51) do
         setfunction(key, value)
     end
@@ -93,8 +97,9 @@ end
 --- Function
 --- Disable Lua 5.1 Compatibility features by removing them from the global namespace.
 module.disable = function()
+    if module.status == false then return end
     for key, value in pairs(lua51) do
-        setfunction(key, nil)
+        setfunction(key, backup[key])
     end
     rawset(module,"status",false)
 end
