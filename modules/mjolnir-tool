@@ -1,11 +1,5 @@
 #! /usr/bin/env lua
 
-local cfg = require("luarocks.cfg")
-local lr_path, lr_cpath = cfg.package_paths()
-package.path = luarocks.util.remove_path_dupes(lr_path..";"..package.path, ";")
-package.cpath = luarocks.util.remove_path_dupes(lr_path..";"..package.cpath, ";")
-
-
 local tools = require("mjolnir._asm.modules")
 
 local latest_version = function(data)
@@ -59,6 +53,17 @@ Usage: mjolnir-tool command [...]
         
     trees
         List the defined trees and their path.
+        
+You can change the default tree from "mjolnir" to something else by creating
+file: ']]..os.getenv("HOME")..[[/.mjolnir/.mjolnir._asm.modules.lua"'
+and putting the following into it:
+
+    return {
+         -- default_tree: is the luarocks tree to use by default
+         default_tree = "mjolnir",
+    }
+
+where "mjolnir" is your preferred default tree.
 ]])
     return true
 end
@@ -126,7 +131,7 @@ function module_report(...)
     end
     
     if flags == "" then flags = "oal" end
-    if not tree then tree = "mjolnir" end
+    if not tree then tree = tools.default_tree end
     
     local line_fmt = "%-30s  %-10s  %-10s  %-10s" 
     local results, available, t = {}, {}, {}
@@ -139,7 +144,7 @@ function module_report(...)
     
     results = tools.versions(tree)
     
-    available = tools.available("mjolnir")
+    available = tools.available(tools.default_tree)
     for i,v in pairs(available) do
         if not results[i] then
             results[i] = {
@@ -206,7 +211,7 @@ function available_modules(...)
     local line_fmt = "%-30s  %s" 
 
     if count == 0 then
-        results = tools.available("mjolnir")
+        results = tools.available(tools.default_tree)
     elseif count == 1 and table.pack(...)[1] == "--all" then
         results = tools.available("")
     else
@@ -240,7 +245,7 @@ function installed_modules(...)
     if table.pack(...).n ~= 0 then
         results = tools.installed(...)
     else
-        results = tools.installed("mjolnir")
+        results = tools.installed(tools.default_tree)
     end
     
     local names, value = {} , {}
@@ -267,6 +272,7 @@ function list_trees(...)
     local results = tools.trees()
     local names, paths = {}, {} 
     
+    print("Default: "..tools.default_tree)
     for _,i in ipairs(results) do
         table.insert(names, i.name)
         paths[i.name] = i.root
@@ -274,7 +280,7 @@ function list_trees(...)
     
     table.sort(names)
     for _,i in ipairs(names) do
-        print(i, paths[i])
+        print((tools.default_tree == i and "*" or " ").." "..i, paths[i])
     end
     return true
 end

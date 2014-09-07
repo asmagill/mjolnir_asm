@@ -15,15 +15,25 @@ specify a different tree name if you wish.  To use the "mjolnir" tree, make sure
 something like the following is in your `~/.luarocks/config.lua` file:
 
     rocks_trees = {
-            { name = [[user]], root = home..[[/.luarocks]] },
-            { name = [[mjolnir]], root = home..[[/.mjolnir/rocks]] },
-            { name = [[system]], root = [[/usr/local]] },
+        { name = [[user]], root = home..[[/.luarocks]] },
+        { name = [[mjolnir]], root = home..[[/.mjolnir/rocks]] },
+        { name = [[system]], root = [[/usr/local]] },
     }
 
 Note that this ends up loading practically all of the luarocks modules into memory
 and may leave Mjolnir in an inconsistent state concerning available modules.  You
 should probably only require this module when you specifically want it, and then
 run mjolnir.reload() when done.
+
+To change the default tree from "mjolnir" to something else, you can use the module's
+`default_tree` variable (see below), or to make it permanent, create a file in your
+`.mjolnir` directory named `.mjolnir._asm.modules.lua` and put the following into it
+(change "mjolnir" to match your preferred default tree):
+
+    return {
+         -- default_tree: is the luarocks tree to use by default
+         default_tree = "mjolnir",
+    }
 
 ### Install
 ~~~bash
@@ -108,13 +118,29 @@ not provided, it is 0, resulting in the most recent install or remove.
 ### Variables
 
 ~~~lua
+mjolnir._asm.modules.default_tree = string
+~~~
+By default, this module assumes the default luarocks tree is "mjolnir".  You
+can set this variable to another value if you wish the default tree to be
+something else.
+If you want to permanently change the default tree to something else, create
+a file in your .mjolnir/ directory named ".mjolnir._asm.modules.lua" and put
+the following into it (change "mjolnir" to match your preferred default tree):
+
+    return {
+        -- default_tree: is the luarocks tree to use by default
+        default_tree = "mjolnir",
+    }
+
+~~~lua
 mjolnir._asm.modules.output[]
 ~~~
 Because Luarocks outputs most of it's status and errors via io.stdout:write(),
 we capture the stderr and stdout streams during module install and removal. To
 see the full output of the last install or remove invocation, just look at the
 end of this array, i.e.
-* print(mjolnir._asm.modules.output[#mjolnir._asm.modules.output])
+
+    print(mjolnir._asm.modules.output[#mjolnir._asm.modules.output])
 
 ### Command Line
 The `mjolnir-tools` file is a command-line tool which is installed into your tree bin

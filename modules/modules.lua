@@ -21,13 +21,13 @@ local modules = {
 --- These tools assume a default Luarocks tree named "mjolnir" exists.  You can always
 --- specify a different tree name if you wish.  To use the "mjolnir" tree, make sure
 --- something like the following is in your `~/.luarocks/config.lua` file:
----
----    rocks_trees = {
----            { name = [[user]], root = home..[[/.luarocks]] },
----            { name = [[mjolnir]], root = home..[[/.mjolnir/rocks]] },
----            { name = [[system]], root = [[/usr/local]] },
----    }
----
+--- <pre>
+---        rocks_trees = {
+---                { name = [[user]], root = home..[[/.luarocks]] },
+---                { name = [[mjolnir]], root = home..[[/.mjolnir/rocks]] },
+---                { name = [[system]], root = [[/usr/local]] },
+---        }
+--- </pre>
 --- Note that this ends up loading practically all of the luarocks modules into memory
 --- and may leave Mjolnir in an inconsistent state concerning available modules.  You
 --- should probably only require this module when you specifically want it, and then
@@ -37,12 +37,42 @@ local modules = {
 --- directory (~/.mjolnir/rocks/bin, if you use the mjolnir tree as shown above). To use
 --- this utility, make sure that the directory is in your shell's PATH or copy/link the
 --- file to somewhere that is.
+---
+--- To change the default tree from "mjolnir" to something else, you can use the module's
+--- `default_tree` variable (see Variables), or to make it permanent, create a file in your
+--- `.mjolnir` directory named `.mjolnir._asm.modules.lua` and put the following into it
+--- (change "mjolnir" to match your preferred default tree):
+--- <pre>
+---     return {
+---         -- default_tree: is the luarocks tree to use by default
+---         default_tree = "mjolnir",
+---     }
+--- </pre>
 
     ]],
 --]=]
 }
 
-local mjolnir_mod_name = "_asm.modules"
+--- mjolnir._asm.modules.default_tree = string
+--- Variable
+--- By default, this module assumes the default luarocks tree is "mjolnir".  You
+--- can set this variable to another value if you wish the default tree to be
+--- something else.
+--- If you want to permanently change the default tree to something else, create
+--- a file in your .mjolnir/ directory named ".mjolnir._asm.modules.lua" and put
+--- the following into it (change "mjolnir" to match your preferred default tree):
+--- <pre>
+---        return {
+---             -- default_tree: is the luarocks tree to use by default
+---             default_tree = "mjolnir",
+---        }
+--- </pre>
+
+local ok, value = pcall(function()
+    return dofile(os.getenv("HOME").."/.mjolnir/.mjolnir._asm.modules.lua")
+end)
+if type(value) ~= "table" then ok = false end
+modules.default_tree = ok and value.default_tree or "mjolnir"
 
 -- private variables and methods -----------------------------------------
 
@@ -54,12 +84,6 @@ else
 end
 
 local mjolnir = mjolnir or { showerror = error }
-
---lua51.enable()
---local cfg = require("luarocks.cfg")
---local search = require("luarocks.search")
---local path = require("luarocks.path")
---lua51.disable()
 
 local backup_io = {
     stderr = io.stderr,
@@ -267,7 +291,7 @@ end
 modules.installed = function(tree)
     local _, search = lua51.pcall(function() return require("luarocks.search") end)
     local _, path = lua51.pcall(function() return require("luarocks.path") end)
-    tree = tree or "mjolnir"
+    tree = tree or modules.default_tree
 
     local trees = tree == "--all" and modules.trees() or modules.trees(tree)
     local results = {}
@@ -341,7 +365,7 @@ end
 modules.remove = function(name, tree, ...)
     local _, remove = lua51.pcall(function() return require("luarocks.remove") end)
     local _, path = lua51.pcall(function() return require("luarocks.path") end)
-    tree = tree or "mjolnir"
+    tree = tree or modules.default_tree
     local results = {}
     local trees = modules.trees(tree)
     local extraArgs = table.pack(...)
@@ -375,7 +399,7 @@ end
 modules.install = function(name, tree, ...)
     local _, install = lua51.pcall(function() return require("luarocks.install") end)
     local _, path = lua51.pcall(function() return require("luarocks.path") end)
-    tree = tree or "mjolnir"
+    tree = tree or modules.default_tree
     local results = {}
     local trees = modules.trees(tree)
     local extraArgs = table.pack(...)
