@@ -2,7 +2,7 @@ local modules = {
 --[=[
     _NAME        = 'mjolnir._asm.modules',
     _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir._asm.toolkit',
+    _URL         = 'https://github.com/asmagill/mjolnir_asm',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
 
@@ -55,11 +55,18 @@ end
 
 local mjolnir = mjolnir or { showerror = error }
 
-lua51.enable()
-local cfg = require("luarocks.cfg")
-local search = require("luarocks.search")
-local path = require("luarocks.path")
-lua51.disable()
+--lua51.enable()
+--local cfg = require("luarocks.cfg")
+--local search = require("luarocks.search")
+--local path = require("luarocks.path")
+--lua51.disable()
+
+local backup_io = {
+    stderr = io.stderr,
+    stdout = io.stdout,
+}
+
+local captured_output = ""
 
 local compare_versions = function(a,b)
 --
@@ -143,12 +150,7 @@ local compare_versions = function(a,b)
     return false
 end
 
---- mjolnir._asm.modules.sorted_versions(manifestdata [, desc]) -> table
---- Function
---- Returns a sorted array of the versions available in the manifest data provided.
---- This manifest data is a specific module's result value from a search.  If desc
---- is true return the list in descending order; otherwise in ascending order.
-modules.sorted_versions = function(data, desc)
+local sorted_versions = function(data, desc)
     local t = {}
     desc = desc or false
     for i,v in pairs(data) do table.insert(t,i) end
@@ -165,20 +167,81 @@ modules.sorted_versions = function(data, desc)
 end
 
 local latest_version = function(data)
-    local t = modules.sorted_versions(data)
+    local t = sorted_versions(data)
 
     return t[#t]
 
 end
 
+local function add_io(self, real_io, ...)
+    captured_output = captured_output..table.concat({...})
+    
+    return real_io:write(...)
+end
+
+local function capture_io()
+    backup_io = {
+        stderr = io.stderr,
+        stdout = io.stdout,
+    }
+
+    io.stderr = {
+        write = function(self, ...) return add_io(self, backup_io.stderr, ...) end,
+        close = function(self, ...) return backup_io.stderr:close(...) end,
+        flush = function(self, ...) return backup_io.stderr:flush(...) end,
+        lines = function(self, ...) return backup_io.stderr:lines(...) end,
+        read = function(self, ...) return backup_io.stderr:read(...) end,
+        seek = function(self, ...) return backup_io.stderr:seek(...) end,
+        setvbuf = function(self, ...) return backup_io.stderr:setvbuf(...) end,
+    }
+    io.stdout = {
+        write = function(self, ...) return add_io(self, backup_io.stdout, ...) end,
+        close = function(self, ...) return backup_io.stdout:close(...) end,
+        flush = function(self, ...) return backup_io.stdout:flush(...) end,
+        lines = function(self, ...) return backup_io.stdout:lines(...) end,
+        read = function(self, ...) return backup_io.stdout:read(...) end,
+        seek = function(self, ...) return backup_io.stdout:seek(...) end,
+        setvbuf = function(self, ...) return backup_io.stdout:setvbuf(...) end,
+    }
+end
+
+local function release_io()
+    io.stderr = backup_io.stderr
+    io.stdout = backup_io.stdout
+end
+
+local mt_array = { __call = function(self, ...)
+        local number = table.pack(...)[1] or 0
+        return self[#self - number]
+    end
+}
 
 -- Public interface ------------------------------------------------------
+
+--- mjolnir._asm.modules.output[]
+--- Variable
+--- Because Luarocks outputs most of it's status and errors via io.stdout:write(),
+--- we capture the stderr and stdout streams during module install and removal. To
+--- see the full output of the last install or remove invocation, just look at the
+--- end of this array, i.e.
+---     print(mjolnir._asm.modules.output[#mjolnir._asm.modules.output])
+
+--- mjolnir._asm.modules.output( n ) -> string
+--- Function
+--- Because Luarocks outputs most of it's status and errors via io.stdout:write(),
+--- we capture the stderr and stdout streams during module install and removal. This
+--- function returns the output of the most recent - n install or remove.  When n is
+--- not provided, it is 0, resulting in the most recent install or remove.
+modules.output = {}
+setmetatable(modules.output, mt_array)
 
 --- mjolnir._asm.modules.trees([name]) -> table
 --- Function
 --- Returns a table of the luarocks tree definition name, or all of the tree definitions
 --- if name is not provided.
 modules.trees = function(name)
+    local _, cfg = lua51.pcall(function() return require("luarocks.cfg") end)
+
     local answer = {}
 
     if name then
@@ -202,6 +265,8 @@ end
 --- returns the manifest for all installed modules.  Otherwise it returns the manifest
 --- for the specified tree.
 modules.installed = function(tree)
+    local _, search = lua51.pcall(function() return require("luarocks.search") end)
+    local _, path = lua51.pcall(function() return require("luarocks.path") end)
     tree = tree or "mjolnir"
 
     local trees = tree == "--all" and modules.trees() or modules.trees(tree)
@@ -223,6 +288,7 @@ end
 --- If name and exact are both missing, then it returns all available modules, similar
 --- to "luarocks search --all".
 modules.available = function(name, exact)
+    local _, search = lua51.pcall(function() return require("luarocks.search") end)
     name = name or ""
     local results = {}
     local query = search.make_query(name:lower())
@@ -231,6 +297,13 @@ modules.available = function(name, exact)
 
     return results
 end
+
+--- mjolnir._asm.modules.sorted_versions(manifestdata [, desc]) -> table
+--- Function
+--- Returns a sorted array of the versions available in the manifest data provided.
+--- This manifest data is a specific module's result value from a search.  If desc
+--- is true return the list in descending order; otherwise in ascending order.
+modules.sorted_versions = sorted_versions
 
 --- mjolnir._asm.modules.versions([tree]) -> table
 --- Function
@@ -267,6 +340,7 @@ end
 --- so format accordingly. Returns true or false indicating success or failure.
 modules.remove = function(name, tree, ...)
     local _, remove = lua51.pcall(function() return require("luarocks.remove") end)
+    local _, path = lua51.pcall(function() return require("luarocks.path") end)
     tree = tree or "mjolnir"
     local results = {}
     local trees = modules.trees(tree)
@@ -277,8 +351,13 @@ modules.remove = function(name, tree, ...)
     end
     
     path.use_tree(trees[1])
-
+    
+    capture_io()
     results = table.pack(lua51.pcall(function() return remove.run("--tree="..tree, name, table.unpack(extraArgs)) end))
+    release_io()
+    table.insert(modules.output, captured_output)
+    captured_output = ""
+    
     if results[1] then
         if type(results[2]) == "nil" then results[2] = false end
         table.remove(results, 1)
@@ -295,6 +374,7 @@ end
 --- format accordingly. Returns the name and version of the module installed, if successful.
 modules.install = function(name, tree, ...)
     local _, install = lua51.pcall(function() return require("luarocks.install") end)
+    local _, path = lua51.pcall(function() return require("luarocks.path") end)
     tree = tree or "mjolnir"
     local results = {}
     local trees = modules.trees(tree)
@@ -306,7 +386,12 @@ modules.install = function(name, tree, ...)
     
     path.use_tree(trees[1])
 
+    capture_io()
     results = table.pack(lua51.pcall(function() return install.run("--tree="..tree, name, table.unpack(extraArgs)) end))
+    release_io()
+    table.insert(modules.output, captured_output)
+    captured_output = ""
+
     if results[1] then
         if type(results[2]) == "nil" then results[2] = false end
         table.remove(results, 1)

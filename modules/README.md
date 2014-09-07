@@ -26,10 +26,8 @@ should probably only require this module when you specifically want it, and then
 run mjolnir.reload() when done.
 
 ### Install
-Soon, this should be available via luarocks at (https://rocks.moonscript.org/), but for now, clone this repository and execute the following in the modules directory:
-
 ~~~bash
-$ luarocks [--tree=mjolnir] make
+$ luarocks [--tree=mjolnir] mjolnir._asm.modules
 ~~~
 
 ### Require
@@ -98,6 +96,25 @@ mjolnir._asm.modules.sorted_versions(manifestdata [, desc]) -> table
 Returns a sorted array of the versions available in the manifest data provided.
 This manifest data is a specific module's result value from a search.  If desc
 is true return the list in descending order; otherwise in ascending order.
+
+~~~lua
+mjolnir._asm.modules.output([n]) -> string
+~~~
+Because Luarocks outputs most of it's status and errors via io.stdout:write(),
+we capture the stderr and stdout streams during module install and removal. This
+function returns the output of the most recent - n install or remove.  When n is
+not provided, it is 0, resulting in the most recent install or remove.
+
+### Variables
+
+~~~lua
+mjolnir._asm.modules.output[]
+~~~
+Because Luarocks outputs most of it's status and errors via io.stdout:write(),
+we capture the stderr and stdout streams during module install and removal. To
+see the full output of the last install or remove invocation, just look at the
+end of this array, i.e.
+* print(mjolnir._asm.modules.output[#mjolnir._asm.modules.output])
 
 ### Command Line
 The `mjolnir-tools` file is a command-line tool which is installed into your tree bin

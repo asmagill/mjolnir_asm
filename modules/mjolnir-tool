@@ -94,17 +94,19 @@ end
 
 function install_module(...) 
     local results = table.pack(tools.install(...))
-    for _,i in ipairs(results) do
-        print(i)
-    end
+    print(table.unpack(results))
+--    for _,i in ipairs(results) do
+--        print(i)
+--    end
     return true
 end
 
 function remove_module(...)
     local results = table.pack(tools.remove(...))
-    for _,i in ipairs(results) do
-        print(i)
-    end
+    print(table.unpack(results))
+--    for _,i in ipairs(results) do
+--        print(i)
+--    end
     return true
 end
 
