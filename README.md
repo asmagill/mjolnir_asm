@@ -3,7 +3,7 @@ mjolnir_asm
 
 Development space  for Mjolnir modules under mjolnir._asm
 
-Once a module has been packed and deployed via it's packe mechanism, a separate repository is created for each specific module.  This repository contains modules in development, or possibly in-progress updates to deployed modules which haven't been published yet.
+Once a module has been packed and deployed via it's package mechanism, a separate repository is created for each specific module.  This repository contains modules in development, or possibly in-progress updates to deployed modules which haven't been published yet.
 
 Currently available:
 
