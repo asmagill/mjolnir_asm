@@ -1,9 +1,17 @@
 mjolnir_asm
 ===========
 
-Luarocks for mjolnir._asm
+Development space Mjolnir modules under mjolnir._asm
 
-Details coming soon.
+Once a module has been packed and deployed via it's packe mechanism, a separate repository is created for each specific module.  This repository contains modules in development, or possibly in-progress updates to deployed modules which haven't been published yet.
+
+Currently available:
+
+|Module                 | Method   | Version | URL                                               |
+|:----------------------|:---------|:-------:|:--------------------------------------------------|
+|mjolnir._asm.compat_51 | Luarocks | 0.2-2   | https://github.com/asmagill/mjolnir_asm.compat_51 |
+|mjolnir._asm.modules   | Luarocks | 0.2-2   | https://github.com/asmagill/mjolnir_asm.modules   |
+
 
 Also, see README.md in each modules directory.
 
