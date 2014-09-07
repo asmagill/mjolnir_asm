@@ -25,10 +25,8 @@ The following Lua 5.1 functions and variables are "created" when the `enable` fu
 See (http://www.lua.org/manual/5.2/manual.html#8) for more details.
 
 ### Install
-Soon, this should be available via luarocks at (https://rocks.moonscript.org/), but for now, clone this repository and execute the following:
-
 ~~~bash
-$ luarocks [--tree=mjolnir] make
+$ luarocks [--tree=mjolnir] install mjolnir._asm.compat_51
 ~~~
 
 ### Require

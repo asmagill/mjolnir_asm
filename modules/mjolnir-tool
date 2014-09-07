@@ -1,11 +1,5 @@
 #! /usr/bin/env lua
 
-local cfg = require("luarocks.cfg")
-local lr_path, lr_cpath = cfg.package_paths()
-package.path = luarocks.util.remove_path_dupes(lr_path..";"..package.path, ";")
-package.cpath = luarocks.util.remove_path_dupes(lr_path..";"..package.cpath, ";")
-
-
 local tools = require("mjolnir._asm.modules")
 
 local latest_version = function(data)
@@ -59,6 +53,17 @@ Usage: mjolnir-tool command [...]
         
     trees
         List the defined trees and their path.
+        
+You can change the default tree from "mjolnir" to something else by creating
+file: ']]..os.getenv("HOME")..[[/.mjolnir/.mjolnir._asm.modules.lua"'
+and putting the following into it:
+
+    return {
+         -- default_tree: is the luarocks tree to use by default
+         default_tree = "mjolnir",
+    }
+
+where "mjolnir" is your preferred default tree.
 ]])
     return true
 end
@@ -94,17 +99,19 @@ end
 
 function install_module(...) 
     local results = table.pack(tools.install(...))
-    for _,i in ipairs(results) do
-        print(i)
-    end
+    print(table.unpack(results))
+--    for _,i in ipairs(results) do
+--        print(i)
+--    end
     return true
 end
 
 function remove_module(...)
     local results = table.pack(tools.remove(...))
-    for _,i in ipairs(results) do
-        print(i)
-    end
+    print(table.unpack(results))
+--    for _,i in ipairs(results) do
+--        print(i)
+--    end
     return true
 end
 
@@ -124,7 +131,7 @@ function module_report(...)
     end
     
     if flags == "" then flags = "oal" end
-    if not tree then tree = "mjolnir" end
+    if not tree then tree = tools.default_tree end
     
     local line_fmt = "%-30s  %-10s  %-10s  %-10s" 
     local results, available, t = {}, {}, {}
@@ -137,7 +144,7 @@ function module_report(...)
     
     results = tools.versions(tree)
     
-    available = tools.available("mjolnir")
+    available = tools.available(tools.default_tree)
     for i,v in pairs(available) do
         if not results[i] then
             results[i] = {
@@ -154,21 +161,37 @@ function module_report(...)
 
     for _, i in ipairs(t) do
         local do_i_print, status = false, ""
-        if flags:match("l") and results[i].local_only then
-            do_i_print = true
-            status = "local"
-        elseif flags:match("o") and results[i].upgrade then
-            do_i_print = true
-            status = "outdated"
-        elseif flags:match("a") and results[i].installed == "" then
-            do_i_print = true
-            status = "available"
-        elseif flags:match("c") and not (results[i].local_only or results[i].upgrade) then
-            do_i_print = true
-            if results[i].installed == results[i].available then
-                status = "current"
-            else
+
+        if results[i].upgrade then
+            if flags:match("o") then
+                do_i_print = true
+                status = "outdated"
+            end
+        end
+        
+        if results[i].local_only then
+            if flags:match("l") then
+                do_i_print = true
                 status = "local"
+            end
+        end
+        
+        if not (results[i].local_only or results[i].upgrade) then
+            if results[i].installed == results[i].available then
+                if flags:match("c") then
+                    do_i_print = true
+                    status = "current"
+                end
+            elseif results[i].installed == "" then
+                if flags:match("a") then
+                    do_i_print = true
+                    status = "available"
+                end
+            else
+                if flags:match("l") then
+                    do_i_print = true
+                    status = "local"
+                end
             end
         end
         
@@ -188,7 +211,7 @@ function available_modules(...)
     local line_fmt = "%-30s  %s" 
 
     if count == 0 then
-        results = tools.available("mjolnir")
+        results = tools.available(tools.default_tree)
     elseif count == 1 and table.pack(...)[1] == "--all" then
         results = tools.available("")
     else
@@ -222,7 +245,7 @@ function installed_modules(...)
     if table.pack(...).n ~= 0 then
         results = tools.installed(...)
     else
-        results = tools.installed("mjolnir")
+        results = tools.installed(tools.default_tree)
     end
     
     local names, value = {} , {}
@@ -249,6 +272,7 @@ function list_trees(...)
     local results = tools.trees()
     local names, paths = {}, {} 
     
+    print("Default: "..tools.default_tree)
     for _,i in ipairs(results) do
         table.insert(names, i.name)
         paths[i.name] = i.root
@@ -256,7 +280,7 @@ function list_trees(...)
     
     table.sort(names)
     for _,i in ipairs(names) do
-        print(i, paths[i])
+        print((tools.default_tree == i and "*" or " ").." "..i, paths[i])
     end
     return true
 end

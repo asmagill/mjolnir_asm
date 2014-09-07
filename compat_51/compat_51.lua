@@ -2,7 +2,7 @@ local module = {
 --[=[
     _NAME        = 'mjolnir._asm.compat_51',
     _VERSION     = 'the 2nd digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir._asm.compat_51',
+    _URL         = 'https://github.com/asmagill/mjolnir_asm',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
     
