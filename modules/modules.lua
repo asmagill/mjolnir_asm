@@ -2,13 +2,13 @@ local modules = {
 --[=[
     _NAME        = 'mjolnir._asm.modules',
     _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm',
+    _URL         = 'https://github.com/asmagill/mjolnir_asm.modules',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
 
 --- === mjolnir._asm.modules ===
 ---
---- Home: https://github.com/asmagill/mjolnir_asm/tree/published/modules
+--- Home: https://github.com/asmagill/mjolnir_asm.modules
 ---
 --- Functions to capture information about, install and remove luarocks for mjolnir modules.
 --- While it is tailored specifically to use with the mjolnir modules, it should

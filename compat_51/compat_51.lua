@@ -2,13 +2,13 @@ local module = {
 --[=[
     _NAME        = 'mjolnir._asm.compat_51',
     _VERSION     = 'the 2nd digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm',
+    _URL         = 'https://github.com/asmagill/mjolnir_asm.compat_51',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
     
 --- === mjolnir._asm.compat_51 ===
 ---
---- Home: https://github.com/asmagill/mjolnir_asm/tree/published/compat_51
+--- Home: https://github.com/asmagill/mjolnir_asm.compat_51
 ---
 --- The Lua 5.2 engine included with [Mjolnir](http://mjolnir.io) does not include the
 --- Lua 5.1 deprecated functions in it's build.  I actually agree with this because new

@@ -1,24 +1,30 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.compat_51"
+package = "mjolnir._asm.modules"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.3-1"
+version = "0.3-2"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm"
-local desc = "Provide Lua 5.1 compatibility functions in Mjolnir"
+local url = "github.com/asmagill/mjolnir_asm.modules"
+local desc = "Module versioning for Mjolnir."
 
 source = {url = "git://" .. url}
 description = {
   summary = desc,
-  detailed = desc,
+  detailed = [[
+Provides functions for getting version information for mjolnir modules
+(actually all luarocks) as well as allow for installation and removal
+of modules.
+
+Also provides command line tool for use outside of mjolnir.
+]],
   homepage = "https://" .. url,
   license = "MIT",
 }
@@ -28,6 +34,7 @@ description = {
 supported_platforms = {"macosx"}
 dependencies = {
   "lua >= 5.2",
+  "mjolnir._asm.compat_51",
 }
 
 -- Build rules:
@@ -35,7 +42,9 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.compat_51"] = "compat_51.lua",
-    ["mjolnir._asm.compat_51.internal"] = "compat_51.m",
+    ["mjolnir._asm.modules"] = "modules.lua",
+  },
+  install = {
+    bin = { "mjolnir-tool" },
   },
 }
