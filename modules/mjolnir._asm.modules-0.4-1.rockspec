@@ -8,7 +8,7 @@ package = "mjolnir._asm.modules"
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.3-2"
+version = "0.4-1"
 
 -- General metadata:
 
