@@ -8,7 +8,7 @@ package = "mjolnir._asm.compat_51"
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.2-2"
+version = "0.3-1"
 
 -- General metadata:
 

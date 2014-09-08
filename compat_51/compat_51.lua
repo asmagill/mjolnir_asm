@@ -39,12 +39,12 @@ local module = {
 --]=]
 }
 
-local mjolnir_mod_name = "_asm.compat_51"
+local mod_name = "mjolnir._asm.compat_51"
 local c_library = "internal"
 
 -- integration with C functions ------------------------------------------
 
-local lua51 = require("mjolnir."..mjolnir_mod_name.."."..c_library)
+local lua51 = require(mod_name.."."..c_library)
 
 -- private variables and methods -----------------------------------------
 
