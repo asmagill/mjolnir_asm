@@ -45,18 +45,35 @@ CFDataRef ipc_callback(CFMessagePortRef local, SInt32 msgid, CFDataRef data, voi
     return outdata;
 }
 
-// assumes the ipc table is pushed
-// leaves lua stack intact
-static void setup_ipc(lua_State* L) {
+static int setup_ipc(lua_State* L) {
+    CFMessagePortRef    *userdata ;
+    
     CFMessagePortContext ctx = {0};
     ctx.info = L;
     CFMessagePortRef messagePort = CFMessagePortCreateLocal(NULL, CFSTR("mjolnir"), ipc_callback, &ctx, false);
     CFRunLoopSourceRef runloopSource = CFMessagePortCreateRunLoopSource(NULL, messagePort, 0);
     CFRunLoopAddSource(CFRunLoopGetMain(), runloopSource, kCFRunLoopCommonModes);
+    
+    userdata = (CFMessagePortRef *) lua_newuserdata(L, sizeof(CFMessagePortRef)) ;
+    *userdata = messagePort ;
+    return 1 ;
 }
 
-int luaopen_mjolnir__asm_internal(lua_State* L) {
-    lua_newtable(L);
-    setup_ipc(L);
+static int invalidate_ipc(lua_State* L) {
+    CFMessagePortRef    *messagePort = lua_touserdata(L,1); 
+    CFMessagePortInvalidate ( *messagePort );
+    
+    return 0;
+}
+
+static const luaL_Reg ipclib[] = { 
+    {"setup_ipc", setup_ipc},
+    {"invalidate_ipc", invalidate_ipc},
+    {NULL, NULL} 
+}; 
+
+int luaopen_mjolnir__asm_ipc_internal(lua_State* L) {
+    luaL_newlib(L, ipclib);
     return 1;
 }
+

@@ -21,7 +21,15 @@ mjolnir._asm.ipc = {
 --]=]
 }
 
-mjolnir._asm.ipc.internal = require("mjolnir._asm.ipc.internal")
+local internal = require("mjolnir._asm.ipc.internal")
+local internal_mt = {
+    __gc = function(...)
+        if internal.messagePort then
+            internal.invalidate_ipc(internal.messagePort)
+        end
+    end
+}
+setmetatable(internal, internal_mt)
 
 -- private variables and methods -----------------------------------------
 
@@ -69,6 +77,8 @@ function mjolnir._asm.ipc._handler(raw, str)
 end
 
 -- Return Module Object --------------------------------------------------
+
+internal.messagePort = internal.setup_ipc()
 
 return mjolnir._asm.ipc
 
