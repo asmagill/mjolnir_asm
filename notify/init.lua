@@ -12,8 +12,7 @@ local module = {
 ---
 --- Apple's built-in notifications system.
 ---
---- This is almost completely lifted from the Hydra source code and tweaked slightly
---- to fit in the Mjolnir environment.
+--- This module is based on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
     ]],
 --]=]

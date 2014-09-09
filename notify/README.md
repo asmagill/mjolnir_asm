@@ -1,7 +1,9 @@
 mjolnir._asm.notify
 ===================
 
-Description
+Apple's built-in notifications system.
+
+This module is based on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 ### Install
 
