@@ -52,6 +52,7 @@ end
 -- Public interface ------------------------------------------------------
 
 --- mjolnir._asm.ipc.handler(str) -> value
+--- Function
 --- The default handler for IPC, called by mjolnir-cli. Default implementation evals the string and returns the result.
 --- You may override this function if for some reason you want to implement special evaluation rules for executing remote commands.
 --- The return value of this function is always turned into a string via tostring() and returned to mjolnir-cli.
