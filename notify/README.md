@@ -54,7 +54,9 @@ notify.registry[]
 ~~~
 This table contains the list of registered tags and their functions.  It should not be modified directly, but instead by the mjolnir._asm.notify.register(tag, fn) and mjolnir._asm.notify.unregister(id) functions.
 
-### Special Notes
+### Known Issues
+
+If you register a callback function for a notification, and then restart Mjolnir, triggering the callback by clicking on the notification in the Message Center will either do nothing, if you have reloaded mjolnir._asm.notify when reloading Mjolnir, or crash Mjolnir, if you haven't reloaded the module.  Never click on the old notification or clear it out of the Message Center to prevent this.
 
 ### License
 
