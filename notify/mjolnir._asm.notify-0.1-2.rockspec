@@ -8,12 +8,12 @@ package = "mjolnir._asm.notify"
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.1-1"
+version = "0.1-2"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.compat_51"
-local desc = "Provide Lua 5.1 compatibility functions in Mjolnir"
+local url = "github.com/asmagill/mjolnir_asm.notify"
+local desc = "Apple's built-in notifications system for Mjolnir."
 
 source = {url = "git://" .. url}
 description = {
