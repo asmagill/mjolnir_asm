@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.ipc"] = "ipc.lua",
-    ["mjolnir._asm.ipc.internal"] = "ipc.m",
+    ["mjolnir._asm.ipc"] = "init.lua",
+    ["mjolnir._asm.ipc.internal"] = "internal.m",
   },
 }
