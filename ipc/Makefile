@@ -1,4 +1,4 @@
-LUAFILES  = ipc.lua
+LUAFILES  = init.lua
 OBJCFILES = internal.m
 HEADERS   = 
 
@@ -9,6 +9,16 @@ OFILES  := $(OBJCFILES:m=o)
 SOFILES := $(OBJCFILES:m=so)
 
 all: $(SOFILES)
+
+install: $(SOFILES)
+	install -d /usr/local/lib/lua/5.2/mjolnir/_asm/ipc/
+	cp $(SOFILES) /usr/local/lib/lua/5.2/mjolnir/_asm/ipc 
+	install -d /usr/local/share/lua/5.2/mjolnir/_asm/ipc/
+	cp $(LUAFILES) /usr/local/share/lua/5.2/mjolnir/_asm/ipc/
+
+uninstall:
+	rm -fr /usr/local/lib/lua/5.2/mjolnir/_asm/ipc/$(SOFILES)
+	rm -fr /usr/local/share/lua/5.2/mjolnir/_asm/ipc/$(LUAFILES)
 
 bundle: $(TARFILE)
 

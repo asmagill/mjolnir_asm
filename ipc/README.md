@@ -1,22 +1,37 @@
 mjolnir._asm.ipc
 ======================
 
-An attempt to port Hydra's ipc code to Mjolnir.
-
-Currently works until a mjolnir.reload() occurs, then crashes.
+A port of Hydra's ipc code to Mjolnir.
 
 ### Details
+This module installs the necessary IPC code for using a command line tool for inspection and
+manipulation of your running Mjolnir application.
 
-### Install
-Don't yet.
+This module is based on code from the previous incarnation of Mjolnir (Hydra) and it's command
+line utility by [Steven Degutis](https://github.com/sdegutis/).
+
+Due to uncertainty in the future of Mjolnir package management, I'm not sure the best way to
+release this... I'll probably do Luarocks, once I decide how best to handle the command line tool,
+but for now, there are these instructions.
+
+### Installation
+
+1. clone this repository.
+2. If you have Luarocks installed, then type `luarocks [--tree=mjolnir] make`
+3. If you do not have Luarocks, then type `make install`
+
+To install the command line tool, enter the cli subdirectory and type `make install`
 
 ### Require
+require("mjolnir._asm.ipc")
 
 ### Functions
+`mjolnir._asm.ipc.handler(str) -> value`
 
-### Variables
-
-### Caveats
+The default handler for IPC, called by mjolnir-cli. Default implementation evals the string and returns the result.
+You may override this function if for some reason you want to implement special evaluation rules for executing remote commands.
+The return value of this function is always turned into a string via tostring() and returned to mjolnir-cli.
+If an error occurs, the error message is returned instead.
 
 ### License
 
