@@ -13,6 +13,7 @@ Currently available:
 |mjolnir._asm.ipc       |          | 0.1-1   | https://github.com/asmagill/mjolnir_asm.ipc       |
 |mjolnir._asm.modules   | Luarocks | 0.3-2   | https://github.com/asmagill/mjolnir_asm.modules   |
 |mjolnir._asm.notify    | Luarocks | 0.1-1   | https://github.com/asmagill/mjolnir_asm.notify    |
+|mjolnir._asm.timer     | Luarocks | 0.1-1   | https://github.com/asmagill/mjolnir_asm.timer     |
 
 
 Also, see README.md in each modules directory.
