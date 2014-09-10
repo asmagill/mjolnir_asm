@@ -40,6 +40,15 @@ local function callback(tag)
   end
 end
 
+local function wrap(fn)
+  return function()
+    if fn then
+      local ok, err = xpcall(fn, debug.traceback)
+      if not ok then mjolnir.showerror(err) end
+    end
+  end
+end
+
 
 -- Public interface ------------------------------------------------------
 
@@ -48,6 +57,8 @@ end
 --- This table contains the list of registered tags and their functions.  It should not be modified directly, but instead by the mjolnir._asm.notify.register(tag, fn) and mjolnir._asm.notify.unregister(id) functions.
 module.registry = {}
 module.registry.n = 0
+
+setmetatable(module.registry, { __gc = module._gc })
 
 if not _notifysetup then
   module._setup(callback)
@@ -59,7 +70,7 @@ end
 --- Registers a function to be called when an Apple notification with the given tag is clicked.
 module.register = function(tag, fn)
   local id = module.registry.n + 1
-  module.registry[id] = {tag, fn}
+  module.registry[id] = {tag, wrap(fn)}
   module.registry.n = id
   return id
 end

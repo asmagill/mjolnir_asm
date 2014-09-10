@@ -56,7 +56,7 @@ This table contains the list of registered tags and their functions.  It should 
 
 ### Known Issues
 
-If you register a callback function for a notification, and then restart Mjolnir, triggering the callback by clicking on the notification in the Message Center will either do nothing, if you have reloaded mjolnir._asm.notify when reloading Mjolnir, or crash Mjolnir, if you haven't reloaded the module.  Never click on the old notification or clear it out of the Message Center to prevent this.
+Fixed bug which caused notifications from a running state of Lua that no longer existed (i.e. the user had reloaded their configuration) to crash Mjolnir by adding garbage collector to remove all notifications that had been delivered when reloading.  This is an interim fix, as the validity of the notification may still have value to the end-user, and a better solution is to rethink how the callback function works.
 
 ### License
 

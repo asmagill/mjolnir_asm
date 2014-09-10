@@ -56,16 +56,21 @@ static int notify_setup(lua_State* L) {
     notify_delegate.callback = ^(NSString* tag) {
         lua_rawgeti(L, LUA_REGISTRYINDEX, closure);
         lua_pushstring(L, [tag UTF8String]);
-        if (lua_pcall(L, 1, 0, 0))
-            mjolnir_handle_error(L);
+        lua_pcall(L, 1, 0, 0);
     };
     
+    return 0;
+}
+
+static int notify_gc(lua_State* L) {
+    [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
     return 0;
 }
 
 static const luaL_Reg notifylib[] = {
     {"show", notify_show},
     {"_setup", notify_setup},
+    {"_gc", notify_gc},
     {NULL, NULL}
 };
 
