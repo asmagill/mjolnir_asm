@@ -1,8 +1,9 @@
 PREFIX ?= /usr/local
-MODULE = timer
+MODULE = modules
+TOOLNAME = mjolnir-tool
 LUAFILE  = init.lua
-OBJCFILE = internal.m
-HEADERS   = 
+OBJCFILE =
+HEADERS  = 
 
 CFLAGS  += -Wall -Wextra
 LDFLAGS += -dynamiclib -undefined dynamic_lookup
@@ -12,20 +13,20 @@ SOFILE := $(OBJCFILE:m=so)
 
 all: $(SOFILE)
 
-install: install-library install-lua
-
-install-library: $(SOFILE)
-	mkdir -p $(PREFIX)/lib/lua/5.2/mjolnir/_asm/$(MODULE)
-	install -m 0644 $(SOFILE) $(PREFIX)/lib/lua/5.2/mjolnir/_asm/$(MODULE)
+install: install-lua install-bin
 	
 install-lua: $(LUAFILE)
 	mkdir -p $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)
 	install -m 0644 $(LUAFILE) $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)
 
-uninstall:
-	rm -fr $(PREFIX)/lib/lua/5.2/mjolnir/_asm/$(MODULE)/$(SOFILE)
-	rm -fr $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)/$(LUAFILE)
+install-bin: $(TOOLNAME)
+	mkdir -p $(PREFIX)/bin
+	install -m 0755 $(TOOLNAME) $(PREFIX)/bin
 
+uninstall:
+	rm -fr $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)/$(LUAFILE)
+	rm -fr $(PREFIX)/bin/$(TOOLNAME)
+    
 bundle: $(TARFILE)
 
 $(SOFILE): $(OFILE) $(HEADERS)

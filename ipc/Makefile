@@ -1,31 +1,45 @@
-LUAFILES  = init.lua
-OBJCFILES = internal.m
-HEADERS   = 
+PREFIX ?= /usr/local
+MODULE = ipc
+TOOLNAME = mjolnir
+LUAFILE  = init.lua
+OBJCFILE = internal.m
+HEADERS  = 
 
 CFLAGS  += -Wall -Wextra
 LDFLAGS += -dynamiclib -undefined dynamic_lookup
 
-OFILES  := $(OBJCFILES:m=o)
-SOFILES := $(OBJCFILES:m=so)
+OFILE  := $(OBJCFILE:m=o)
+SOFILE := $(OBJCFILE:m=so)
 
-all: $(SOFILES)
+all: $(SOFILE) cli
 
-install: $(SOFILES)
-	install -d /usr/local/lib/lua/5.2/mjolnir/_asm/ipc/
-	cp $(SOFILES) /usr/local/lib/lua/5.2/mjolnir/_asm/ipc 
-	install -d /usr/local/share/lua/5.2/mjolnir/_asm/ipc/
-	cp $(LUAFILES) /usr/local/share/lua/5.2/mjolnir/_asm/ipc/
+install: install-library install-lua install-cli
 
+install-library: $(SOFILE)
+	mkdir -p $(PREFIX)/lib/lua/5.2/mjolnir/_asm/$(MODULE)
+	install -m 0644 $(SOFILE) $(PREFIX)/lib/lua/5.2/mjolnir/_asm/$(MODULE)
+	
+install-lua: $(LUAFILE)
+	mkdir -p $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)
+	install -m 0644 $(LUAFILE) $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)
+
+install-cli: cli
+	$(MAKE) -C cli install
+    
 uninstall:
-	rm -fr /usr/local/lib/lua/5.2/mjolnir/_asm/ipc/$(SOFILES)
-	rm -fr /usr/local/share/lua/5.2/mjolnir/_asm/ipc/$(LUAFILES)
+	rm -fr $(PREFIX)/lib/lua/5.2/mjolnir/_asm/$(MODULE)/$(SOFILE)
+	rm -fr $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)/$(LUAFILE)
+	$(MAKE) -C cli uninstall
+
+cli:
+	$(MAKE) -C cli
 
 bundle: $(TARFILE)
 
-$(SOFILES): $(OFILES) $(HEADERS)
-	$(CC) $(OFILES) $(CFLAGS) $(LDFLAGS) -o $@
+$(SOFILE): $(OFILE) $(HEADERS)
+	$(CC) $(OFILE) $(CFLAGS) $(LDFLAGS) -o $@
 
-docs.json: $(OBJCFILES) $(LUAFILES)
+docs.json: $(OBJCFILE) $(LUAFILE)
 	ruby gendocs.rb --json $^ > $@
 
 docs.in.sql: docs.json
@@ -39,10 +53,10 @@ docs.html.d: docs.json
 	mkdir -p $@
 	ruby gendocs.rb --html $^ $@
 
-$(TARFILE): $(SOFILES) $(LUAFILES) docs.html.d docs.in.sql docs.out.sql README.md
+$(TARFILE): $(SOFILE) $(LUAFILE) docs.html.d docs.in.sql docs.out.sql README.md
 	tar -czf $@ $^
 
 clean:
-	rm -rf $(OFILES) $(SOFILES) docs.json docs.in.sql docs.out.sql mjolnir docs.html.d $(TARFILE)
+	rm -rf $(OFILE) $(SOFILE) docs.json docs.in.sql docs.out.sql mjolnir docs.html.d $(TARFILE) *.rock
 
-.PHONY: all clean
+.PHONY: all clean cli

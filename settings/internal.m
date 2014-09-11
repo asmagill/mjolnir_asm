@@ -79,6 +79,7 @@ void settings_push_luavalue_for_nsobject(lua_State* L, id obj) {
 
 
 /// mjolnir._asm.settings.set(key, val)
+/// Function
 /// Saves the given value for the string key; value must be a string, number, boolean, nil, or a table of any of these, recursively.
 static int settings_set(lua_State* L) {
     NSString* key = [NSString stringWithUTF8String: luaL_checkstring(L, 1)];
@@ -89,6 +90,7 @@ static int settings_set(lua_State* L) {
 }
 
 /// mjolnir._asm.settings.get(key) -> val
+/// Function
 /// Gets the Lua value for the given string key.
 static int settings_get(lua_State* L) {
     NSString* key = [NSString stringWithUTF8String: luaL_checkstring(L, 1)];

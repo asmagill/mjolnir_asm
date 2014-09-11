@@ -1,4 +1,4 @@
-PREFIX = /usr/local
+PREFIX ?= /usr/local
 LDFLAGS += -framework CoreFoundation -ledit
 
 all: mjolnir

@@ -42,7 +42,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.modules"] = "modules.lua",
+    ["mjolnir._asm.modules"] = "init.lua",
   },
   install = {
     bin = { "mjolnir-tool" },

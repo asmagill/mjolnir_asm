@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.compat_51"] = "compat_51.lua",
-    ["mjolnir._asm.compat_51.internal"] = "compat_51.m",
+    ["mjolnir._asm.compat_51"] = "init.lua",
+    ["mjolnir._asm.compat_51.internal"] = "internal.m",
   },
 }

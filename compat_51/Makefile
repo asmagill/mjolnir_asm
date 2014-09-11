@@ -1,8 +1,8 @@
 PREFIX ?= /usr/local
-MODULE = timer
+MODULE = compat_51
 LUAFILE  = init.lua
 OBJCFILE = internal.m
-HEADERS   = 
+HEADERS  = 
 
 CFLAGS  += -Wall -Wextra
 LDFLAGS += -dynamiclib -undefined dynamic_lookup
