@@ -12,7 +12,7 @@ local module = {
 ---
 --- Apple's built-in notifications system.
 ---
---- This module is based on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+--- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
     ]],
 --]=]
@@ -58,7 +58,7 @@ end
 module.registry = {}
 module.registry.n = 0
 
-setmetatable(module.registry, { __gc = module._gc })
+setmetatable(module.registry, { __gc = module.withdraw_all })
 
 if not _notifysetup then
   module._setup(callback)

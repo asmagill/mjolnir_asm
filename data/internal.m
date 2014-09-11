@@ -118,7 +118,7 @@ static int data_uuid(lua_State* L) {
 
 /// mjolnir._asm.data.json.encode(val[, prettyprint?]) -> str
 /// Function
-/// Returns a JSON string representing the given table; if prettyprint is true, the resulting string will be quite beautiful.
+/// Returns a JSON string representing the given value; if prettyprint is true, the resulting string will formatted for readability.  Value must be a table.
 static int json_encode(lua_State* L) {
     if lua_istable(L, 1) {
         id obj = mjolnir_nsobject_for_luavalue(L, 1);
@@ -190,10 +190,9 @@ static int pasteboard_setcontents(lua_State* L) {
     return 1;
 }
 
-/// mjolnir._asm.data.clipboard.changecount() -> number
+/// mjolnir._asm.data.pasteboard.changecount() -> number
 /// Function
-/// The number of times the pasteboard owner changed
-/// (useful to see if the pasteboard was updated, by seeing if the value of this function changes).
+/// The number of times the pasteboard owner changed (useful to see if the pasteboard was updated, by seeing if the value of this function changes).
 static int pasteboard_changecount(lua_State* L) {
     lua_pushnumber(L, [[NSPasteboard generalPasteboard] changeCount]);
     return 1;

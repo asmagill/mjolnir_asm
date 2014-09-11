@@ -28,14 +28,14 @@ notify = require("mjolnir._asm.notify")
 ### Functions
 
 ~~~lua
-notify.show(title, subtitle, text, tag)
-~~~
-Show an Apple notification. Tag is a unique string that identifies this notification; any functions registered for the given tag will be called if the notification is clicked. None of the strings are optional, though they may each be blank.
-
-~~~lua
 notify.register(tag, fn) -> id
 ~~~
 Registers a function to be called when an Apple notification with the given tag is clicked.
+
+~~~lua
+notify.show(title, subtitle, text, tag)
+~~~
+Show an Apple notification. Tag is a unique string that identifies this notification; any functions registered for the given tag will be called if the notification is clicked. None of the strings are optional, though they may each be blank.
 
 ~~~lua
 notify.unregister(id)
@@ -46,6 +46,11 @@ Unregisters a function to no longer be called when an Apple notification with th
 notify.unregisterall()
 ~~~
 Unregisters all functions registered for notification-clicks; called automatically when user config 
+
+~~~lua
+mjolnir._asm.notify.withdraw_all()
+~~~
+Withdraw all posted notifications.  This is called automatically during a reload to prevent crashes upon user activation of a notification, so you should seldom need to use this directly.
 
 ### Variables
 

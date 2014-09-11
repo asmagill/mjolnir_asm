@@ -6,16 +6,37 @@ local module = {
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
     
---- === mjolnir._asm.settings ===
+--- === mjolnir._asm.data ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.data
 ---
---- Functions for data encoding and decoding data within Mjolnir.  This module contains a variety
---- of modules that were separated in Hydra, but seemed too small/somewhat related enough that
---- combining them seemed reasonable.
+--- Functions for data encoding and decoding data within Mjolnir.  This module contains a variety of modules that were separated in Hydra, but seemed too small/somewhat related enough that combining them seemed reasonable.
 ---
---- This module is based primarily on code from the previous incarnation of Mjolnir by
---- [Steven Degutis](https://github.com/sdegutis/).
+--- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+
+--- === mjolnir._asm.data.json ===
+---
+--- Home: https://github.com/asmagill/mjolnir_asm.data
+---
+--- This is a submodule of mjolnir._asm.data.  This submodule contains the ported Hydra json functions.
+---
+--- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+
+--- === mjolnir._asm.data.utf8 ===
+---
+--- Home: https://github.com/asmagill/mjolnir_asm.data
+---
+--- This is a submodule of mjolnir._asm.data.  This submodule contains the ported Hydra utf8 functions.
+---
+--- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+
+--- === mjolnir._asm.data.pasteboard ===
+---
+--- Home: https://github.com/asmagill/mjolnir_asm.data
+---
+--- This is a submodule of mjolnir._asm.data.  This submodule contains the ported Hydra pasteboard functions.
+---
+--- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
     ]],
 --]=]

@@ -62,6 +62,9 @@ static int notify_setup(lua_State* L) {
     return 0;
 }
 
+/// mjolnir._asm.notify.withdraw_all()
+/// Function
+/// Withdraw all posted notifications.  This is called automatically during a reload to prevent crashes upon user activation of a notification, so you should seldom need to use this directly.
 static int notify_gc(lua_State* L) {
     [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
     return 0;
@@ -70,7 +73,7 @@ static int notify_gc(lua_State* L) {
 static const luaL_Reg notifylib[] = {
     {"show", notify_show},
     {"_setup", notify_setup},
-    {"_gc", notify_gc},
+    {"withdraw_all", notify_gc},
     {NULL, NULL}
 };
 
