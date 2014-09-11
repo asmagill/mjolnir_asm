@@ -10,6 +10,7 @@ Currently available:
 |Module                 | Method   | Version | URL                                               |
 |:----------------------|:---------|:-------:|:--------------------------------------------------|
 |mjolnir._asm.compat_51 | Luarocks | 0.2-2   | https://github.com/asmagill/mjolnir_asm.compat_51 |
+|mjolnir._asm.data      |          | 0.1-1   | https://github.com/asmagill/mjolnir_asm.data      |
 |mjolnir._asm.ipc       |          | 0.1-1   | https://github.com/asmagill/mjolnir_asm.ipc       |
 |mjolnir._asm.modules   | Luarocks | 0.3-2   | https://github.com/asmagill/mjolnir_asm.modules   |
 |mjolnir._asm.notify    | Luarocks | 0.2-1   | https://github.com/asmagill/mjolnir_asm.notify    |
