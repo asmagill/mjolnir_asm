@@ -15,10 +15,10 @@ If you wish to install this from Luarocks, do the following:
 $ luarocks [--tree=mjolnir] install mjolnir._asm.settings
 ~~~
 
-If you wish to install this yourself, clone the repository and do the following (change PREFIX in the Makefile if you do not want this to be installed in /usr/local):
+If you wish to install this yourself, clone the repository and do the following:
 
 ~~~bash
-$ make install
+$ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require
