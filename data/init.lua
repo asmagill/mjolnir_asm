@@ -10,12 +10,12 @@ local module = {
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.data
 ---
---- Functions for data encoding and decoding within Mjolnir.
+--- Functions for data encoding and decoding data within Mjolnir.  This module contains a variety
+--- of modules that were separated in Hydra, but seemed too small/somewhat related enough that
+--- combining them seemed reasonable.
 ---
---- json, uuid, and clipboard code is based on code from the previous incarnation of Mjolnir by
+--- This module is based primarily on code from the previous incarnation of Mjolnir by
 --- [Steven Degutis](https://github.com/sdegutis/).
----
---- utf-8 code is based upon the Lua 5.3 alpha specification (http://www.lua.org)
 
     ]],
 --]=]
@@ -33,6 +33,51 @@ end
 -- private variables and methods -----------------------------------------
 
 -- Public interface ------------------------------------------------------
+
+--- mjolnir._asm.data.applekeys[...]
+--- Variable
+--- Array of symbols representing special keys in the mac environment, as per
+--- http://macbiblioblog.blogspot.com/2005/05/special-key-symbols.html.
+module.applekeys = {
+    ["escape"] = "⎋",
+    ["tab"] = "⇥",
+    ["backtab"] = "⇤",
+    ["capslock"] = "⇪",
+    ["shift"] = "⇧",
+    ["ctrl"] = "⌃",
+    ["alt"] = "⌥",
+    ["option"] = "⌥",
+    ["apple"] = "",
+    ["cmd"] = "⌘",
+    ["space"] = "␣",
+    ["return"] = "⏎",
+    ["return2"] = "↩",
+    ["delete"] = "⌫",
+    ["forwarddelete"] = "⌦",
+    ["help"] = "﹖",
+    ["home"] = "⇱",
+    ["home alternate2"] = "↖",
+    ["home alternate3"] = "↸",
+    ["end"] = "⇲",
+    ["end2"] = "↘",
+    ["pageup"] = "⇞",
+    ["pagedown"] = "⇟",
+    ["up"] = "↑",
+    ["up2"] = "⇡",
+    ["down"] = "↓",
+    ["down2"] = "⇣",
+    ["left"] = "←",
+    ["left2"] = "⇠",
+    ["right"] = "→",
+    ["right2"] = "⇢",
+    ["padclear"] = "⌧",
+    ["numlock"] = "⇭",
+    ["padenter"] = "⌤", -- apple preferred
+    ["padenter2"] = "⎆", -- sun preferred
+    ["padenter3"] = "↩",
+    ["eject"] = "⏏",
+    ["power"] = "⌽",
+}
 
 -- Return Module Object --------------------------------------------------
 

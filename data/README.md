@@ -1,12 +1,11 @@
 mjolnir._asm.data
 =================
 
-Functions for data encoding and decoding within Mjolnir.
+Functions for data encoding and decoding data within Mjolnir.  This module contains a variety
+of modules that were separated in Hydra, but seemed too small/somewhat related enough that
+combining them seemed reasonable.
 
-json, uuid, and clipboard code is based on code from the previous incarnation of Mjolnir by
-[Steven Degutis](https://github.com/sdegutis/).
-
-utf-8 code is based upon the Lua 5.3 alpha specification (http://www.lua.org)
+This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 ### Install
 
@@ -31,30 +30,54 @@ data = require("mjolnir._asm.data")
 ### Functions
 
 ~~~lua
-data.uuid() -> string
-~~~
-Returns a newly generated UUID as a string
-
-~~~lua
-data.json.encode(val[, prettyprint?]) -> str
-~~~
-Returns a JSON string representing the given value; if prettyprint is true, the resulting string will be quite beautiful.
-
-~~~lua
 data.json.decode(str) -> val
 ~~~
 Returns a Lua value representing the given JSON string.
 
 ~~~lua
-data.clipboard.stringcontents() -> string
+data.json.encode(val[, prettyprint]) -> str
+~~~
+Returns a JSON string representing the given value; if prettyprint is true, the resulting string will formatted for readability.  Value must be a table.
+
+~~~lua
+data.pasteboard.changecount() -> number
+~~~
+The number of times the pasteboard owner changed
+(useful to see if the pasteboard was updated, by seeing if the value of this function changes).
+
+~~~lua
+data.pasteboard.getcontents() -> string
 ~~~
 Returns the contents of the pasteboard as a string, or nil if it can't be done
 
 ~~~lua
-data.clipboard.changecount() -> number
+data.pasteboard.setcontents(string) -> boolean
 ~~~
-The number of times the pasteboard owner changed
-(useful to see if the pasteboard was updated, by seeing if the value of this function changes).
+Sets the contents of the pasteboard to the string value passed in.  Returns success status as true or false.
+
+~~~lua
+data.utf8.chars(str) -> {str, ...}
+~~~
+Splits the string into groups of (UTF-8 encoded) strings representing what humans would consider individual characters.
+
+The result is a sequential table, such that table.concat(result) produces the original string.
+
+~~~lua
+data.utf8.count(str) -> int
+~~~
+Returns the number of characters as humans would count them.
+
+~~~lua
+data.uuid() -> string
+~~~
+Returns a newly generated UUID as a string
+
+### Variables
+
+~~~lua
+data.applekeys[...]
+~~~
+Array of symbols representing special keys in the mac environment, as per http://macbiblioblog.blogspot.com/2005/05/special-key-symbols.html.
 
 ### License
 
