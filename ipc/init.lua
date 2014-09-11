@@ -14,10 +14,10 @@ mjolnir._asm.ipc = {
 ---
 --- Interface with Mjolnir from the command line.
 ---
---- If you installed this module via Luarocks, please visit the homepage above, clone the repository, and enter the following from the command line while in the `cli` subdirectory to create the command line tool:
+--- If you installed this module via Luarocks, please visit the homepage above, clone the repository, and enter the following from the command line while in module directory:
 ---
 --- <pre>
----     [PREFIX=/usr/local] make install
+---     [PREFIX=/usr/local] make install-cli
 --- </pre>
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).

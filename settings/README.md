@@ -5,18 +5,16 @@ Functions for user-defined settings that persist across Hydra launches.
 
 This module is based on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-### Install
-
-If you wish to install this from Luarocks, do the following:
-
+### Luarocks Install
 ~~~bash
 $ luarocks [--tree=mjolnir] install mjolnir._asm.settings
 ~~~
 
-If you wish to install this yourself, clone the repository and do the following (change PREFIX in the Makefile if you do not want this to be installed in /usr/local):
-
+### Local Install
 ~~~bash
-$ make install
+$ git clone https://github.com/asmagill/mjolnir_asm.settings
+$ cd mjolnir_asm.settings
+$ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require

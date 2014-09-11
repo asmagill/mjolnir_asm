@@ -35,9 +35,16 @@ To change the default tree from "mjolnir" to something else, you can use the mod
          default_tree = "mjolnir",
     }
 
-### Install
+### Luarocks Install
 ~~~bash
-$ luarocks [--tree=mjolnir] mjolnir._asm.modules
+$ luarocks [--tree=mjolnir] install mjolnir._asm.modules
+~~~
+
+### Local Install
+~~~bash
+$ git clone https://github.com/asmagill/mjolnir_asm.modules
+$ cd mjolnir_asm.modules
+$ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require

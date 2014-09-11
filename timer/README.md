@@ -5,18 +5,16 @@ Execute functions with various timing rules.
 
 This module is based on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-### Install
-
-If you wish to install this from Luarocks, do the following:
-
+### Luarocks Install
 ~~~bash
 $ luarocks [--tree=mjolnir] install mjolnir._asm.timer
 ~~~
 
-If you wish to install this yourself, clone the repository and do the following (change PREFIX in the Makefile if you do not want this to be installed in /usr/local):
-
+### Local Install
 ~~~bash
-$ make install
+$ git clone https://github.com/asmagill/mjolnir_asm.timer
+$ cd mjolnir_asm.timer
+$ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require

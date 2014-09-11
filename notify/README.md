@@ -5,18 +5,16 @@ Apple's built-in notifications system.
 
 This module is based on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-### Install
-
-If you wish to install this from Luarocks, do the following:
-
+### Luarocks Install
 ~~~bash
 $ luarocks [--tree=mjolnir] install mjolnir._asm.notify
 ~~~
 
-If you wish to install this yourself, clone the repository and do the following:
-
+### Local Install
 ~~~bash
-$ make install
+$ git clone https://github.com/asmagill/mjolnir_asm.notify
+$ cd mjolnir_asm.notify
+$ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require

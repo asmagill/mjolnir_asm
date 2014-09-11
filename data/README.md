@@ -7,17 +7,15 @@ combining them seemed reasonable.
 
 This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-### Install
-
-If you wish to install this from Luarocks, do the following:
-
+### Luarocks Install
 ~~~bash
-$ luarocks [--tree=mjolnir] install mjolnir._asm.settings
+$ luarocks [--tree=mjolnir] install mjolnir._asm.data
 ~~~
 
-If you wish to install this yourself, clone the repository and do the following:
-
+### Local Install
 ~~~bash
+$ git clone https://github.com/asmagill/mjolnir_asm.data
+$ cd mjolnir_asm.data
 $ [PREFIX=/usr/local] make install
 ~~~
 

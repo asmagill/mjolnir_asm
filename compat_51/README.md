@@ -24,9 +24,16 @@ The following Lua 5.1 functions and variables are "created" when the `enable` fu
 
 See (http://www.lua.org/manual/5.2/manual.html#8) for more details.
 
-### Install
+### Luarocks Install
 ~~~bash
 $ luarocks [--tree=mjolnir] install mjolnir._asm.compat_51
+~~~
+
+### Local Install
+~~~bash
+$ git clone https://github.com/asmagill/mjolnir_asm.compat_51
+$ cd mjolnir_asm.compat_51
+$ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require

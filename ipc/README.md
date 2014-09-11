@@ -7,20 +7,30 @@ A port of Hydra's ipc code to Mjolnir.
 This module installs the necessary IPC code for using a command line tool for inspection and
 manipulation of your running Mjolnir application.
 
-This module is based on code from the previous incarnation of Mjolnir (Hydra) and it's command
+This module is based primarily code from the previous incarnation of Mjolnir (Hydra) and it's command
 line utility by [Steven Degutis](https://github.com/sdegutis/).
 
-Due to uncertainty in the future of Mjolnir package management, I'm not sure the best way to
-release this... I'll probably do Luarocks, once I decide how best to handle the command line tool,
-but for now, there are these instructions.
 
-### Installation
+### Luarocks Install
+Note that `luarocks` will only install the ipc module and not the command line utility.  This will hopefully change soon, but right now you have to perform the extra steps which follow.
 
-1. clone this repository.
-2. If you have Luarocks installed, then type `luarocks [--tree=mjolnir] make`
-3. If you do not have Luarocks, then type `make install`
+~~~bash
+$ luarocks [--tree=mjolnir] install mjolnir._asm.ipc
+~~~
 
-To install the command line tool, enter the cli subdirectory and type `make install`
+###### *Extra Steps*
+~~~bash
+$ git clone https://github.com/asmagill/mjolnir_asm.ipc
+$ cd mjolnir_asm.ipc
+$ [PREFIX=/usr/local] make install-cli
+~~~
+
+### Local Install
+~~~bash
+$ git clone https://github.com/asmagill/mjolnir_asm.ipc
+$ cd mjolnir_asm.ipc
+$ [PREFIX=/usr/local] make install
+~~~
 
 ### Require
 require("mjolnir._asm.ipc")
