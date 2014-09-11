@@ -56,7 +56,10 @@ docs.html.d: docs.json
 $(TARFILE): $(SOFILE) $(LUAFILE) docs.html.d docs.in.sql docs.out.sql README.md
 	tar -czf $@ $^
 
-clean:
+clean: clean-cli
 	rm -rf $(OFILE) $(SOFILE) docs.json docs.in.sql docs.out.sql mjolnir docs.html.d $(TARFILE) *.rock
 
-.PHONY: all clean cli
+clean-cli:
+	make -C cli clean
+
+.PHONY: all clean cli clean-cli
