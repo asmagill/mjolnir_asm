@@ -3,9 +3,9 @@ mjolnir_asm
 
 Development space  for Mjolnir modules under mjolnir._asm
 
-Once a module has been packed and deployed via it's package mechanism, a separate repository is created for each specific module.  This repository contains modules in development, or possibly in-progress updates to deployed modules which haven't been published yet.
+Published modules are listed as *Currently Available*.  Follow their link for the code making up their deployed version.  This repository may contain updates which have not yet been published or *Work In Progress*.
 
-Currently available:
+### Currently available:
 
 |Module                 | Method   | Version | URL                                               |
 |:----------------------|:---------|:-------:|:--------------------------------------------------|
@@ -17,7 +17,17 @@ Currently available:
 |mjolnir._asm.settings  | Luarocks | 0.1-1   | https://github.com/asmagill/mjolnir_asm.settings  |
 |mjolnir._asm.timer     | Luarocks | 0.1-1   | https://github.com/asmagill/mjolnir_asm.timer     |
 
+### Work In progress:
+
+|Module                   | Version | Description                                              |
+|:------------------------|:-------:|:---------------------------------------------------------|
+|mjolnir._asm.applistener | 0.1-1   | Hydra's notify.applistener module.                       |
+|mjolnir._asm.script      | 0.1-1   | Hydra's Applescript module, + some shell stuff, planned. |
+|mjolnir._asm.utf8_53     | 0.1-1   | Lua 5.3's planned UTF8 library wrapped for Mjolnir.      |
+
 Also, see README.md in each modules directory.
+
+**NOTE: README's for in progress modules may mention luarocks, but probably haven't been uploaded yet, unless it's a major change or rewrite of an existing, older module.**
 
 ### License
 
