@@ -41,7 +41,7 @@ end
 -- Public interface ------------------------------------------------------
 
 --- mjolnir._asm.timer.new(interval, fn) -> timer
---- Function
+--- Constructor
 --- Creates a new timer that can be started; interval is specified in seconds as a decimal number.
 function module.new(interval, fn)
   local _fn = wrap(fn)
