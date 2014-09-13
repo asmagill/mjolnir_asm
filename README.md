@@ -17,7 +17,7 @@ Published modules are listed as *Currently Available*.  Follow their link for th
 |mjolnir._asm.notify      | Luarocks | 0.3-1   | Hydra's notify function in Mjolnir                   | [link](https://github.com/asmagill/mjolnir_asm.notify)      |
 |mjolnir._asm.settings    | Luarocks | 0.1-1   | Hydra's Get and Set for persistent data in Mjolnir   | [link](https://github.com/asmagill/mjolnir_asm.settings)    |
 |mjolnir._asm.timer       | Luarocks | 0.1-1   | Hydra's timer module for Mjolnir                     | [link](https://github.com/asmagill/mjolnir_asm.timer)       |
-|mjolnir._asm.utf8_53     | Luarocks | 0.1-1   | Lua 5.3's planned UTF8 library wrapped for Mjolnir.  | [link](https://github.com/asmagill/mjolnir_asm.utf8_53      |
+|mjolnir._asm.utf8_53     | Luarocks | 0.1-1   | Lua 5.3's planned UTF8 library wrapped for Mjolnir.  | [link](https://github.com/asmagill/mjolnir_asm.utf8_53)     |
 
 ### Work In progress:
 
