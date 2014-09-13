@@ -1,17 +1,6 @@
 #import <Cocoa/Cocoa.h>
 #import <lauxlib.h>
 
-// stack in:  [..., error]
-// stack out: [...]
-void mjolnir_handle_error(lua_State* L) {
-    // original error is at top of stack
-    lua_getglobal(L, "mjolnir"); // pop this at the end
-    lua_getfield(L, -1, "showerror");
-    lua_pushvalue(L, -3);
-    lua_pcall(L, 1, 0, 0); // trust me
-    lua_pop(L, 2);
-}
-
 // you hate us Apple, don't you
 @interface PHNotificationDelegate : NSObject <NSUserNotificationCenterDelegate>
 @property (copy) void(^callback)(NSString* tag);
