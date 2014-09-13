@@ -7,15 +7,15 @@ Published modules are listed as *Currently Available*.  Follow their link for th
 
 ### Currently available:
 
-|Module                 | Method   | Version | URL                                               |
-|:----------------------|:---------|:-------:|:--------------------------------------------------|
-|mjolnir._asm.compat_51 | Luarocks | 0.3-1   | https://github.com/asmagill/mjolnir_asm.compat_51 |
-|mjolnir._asm.data      | Luarocks | 0.1-1   | https://github.com/asmagill/mjolnir_asm.data      |
-|mjolnir._asm.ipc       | Luarocks | 0.1-1   | https://github.com/asmagill/mjolnir_asm.ipc       |
-|mjolnir._asm.modules   | Luarocks | 0.3-2   | https://github.com/asmagill/mjolnir_asm.modules   |
-|mjolnir._asm.notify    | Luarocks | 0.3-1   | https://github.com/asmagill/mjolnir_asm.notify    |
-|mjolnir._asm.settings  | Luarocks | 0.1-1   | https://github.com/asmagill/mjolnir_asm.settings  |
-|mjolnir._asm.timer     | Luarocks | 0.1-1   | https://github.com/asmagill/mjolnir_asm.timer     |
+|Module                 | Method   | Version | Description                                          | URL                                                       |
+|:----------------------|:---------|:-------:|:-----------------------------------------------------|:----------------------------------------------------------|
+|mjolnir._asm.compat_51 | Luarocks | 0.3-1   | Missing Lua 5.1 compatibility functions for Mjolnir  | [link](https://github.com/asmagill/mjolnir_asm.compat_51) |
+|mjolnir._asm.data      | Luarocks | 0.1-1   | Hydra's json, pasteboard, utf8, uuid functions       | [link](https://github.com/asmagill/mjolnir_asm.data)      |
+|mjolnir._asm.ipc       | Luarocks | 0.1-1   | Hydra's IPC and Command Line application for Mjolnir | [link](https://github.com/asmagill/mjolnir_asm.ipc)       |
+|mjolnir._asm.modules   | Luarocks | 0.3-2   | Module version and update tracking for Mjolnir       | [link](https://github.com/asmagill/mjolnir_asm.modules)   |
+|mjolnir._asm.notify    | Luarocks | 0.3-1   | Hydra's notify function in Mjolnir                   | [link](https://github.com/asmagill/mjolnir_asm.notify)    |
+|mjolnir._asm.settings  | Luarocks | 0.1-1   | Hydra's Get and Set for persistent data in Mjolnir   | [link](https://github.com/asmagill/mjolnir_asm.settings)  |
+|mjolnir._asm.timer     | Luarocks | 0.1-1   | Hydra's timer module for Mjolnir                     | [link](https://github.com/asmagill/mjolnir_asm.timer)     |
 
 ### Work In progress:
 
