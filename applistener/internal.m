@@ -127,5 +127,13 @@ static const luaL_Reg applistenerlib[] = {
 int luaopen_mjolnir__asm_applistener_internal(lua_State* L) {
     luaL_newlib(L, applistenerlib);
 
+    // timer.__index = applistener
+    lua_pushvalue(L, -1);
+    lua_setfield(L, -2, "__index");
+    
+    // put timer in registry; necessary for luaL_checkudata()
+    lua_pushvalue(L, -1);
+    lua_setfield(L, LUA_REGISTRYINDEX, "applistener");
+
     return 1;
 }

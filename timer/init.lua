@@ -30,9 +30,9 @@ end
 -- private variables and methods -----------------------------------------
 
 local function wrap(fn)
-  return function()
+  return function(...)
     if fn then
-      local ok, err = xpcall(fn, debug.traceback)
+      local ok, err = xpcall(fn, debug.traceback, ...)
       if not ok then mjolnir.showerror(err) end
     end
   end

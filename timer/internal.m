@@ -157,7 +157,7 @@ static const luaL_Reg timerlib[] = {
 int luaopen_mjolnir__asm_timer_internal(lua_State* L) {
     luaL_newlib(L, timerlib);
 
-    // timer.__index = hotkey
+    // timer.__index = timer
     lua_pushvalue(L, -1);
     lua_setfield(L, -2, "__index");
     
