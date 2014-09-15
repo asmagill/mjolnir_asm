@@ -7,24 +7,26 @@ Published modules are listed as *Currently Available*.  Follow their link for th
 
 ### Currently available:
 
-|Module                   | Method   | Version | Description                                          | URL                                                         |
-|:------------------------|:---------|:-------:|:-----------------------------------------------------|:------------------------------------------------------------|
-|mjolnir._asm.applistener | Luarocks | 0.1-1   | Hydra's notify.applistener module.                   | [link](https://github.com/asmagill/mjolnir_asm.applistener) |
-|mjolnir._asm.compat_51   | Luarocks | 0.3-1   | Missing Lua 5.1 compatibility functions for Mjolnir  | [link](https://github.com/asmagill/mjolnir_asm.compat_51)   |
-|mjolnir._asm.data        | Luarocks | 0.1-1   | Hydra's json, pasteboard, utf8, uuid functions       | [link](https://github.com/asmagill/mjolnir_asm.data)        |
-|mjolnir._asm.ipc         | Luarocks | 0.1-1   | Hydra's IPC and Command Line application for Mjolnir | [link](https://github.com/asmagill/mjolnir_asm.ipc)         |
-|mjolnir._asm.modules     | Luarocks | 0.3-2   | Module version and update tracking for Mjolnir       | [link](https://github.com/asmagill/mjolnir_asm.modules)     |
-|mjolnir._asm.notify      | Luarocks | 0.3-1   | Hydra's notify function in Mjolnir                   | [link](https://github.com/asmagill/mjolnir_asm.notify)      |
-|mjolnir._asm.pathwatcher | Luarocks | 0.1-1   | Hydra's pathwatcher module                           | [link](https://github.com/asmagill/mjolnir_asm.pathwatcher) |
-|mjolnir._asm.settings    | Luarocks | 0.1-1   | Hydra's Get and Set for persistent data in Mjolnir   | [link](https://github.com/asmagill/mjolnir_asm.settings)    |
-|mjolnir._asm.timer       | Luarocks | 0.1-1   | Hydra's timer module for Mjolnir                     | [link](https://github.com/asmagill/mjolnir_asm.timer)       |
-|mjolnir._asm.utf8_53     | Luarocks | 0.1-1   | Lua 5.3's planned UTF8 library wrapped for Mjolnir.  | [link](https://github.com/asmagill/mjolnir_asm.utf8_53)     |
+|Module                                                                          | Method   | Version | Description                                          |
+|:-------------------------------------------------------------------------------|:---------|:-------:|:-----------------------------------------------------|
+|[mjolnir._asm.applistener](https://github.com/asmagill/mjolnir_asm.applistener) | Luarocks | 0.1-1   | Hydra's notify.applistener module.                   |
+|[mjolnir._asm.compat_51](https://github.com/asmagill/mjolnir_asm.compat_51)     | Luarocks | 0.3-1   | Missing Lua 5.1 compatibility functions for Mjolnir  |
+|[mjolnir._asm.data](https://github.com/asmagill/mjolnir_asm.data)               | Luarocks | 0.1-1   | Hydra's json, pasteboard, utf8, uuid functions       |
+|[mjolnir._asm.ipc](https://github.com/asmagill/mjolnir_asm.ipc)                 | Luarocks | 0.1-1   | Hydra's IPC and Command Line application for Mjolnir |
+|[mjolnir._asm.modules](https://github.com/asmagill/mjolnir_asm.modules)         | Luarocks | 0.3-2   | Module version and update tracking for Mjolnir       |
+|[mjolnir._asm.notify](https://github.com/asmagill/mjolnir_asm.notify)           | Luarocks | 0.3-1   | Hydra's notify function in Mjolnir                   |
+|[mjolnir._asm.pathwatcher](https://github.com/asmagill/mjolnir_asm.pathwatcher) | Luarocks | 0.1-1   | Hydra's pathwatcher module                           |
+|[mjolnir._asm.settings](https://github.com/asmagill/mjolnir_asm.settings)       | Luarocks | 0.1-1   | Hydra's Get and Set for persistent data in Mjolnir   |
+|[mjolnir._asm.timer](https://github.com/asmagill/mjolnir_asm.timer)             | Luarocks | 0.1-1   | Hydra's timer module for Mjolnir                     |
+|[mjolnir._asm.utf8_53](https://github.com/asmagill/mjolnir_asm.utf8_53)         | Luarocks | 0.1-1   | Lua 5.3's planned UTF8 library wrapped for Mjolnir.  |
 
 ### Work In progress:
 
-|Module                   | Version | Description                                              |
-|:------------------------|:-------:|:---------------------------------------------------------|
-|mjolnir._asm.script      | 0.1-1   | Hydra's Applescript module, + some shell stuff, planned. |
+|Module                                                                                | Version | Description                                              |
+|:-------------------------------------------------------------------------------------|:-------:|:---------------------------------------------------------|
+|[mjolnir._asm.eventtap](https://github.com/asmagill/mjolnir_asm.eventtap)             | 0.1-1   | Hydra's eventtap module                                  |
+|[mjolnir._asm.eventtap.event](https://github.com/asmagill/mjolnir_asm.eventtap.event) | 0.1-1   | Hydra's eventtap.event module                            |
+|[mjolnir._asm.script](https://github.com/asmagill/mjolnir_asm.script)                 | 0.1-1   | Hydra's Applescript module, + some shell stuff, planned. |
 
 Also, see README.md in each modules directory.
 
