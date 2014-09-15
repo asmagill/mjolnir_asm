@@ -1,20 +1,15 @@
-mjolnir._asm.eventtap
-=====================
+mjolnir._asm.eventtap.event
+===========================
 
-Functionality to inspect, modify, and create events for [mjolnir_asm.eventtap](https://github.com/asmagill/mjolnir_asm/eventtap) is provided by this module.
+Functionality to inspect, modify, and create events for [mjolnir_asm.eventtap](https://github.com/asmagill/mjolnir_asm.eventtap) is provided by this module.
 
 This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 ### Luarocks Install
-~~~bash
-$ luarocks [--tree=mjolnir] install mjolnir._asm.eventtap.event
-~~~
+This module is not available via luarocks yet... clone the repository (or download the zip file), enter the created directory and do the following:
 
-### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.eventtap.event
-$ cd mjolnir_asm.eventtap.event
-$ [PREFIX=/usr/local] make install
+$ luarocks [--tree=mjolnir] make
 ~~~
 
 ### Require
