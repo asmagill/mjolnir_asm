@@ -47,9 +47,9 @@ Unregisters pathwatcher's fn so it won't be called again until the pathwatcher i
 
 ### Notes
 
-This release is a port of the Hydra pathwatcher code and seems to work as intended, but I do have some issues with it that I'd like to see addressed at some point.  At present, it reports on all changes within a directory and all subdirectories with no indication of what has actually changed beyond the file name -- I would like to be able to limit this to just the specified directory (no sub-dirs) and include some indicator of the type of change.  While it is true that some Lua code logic can be used to figure these out, I feel it should be built in to the module.
+This release is a port of the Hydra pathwatcher code and seems to work as intended, but I do have some issues with it that I'd like to see addressed at some point. At present, it reports on all changes within a directory and all subdirectories with no indication of what has actually changed (added/deleted/changed, etc.) beyond the file name -- I would like to be able to optionally limit this to just the specified directory (no sub-dirs) and include some indicator of the type of change. Maybe even a pattern matcher for just specific files or types of files.  While it is true that some Lua code logic can be used to figure these out, I feel it should be built in to the module.
 
-There is also a situation where if you stop a pathwatcher, and then re-start it without using new again, sometimes (not always) changes that occurred while it was stopped appear immediately... this should be made consistent, one way or the other.  Note, however, that stopping and then-restarting a pathwatcher in Hydra seems to crash my machine, so already this diverges some from the original.
+There is also a situation where if you stop a pathwatcher, and then re-start it without using new again, sometimes (not always) changes that occurred while it was stopped appear immediately... this should be made consistent, one way or the other. Note, however, that stopping and then-restarting a pathwatcher in Hydra seems to crash on my machine, so already this diverges some from the original.
 
 However, it works [mostly] as it did in Hydra, which is this first version's goal.
 
