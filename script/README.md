@@ -26,11 +26,18 @@ script = require("mjolnir._asm.script")
 ### Functions
 
 ~~~lua
-script.applescript(string) -> bool, string
+script.execute(command) -> rc, result
 ~~~
-Runs the given AppleScript string. If it succeeds, returns true, and the NSObject return value as a string ; if it fails, returns false and a string containing information that hopefully explains why.
+A replacement for os.execute(command) which returns the result code and the stdout output from the shell command as a string. Similar to hydra.exec, but also returns a result code indicating success (0) or an error (any other number -- consult your command line shell man pages if you need to identify it more specifically).
 
-***NOTE: Result is not exactly like Hydra's, as I'm trying to work out how to provide a better result for non-string results. Results format may change before loaded to Luarocks and formally deployed.***
+~~~lua
+script.applescript(string) -> bool, result
+~~~
+Runs the given AppleScript string. If it succeeds, returns true, and the result as a string or number (if it can identify it as such) or  as a string describing the NSAppleEventDescriptor result; if it fails, returns false and an array containing the error dictionary describing why.
+
+Use `script._applescript(string)` if you always want the result as a string describing the NSAppleEventDescriptor result.
+
+*NOTE: Result is not exactly like Hydra's, as I'm trying to work out how to provide a better result for non-string results, but it should be the same for scripts that return a number or string as their result.  I still hope to clean up object results, which were not possible with Hydra's applescript.*
 
 ### License
 
