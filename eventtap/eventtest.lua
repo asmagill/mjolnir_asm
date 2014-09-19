@@ -18,6 +18,8 @@
 --     (this differs from et.key in that flag changes (i.e. key modifiers) are not
 --     sufficient to trigger an event by themselves.)
 --
+-- a:start()
+--
 
 e = require("mjolnir._asm.eventtap")
 k = require("mjolnir.keycodes")
