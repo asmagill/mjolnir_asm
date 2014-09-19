@@ -34,12 +34,12 @@ The table may have any of the strings {"cmd", "alt", "shift", "ctrl", "fn"} as k
 ~~~lua
 eventtap.event:getkeycode() -> keycode
 ~~~
-Gets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes` table.
+Gets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes.map` table.
 
 ~~~lua
 eventtap.event:setkeycode(keycode)
 ~~~
-Sets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes` table.
+Sets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes.map` table.
 
 ~~~lua
 eventtap.event:post(app = nil)

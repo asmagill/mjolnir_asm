@@ -5,8 +5,8 @@ local module = {
     _URL         = 'https://github.com/asmagill/mjolnir_asm.eventtap.event',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
-    
---- === mjolnir._asm.eventtap ===
+
+--- === mjolnir._asm.eventtap.event ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.eventtap.event
 ---

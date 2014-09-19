@@ -76,7 +76,7 @@ static int eventtap_event_setflags(lua_State* L) {
 
 /// eventtap.event:getkeycode() -> keycode
 /// Method
-/// Gets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes` table.
+/// Gets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes.map` table.
 static int eventtap_event_getkeycode(lua_State* L) {
     CGEventRef event = *(CGEventRef*)luaL_checkudata(L, 1, "mjolnir._asm.eventtap.event");
     lua_pushnumber(L, CGEventGetDoubleValueField(event, kCGKeyboardEventKeycode));
@@ -85,7 +85,7 @@ static int eventtap_event_getkeycode(lua_State* L) {
 
 /// eventtap.event:setkeycode(keycode)
 /// Method
-/// Sets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes` table.
+/// Sets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes.map` table.
 static int eventtap_event_setkeycode(lua_State* L) {
     CGEventRef event = *(CGEventRef*)luaL_checkudata(L, 1, "mjolnir._asm.eventtap.event");
     CGKeyCode keycode = luaL_checknumber(L, 2);

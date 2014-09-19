@@ -41,7 +41,7 @@ Stops an event tap; must be in started state.
 
 ### Example
 
-See the file `eventtest.lua` in this repository for a sample of using this module.
+See the file `eventtest.lua` in this repository for a sample of using this module.  The example requires `inspect`, available via Luarocks (`luarocks install inspect`).
 
 ### License
 

@@ -5,7 +5,7 @@
 void new_eventtap_event(lua_State* L, CGEventRef event) {
     CFRetain(event);
     *(CGEventRef*)lua_newuserdata(L, sizeof(CGEventRef*)) = event;
-    
+
     luaL_getmetatable(L, "mjolnir._asm.eventtap.event");
     lua_setmetatable(L, -2);
 }
@@ -13,12 +13,6 @@ void new_eventtap_event(lua_State* L, CGEventRef event) {
 CGEventRef mjolnir_to_eventtap_event(lua_State* L, int idx) {
     return *(CGEventRef*)luaL_checkudata(L, idx, "mjolnir._asm.eventtap.event");
 }
-
-
-/// === eventtap ===
-///
-/// For tapping into input events (mouse, keyboard, trackpad) for observation and possibly overriding them.
-
 
 typedef struct _eventtap_t {
     lua_State* L;
@@ -47,14 +41,14 @@ static void remove_event(lua_State* L, int x) {
 CGEventRef eventtap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
     eventtap_t* e = refcon;
     lua_State* L = e->L;
-    
+
     lua_rawgeti(L, LUA_REGISTRYINDEX, e->fn);
     new_eventtap_event(L, event);
-    
+
     lua_call(L, 1, 2);
-    
+
     bool ignoreevent = lua_toboolean(L, -2);
-    
+
     if (lua_istable(L, -1)) {
         lua_pushnil(L);
         while (lua_next(L, -2) != 0) {
@@ -63,9 +57,9 @@ CGEventRef eventtap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef
             lua_pop(L, 1);
         }
     }
-    
+
     lua_pop(L, 2);
-    
+
     if (ignoreevent)
         return NULL;
     else
@@ -79,25 +73,25 @@ CGEventRef eventtap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef
 static int eventtap_new(lua_State* L) {
     luaL_checktype(L, 1, LUA_TTABLE);
     luaL_checktype(L, 2, LUA_TFUNCTION);
-    
+
     eventtap_t* eventtap = lua_newuserdata(L, sizeof(eventtap_t));
     memset(eventtap, 0, sizeof(eventtap_t));
-    
+
     eventtap->L = L;
-    
+
     lua_pushnil(L);
     while (lua_next(L, 1) != 0) {
         CGEventType type = lua_tonumber(L, -1);
         eventtap->mask |= CGEventMaskBit(type);
         lua_pop(L, 1);
     }
-    
+
     lua_pushvalue(L, 2);
     eventtap->fn = luaL_ref(L, LUA_REGISTRYINDEX);
-    
+
     luaL_getmetatable(L, "mjolnir._asm.eventtap");
     lua_setmetatable(L, -2);
-    
+
     return 1;
 }
 
@@ -106,10 +100,10 @@ static int eventtap_new(lua_State* L) {
 /// Starts an event tap; must be in stopped state.
 static int eventtap_start(lua_State* L) {
     eventtap_t* e = luaL_checkudata(L, 1, "mjolnir._asm.eventtap");
-    
+
     if (e->running)
         return 0;
-    
+
     e->self = store_event(L, 1);
     e->running = true;
     e->tap = CGEventTapCreate(kCGSessionEventTap,
@@ -118,11 +112,11 @@ static int eventtap_start(lua_State* L) {
                               e->mask,
                               eventtap_callback,
                               e);
-    
+
     CGEventTapEnable(e->tap, true);
     e->runloopsrc = CFMachPortCreateRunLoopSource(NULL, e->tap, 0);
     CFRunLoopAddSource(CFRunLoopGetMain(), e->runloopsrc, kCFRunLoopCommonModes);
-    
+
     return 0;
 }
 
@@ -131,19 +125,19 @@ static int eventtap_start(lua_State* L) {
 /// Stops an event tap; must be in started state.
 static int eventtap_stop(lua_State* L) {
     eventtap_t* e = luaL_checkudata(L, 1, "mjolnir._asm.eventtap");
-    
+
     if (!e->running)
         return 0;
-    
+
     remove_event(L, e->self);
     e->running = false;
-    
+
     CGEventTapEnable(e->tap, false);
     CFMachPortInvalidate(e->tap);
     CFRunLoopRemoveSource(CFRunLoopGetMain(), e->runloopsrc, kCFRunLoopCommonModes);
     CFRelease(e->runloopsrc);
     CFRelease(e->tap);
-    
+
     return 0;
 }
 
@@ -161,7 +155,7 @@ static int eventtap_gc(lua_State* L) {
     if (eventtap->running) {
         remove_event(L, eventtap->self);
         eventtap->running = false;
-    
+
         CGEventTapEnable(eventtap->tap, false);
         CFMachPortInvalidate(eventtap->tap);
         CFRunLoopRemoveSource(CFRunLoopGetMain(), eventtap->runloopsrc, kCFRunLoopCommonModes);
@@ -176,26 +170,26 @@ static luaL_Reg eventtaplib[] = {
     // module methods
     {"_new", eventtap_new},
 //     {"stopall", eventtap_stopall},
-    
+
     // instance methods
     {"start", eventtap_start},
     {"stop", eventtap_stop},
-    
+
     // metamethods
     {"__gc", eventtap_gc},
-    
+
     // sentinel
     {}
 };
 
 int luaopen_mjolnir__asm_eventtap_internal(lua_State* L) {
     luaL_newlib(L, eventtaplib);
-    
+
     lua_pushvalue(L, -1);
     lua_setfield(L, -2, "__index");
-    
+
     lua_pushvalue(L, -1);
     lua_setfield(L, LUA_REGISTRYINDEX, "mjolnir._asm.eventtap");
-    
+
     return 1;
 }
