@@ -5,7 +5,7 @@ local module = {
     _URL         = 'https://github.com/asmagill/mjolnir_asm.eventtap',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
-    
+
 --- === mjolnir._asm.eventtap ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.eventtap
@@ -42,9 +42,14 @@ end
 
 -- Public interface ------------------------------------------------------
 
---- eventtap.new(types, fn) -> ignoreevent[, moreevents]) -> eventtap
+--- eventtap.new(types, fn) -> eventtap
 --- Constructor
---- Returns a new event tap with the given function as the callback for the given event type; the eventtap not started automatically. The types param is a table which may contain values from table `mjolnir._asm.eventtap.event.types`. The callback function takes an event object as its only parameter. It can optionally return two values: if the first one is truthy, this event is deleted from the system input event stream and not seen by any other app; if the second one is a table of events, they will each be posted along with this event.
+--- Returns a new event tap with the given function as the callback for the given event type; the eventtap not started automatically. The types param is a table which may contain values from table `mjolnir._asm.eventtap.event.types`.
+---
+--- The callback function takes an event object as its only parameter. It can optionally return two values: if the first one is truthy, this event is deleted from the system input event stream and not seen by any other app; if the second one is a table of events, they will each be posted along with this event.
+---
+---  e.g. callback(obj) -> bool[, table]
+
 function module.new(path, fn)
   local _fn = wrap(fn)
 
