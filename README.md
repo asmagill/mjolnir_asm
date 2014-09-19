@@ -7,18 +7,19 @@ Published modules are listed as *Currently Available*.  Follow their link for th
 
 ### Currently available:
 
-|Module                                                                          | Method   | Version | Description                                          |
-|:-------------------------------------------------------------------------------|:---------|:-------:|:-----------------------------------------------------|
-|[mjolnir._asm.applistener](https://github.com/asmagill/mjolnir_asm.applistener) | Luarocks | 0.1-1   | Hydra's notify.applistener module.                   |
-|[mjolnir._asm.compat_51](https://github.com/asmagill/mjolnir_asm.compat_51)     | Luarocks | 0.3-1   | Missing Lua 5.1 compatibility functions for Mjolnir  |
-|[mjolnir._asm.data](https://github.com/asmagill/mjolnir_asm.data)               | Luarocks | 0.1-1   | Hydra's json, pasteboard, utf8, uuid functions       |
-|[mjolnir._asm.ipc](https://github.com/asmagill/mjolnir_asm.ipc)                 | Luarocks | 0.1-1   | Hydra's IPC and Command Line application for Mjolnir |
-|[mjolnir._asm.modules](https://github.com/asmagill/mjolnir_asm.modules)         | Luarocks | 0.3-2   | Module version and update tracking for Mjolnir       |
-|[mjolnir._asm.notify](https://github.com/asmagill/mjolnir_asm.notify)           | Luarocks | 0.3-1   | Hydra's notify function in Mjolnir                   |
-|[mjolnir._asm.pathwatcher](https://github.com/asmagill/mjolnir_asm.pathwatcher) | Luarocks | 0.1-1   | Hydra's pathwatcher module                           |
-|[mjolnir._asm.settings](https://github.com/asmagill/mjolnir_asm.settings)       | Luarocks | 0.1-1   | Hydra's Get and Set for persistent data in Mjolnir   |
-|[mjolnir._asm.timer](https://github.com/asmagill/mjolnir_asm.timer)             | Luarocks | 0.1-1   | Hydra's timer module for Mjolnir                     |
-|[mjolnir._asm.utf8_53](https://github.com/asmagill/mjolnir_asm.utf8_53)         | Luarocks | 0.1-1   | Lua 5.3's planned UTF8 library wrapped for Mjolnir.  |
+|Module                                                                            | Method   | Version | Description                                          |
+|:---------------------------------------------------------------------------------|:---------|:-------:|:-----------------------------------------------------|
+|[mjolnir._asm.applistener](https://github.com/asmagill/mjolnir_asm.applistener)   | Luarocks | 0.1-1   | Hydra's notify.applistener module.                   |
+|[mjolnir._asm.compat_51](https://github.com/asmagill/mjolnir_asm.compat_51)       | Luarocks | 0.3-1   | Missing Lua 5.1 compatibility functions for Mjolnir  |
+|[mjolnir._asm.data](https://github.com/asmagill/mjolnir_asm.data)                 | Luarocks | 0.1-1   | Hydra's json, pasteboard, utf8, uuid functions       |
+|[mjolnir._asm.ipc](https://github.com/asmagill/mjolnir_asm.ipc)                   | Luarocks | 0.1-1   | Hydra's IPC and Command Line application for Mjolnir |
+|[mjolnir._asm.modal_hotkey](https://github.com/asmagill/mjolnir_asm.modal_hotkey) | Luarocks | 0.1-1   | Hydra's modal hotkeys for Mjolnir                    |
+|[mjolnir._asm.modules](https://github.com/asmagill/mjolnir_asm.modules)           | Luarocks | 0.3-2   | Module version and update tracking for Mjolnir       |
+|[mjolnir._asm.notify](https://github.com/asmagill/mjolnir_asm.notify)             | Luarocks | 0.3-1   | Hydra's notify function in Mjolnir                   |
+|[mjolnir._asm.pathwatcher](https://github.com/asmagill/mjolnir_asm.pathwatcher)   | Luarocks | 0.1-1   | Hydra's pathwatcher module                           |
+|[mjolnir._asm.settings](https://github.com/asmagill/mjolnir_asm.settings)         | Luarocks | 0.1-1   | Hydra's Get and Set for persistent data in Mjolnir   |
+|[mjolnir._asm.timer](https://github.com/asmagill/mjolnir_asm.timer)               | Luarocks | 0.1-1   | Hydra's timer module for Mjolnir                     |
+|[mjolnir._asm.utf8_53](https://github.com/asmagill/mjolnir_asm.utf8_53)           | Luarocks | 0.1-1   | Lua 5.3's planned UTF8 library wrapped for Mjolnir.  |
 
 ### Work In progress:
 
