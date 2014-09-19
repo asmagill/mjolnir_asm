@@ -24,20 +24,20 @@ typedef struct _pathwatcher_t {
 } pathwatcher_t;
 
 void event_callback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[]) {
-    
+
     pathwatcher_t* pw = clientCallBackInfo;
     lua_State* L = pw->L;
-    
+
     const char** changedFiles = eventPaths;
-    
+
     lua_rawgeti(L, LUA_REGISTRYINDEX, pw->closureref);
-    
+
     lua_newtable(L);
     for(int i = 0 ; i < numEvents; i++) {
         lua_pushstring(L, changedFiles[i]);
         lua_rawseti(L, -2, i + 1);
     }
-    
+
     lua_call(L, 1, 0) ;
 }
 
@@ -49,14 +49,14 @@ static int pathwatcher_new(lua_State* L) {
     luaL_checktype(L, 2, LUA_TFUNCTION);
     lua_settop(L, 2);
     int closureref = luaL_ref(L, LUA_REGISTRYINDEX);
-    
+
     pathwatcher_t* pathwatcher = lua_newuserdata(L, sizeof(pathwatcher_t));
     pathwatcher->L = L;
     pathwatcher->closureref = closureref;
-    
-    lua_getfield(L, LUA_REGISTRYINDEX, "pathwatcher");
+
+    lua_getfield(L, LUA_REGISTRYINDEX, "mjolnir._asm.pathwatcher");
     lua_setmetatable(L, -2);
-    
+
     FSEventStreamContext context;
     context.info = pathwatcher;
     context.version = 0;
@@ -70,7 +70,7 @@ static int pathwatcher_new(lua_State* L) {
                                               kFSEventStreamEventIdSinceNow,
                                               0.4,
                                               kFSEventStreamCreateFlagWatchRoot | kFSEventStreamCreateFlagNoDefer | kFSEventStreamCreateFlagFileEvents);
-    
+
     return 1;
 }
 
@@ -78,12 +78,12 @@ static int pathwatcher_new(lua_State* L) {
 /// Method
 /// Registers pathwatcher's fn as a callback when pathwatcher's path or any descendent changes.
 static int pathwatcher_start(lua_State* L) {
-    pathwatcher_t* pathwatcher = luaL_checkudata(L, 1, "pathwatcher");
-    
+    pathwatcher_t* pathwatcher = luaL_checkudata(L, 1, "mjolnir._asm.pathwatcher");
+
     pathwatcher->self = store_pathwatcher(L, 1);
     FSEventStreamScheduleWithRunLoop(pathwatcher->stream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
     FSEventStreamStart(pathwatcher->stream);
-    
+
     return 0;
 }
 
@@ -91,29 +91,29 @@ static int pathwatcher_start(lua_State* L) {
 /// Method
 /// Unregisters pathwatcher's fn so it won't be called again until the pathwatcher is restarted.
 static int pathwatcher_stop(lua_State* L) {
-    pathwatcher_t* pathwatcher = luaL_checkudata(L, 1, "pathwatcher");
-    
+    pathwatcher_t* pathwatcher = luaL_checkudata(L, 1, "mjolnir._asm.pathwatcher");
+
     remove_pathwatcher(L, pathwatcher->self);
     FSEventStreamStop(pathwatcher->stream);
     FSEventStreamUnscheduleFromRunLoop(pathwatcher->stream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 
 //    FSEventStreamInvalidate(pathwatcher->stream);
 //    FSEventStreamRelease(pathwatcher->stream);
-    
+
     return 0;
 }
 
 // /// mjolnir._asm.pathwatcher.stopall()
 // /// Calls mjolnir._asm.pathwatcher:stop() for all started pathwatchers; called automatically when user config reloads.
 // static int pathwatcher_stopall(lua_State* L) {
-//     lua_getglobal(L, "pathwatcher");
+//     lua_getglobal(L, "mjolnir._asm.pathwatcher");
 //     lua_getfield(L, -1, "stop");
-//     hydra_remove_all_handlers(L, "pathwatcher");
+//     hydra_remove_all_handlers(L, "mjolnir._asm.pathwatcher");
 //     return 0;
 // }
 
 static int pathwatcher_gc(lua_State* L) {
-    pathwatcher_t* pathwatcher = luaL_checkudata(L, 1, "pathwatcher");
+    pathwatcher_t* pathwatcher = luaL_checkudata(L, 1, "mjolnir._asm.pathwatcher");
 
 // need a way to check if it's already been stopped... probably easy, but it's late.
 // also can we filter at all (no sublevels, file pattern ,etc.)?
@@ -131,23 +131,23 @@ static int pathwatcher_gc(lua_State* L) {
 static const luaL_Reg pathwatcherlib[] = {
     {"_new", pathwatcher_new},
 //     {"stopall", pathwatcher_stopall},
-    
+
     {"start", pathwatcher_start},
     {"stop", pathwatcher_stop},
-    
+
     {"__gc", pathwatcher_gc},
-    
+
     {NULL, NULL}
 };
 
 int luaopen_mjolnir__asm_pathwatcher_internal(lua_State* L) {
     luaL_newlib(L, pathwatcherlib);
-    
+
     lua_pushvalue(L, -1);
-    lua_setfield(L, LUA_REGISTRYINDEX, "pathwatcher");
-    
+    lua_setfield(L, LUA_REGISTRYINDEX, "mjolnir._asm.pathwatcher");
+
     lua_pushvalue(L, -1);
     lua_setfield(L, -2, "__index");
-    
+
     return 1;
 }

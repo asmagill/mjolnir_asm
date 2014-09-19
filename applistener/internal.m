@@ -8,7 +8,7 @@ void mjolnir_push_luavalue_for_nsobject(lua_State* L, id obj) {
     else if ([obj isKindOfClass: [NSDictionary class]]) {
         lua_newtable(L);
         NSDictionary* dict = obj;
-        
+
         for (id key in dict) {
             mjolnir_push_luavalue_for_nsobject(L, key);
             mjolnir_push_luavalue_for_nsobject(L, [dict objectForKey:key]);
@@ -34,10 +34,10 @@ void mjolnir_push_luavalue_for_nsobject(lua_State* L, id obj) {
     }
     else if ([obj isKindOfClass: [NSArray class]]) {
         lua_newtable(L);
-        
+
         int i = 0;
         NSArray* list = obj;
-        
+
         for (id item in list) {
             mjolnir_push_luavalue_for_nsobject(L, item);
             lua_rawseti(L, -2, ++i);
@@ -54,7 +54,7 @@ void mjolnir_push_luavalue_for_nsobject(lua_State* L, id obj) {
 - (void) heard:(NSNotification*)note {
     lua_State* L = self.L;
     lua_rawgeti(L, LUA_REGISTRYINDEX, self.fn);
-    
+
     lua_pushstring(L, [[note name] UTF8String]);
     mjolnir_push_luavalue_for_nsobject(L, [note object]);
     mjolnir_push_luavalue_for_nsobject(L, [note userInfo]);
@@ -80,19 +80,19 @@ static void remove_applistener(lua_State* L, int x) {
 // Registers a listener function for inter-app notifications.
 static int applistener_new(lua_State* L) {
     luaL_checktype(L, 1, LUA_TFUNCTION);
-    
+
     MjolnirAppListenerClass* listener = [[MjolnirAppListenerClass alloc] init];
     listener.L = L;
-    
+
     lua_pushvalue(L, 1);
     listener.fn = luaL_ref(L, LUA_REGISTRYINDEX);
-    
+
     void** ud = lua_newuserdata(L, sizeof(id*));
     *ud = (__bridge void*)listener;
-    
-    luaL_getmetatable(L, "applistener");
+
+    luaL_getmetatable(L, "mjolnir._asm.applistener");
     lua_setmetatable(L, -2);
-    
+
     return 1;
 }
 
@@ -100,7 +100,7 @@ static int applistener_new(lua_State* L) {
 /// Method
 /// Starts listening for notifications.
 static int applistener_start(lua_State* L) {
-    MjolnirAppListenerClass* applistener = (__bridge MjolnirAppListenerClass*)(*(void**)luaL_checkudata(L, 1, "applistener"));
+    MjolnirAppListenerClass* applistener = (__bridge MjolnirAppListenerClass*)(*(void**)luaL_checkudata(L, 1, "mjolnir._asm.applistener"));
     [[NSDistributedNotificationCenter defaultCenter] addObserver:applistener selector:@selector(heard:) name:nil object:nil];
     applistener.ref = store_applistener(L, 1);
     return 0;
@@ -110,7 +110,7 @@ static int applistener_start(lua_State* L) {
 /// Method
 /// Stops listening for notifications.
 static int applistener_stop(lua_State* L) {
-    MjolnirAppListenerClass* applistener = (__bridge MjolnirAppListenerClass*)(*(void**)luaL_checkudata(L, 1, "applistener"));
+    MjolnirAppListenerClass* applistener = (__bridge MjolnirAppListenerClass*)(*(void**)luaL_checkudata(L, 1, "mjolnir._asm.applistener"));
     [[NSDistributedNotificationCenter defaultCenter] removeObserver:applistener];
     remove_applistener(L, applistener.ref);
     return 0;
@@ -127,13 +127,13 @@ static const luaL_Reg applistenerlib[] = {
 int luaopen_mjolnir__asm_applistener_internal(lua_State* L) {
     luaL_newlib(L, applistenerlib);
 
-    // timer.__index = applistener
+    // applistener.__index = applistener
     lua_pushvalue(L, -1);
     lua_setfield(L, -2, "__index");
-    
-    // put timer in registry; necessary for luaL_checkudata()
+
+    // put applistener in registry; necessary for luaL_checkudata()
     lua_pushvalue(L, -1);
-    lua_setfield(L, LUA_REGISTRYINDEX, "applistener");
+    lua_setfield(L, LUA_REGISTRYINDEX, "mjolnir._asm.applistener");
 
     return 1;
 }
