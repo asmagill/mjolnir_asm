@@ -83,69 +83,71 @@ Creates a new mouse event.
 eventtap.event.types[]
 ~~~
 Table for use with `mjolnir._asm.eventtap.new`, with the following keys (and their reverse, for decoding purposes):
-  keydown, keyup,
-  leftmousedown, leftmouseup, leftmousedragged,
-  rightmousedown, rightmouseup, rightmousedragged,
-  middlemousedown, middlemouseup, middlemousedragged,
-  mousemoved, flagschanged, scrollwheel
+
+    keydown, keyup,
+    leftmousedown, leftmouseup, leftmousedragged,
+    rightmousedown, rightmouseup, rightmousedragged,
+    middlemousedown, middlemouseup, middlemousedragged,
+    mousemoved, flagschanged, scrollwheel
 
 ~~~lua
 eventtap.event.properties[]
 ~~~
 For use with mjolnir._asm.eventtap.event:{get,set}property; contains the following keys (and their reverse, for decoding purposes):
-    - MouseEventNumber
-    - MouseEventClickState
-    - MouseEventPressure
-    - MouseEventButtonNumber
-    - MouseEventDeltaX
-    - MouseEventDeltaY
-    - MouseEventInstantMouser
-    - MouseEventSubtype
-    - KeyboardEventAutorepeat
-    - KeyboardEventKeycode
-    - KeyboardEventKeyboardType
-    - ScrollWheelEventDeltaAxis1
-    - ScrollWheelEventDeltaAxis2
-    - ScrollWheelEventDeltaAxis3
-    - ScrollWheelEventFixedPtDeltaAxis1
-    - ScrollWheelEventFixedPtDeltaAxis2
-    - ScrollWheelEventFixedPtDeltaAxis3
-    - ScrollWheelEventPointDeltaAxis1
-    - ScrollWheelEventPointDeltaAxis2
-    - ScrollWheelEventPointDeltaAxis3
-    - ScrollWheelEventInstantMouser
-    - TabletEventPointX
-    - TabletEventPointY
-    - TabletEventPointZ
-    - TabletEventPointButtons
-    - TabletEventPointPressure
-    - TabletEventTiltX
-    - TabletEventTiltY
-    - TabletEventRotation
-    - TabletEventTangentialPressure
-    - TabletEventDeviceID
-    - TabletEventVendor1
-    - TabletEventVendor2
-    - TabletEventVendor3
-    - TabletProximityEventVendorID
-    - TabletProximityEventTabletID
-    - TabletProximityEventPointerID
-    - TabletProximityEventDeviceID
-    - TabletProximityEventSystemTabletID
-    - TabletProximityEventVendorPointerType
-    - TabletProximityEventVendorPointerSerialNumber
-    - TabletProximityEventVendorUniqueID
-    - TabletProximityEventCapabilityMask
-    - TabletProximityEventPointerType
-    - TabletProximityEventEnterProximity
-    - EventTargetProcessSerialNumber
-    - EventTargetUnixProcessID
-    - EventSourceUnixProcessID
-    - EventSourceUserData
-    - EventSourceUserID
-    - EventSourceGroupID
-    - EventSourceStateID
-    - ScrollWheelEventIsContinuous
+
+     - MouseEventNumber
+     - MouseEventClickState
+     - MouseEventPressure
+     - MouseEventButtonNumber
+     - MouseEventDeltaX
+     - MouseEventDeltaY
+     - MouseEventInstantMouser
+     - MouseEventSubtype
+     - KeyboardEventAutorepeat
+     - KeyboardEventKeycode
+     - KeyboardEventKeyboardType
+     - ScrollWheelEventDeltaAxis1
+     - ScrollWheelEventDeltaAxis2
+     - ScrollWheelEventDeltaAxis3
+     - ScrollWheelEventFixedPtDeltaAxis1
+     - ScrollWheelEventFixedPtDeltaAxis2
+     - ScrollWheelEventFixedPtDeltaAxis3
+     - ScrollWheelEventPointDeltaAxis1
+     - ScrollWheelEventPointDeltaAxis2
+     - ScrollWheelEventPointDeltaAxis3
+     - ScrollWheelEventInstantMouser
+     - TabletEventPointX
+     - TabletEventPointY
+     - TabletEventPointZ
+     - TabletEventPointButtons
+     - TabletEventPointPressure
+     - TabletEventTiltX
+     - TabletEventTiltY
+     - TabletEventRotation
+     - TabletEventTangentialPressure
+     - TabletEventDeviceID
+     - TabletEventVendor1
+     - TabletEventVendor2
+     - TabletEventVendor3
+     - TabletProximityEventVendorID
+     - TabletProximityEventTabletID
+     - TabletProximityEventPointerID
+     - TabletProximityEventDeviceID
+     - TabletProximityEventSystemTabletID
+     - TabletProximityEventVendorPointerType
+     - TabletProximityEventVendorPointerSerialNumber
+     - TabletProximityEventVendorUniqueID
+     - TabletProximityEventCapabilityMask
+     - TabletProximityEventPointerType
+     - TabletProximityEventEnterProximity
+     - EventTargetProcessSerialNumber
+     - EventTargetUnixProcessID
+     - EventSourceUnixProcessID
+     - EventSourceUserData
+     - EventSourceUserID
+     - EventSourceGroupID
+     - EventSourceStateID
+     - ScrollWheelEventIsContinuous
 
 ### License
 

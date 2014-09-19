@@ -17,7 +17,7 @@ CGEventRef mjolnir_to_eventtap_event(lua_State* L, int idx) {
 void new_eventtap_event(lua_State* L, CGEventRef event) {
     CFRetain(event);
     *(CGEventRef*)lua_newuserdata(L, sizeof(CGEventRef*)) = event;
-    
+
     luaL_getmetatable(L, "mjolnir._asm.eventtap.event");
     lua_setmetatable(L, -2);
 }
@@ -30,11 +30,11 @@ static int eventtap_event_gc(lua_State* L) {
 
 static int eventtap_event_copy(lua_State* L) {
     CGEventRef event = *(CGEventRef*)luaL_checkudata(L, 1, "mjolnir._asm.eventtap.event");
-    
+
     CGEventRef copy = CGEventCreateCopy(event);
     new_eventtap_event(L, copy);
     CFRelease(copy);
-    
+
     return 1;
 }
 
@@ -43,7 +43,7 @@ static int eventtap_event_copy(lua_State* L) {
 /// Returns a table with any of the strings {"cmd", "alt", "shift", "ctrl", "fn"} as keys pointing to the value `true`
 static int eventtap_event_getflags(lua_State* L) {
     CGEventRef event = *(CGEventRef*)luaL_checkudata(L, 1, "mjolnir._asm.eventtap.event");
-    
+
     lua_newtable(L);
     CGEventFlags curAltkey = CGEventGetFlags(event);
     if (curAltkey & kCGEventFlagMaskAlternate) { lua_pushboolean(L, YES); lua_setfield(L, -2, "alt"); }
@@ -60,17 +60,17 @@ static int eventtap_event_getflags(lua_State* L) {
 static int eventtap_event_setflags(lua_State* L) {
     CGEventRef event = *(CGEventRef*)luaL_checkudata(L, 1, "mjolnir._asm.eventtap.event");
     luaL_checktype(L, 2, LUA_TTABLE);
-    
+
     CGEventFlags flags = 0;
-    
+
     if (lua_getfield(L, 2, "cmd"), lua_toboolean(L, -1)) flags |= kCGEventFlagMaskCommand;
     if (lua_getfield(L, 2, "alt"), lua_toboolean(L, -1)) flags |= kCGEventFlagMaskAlternate;
     if (lua_getfield(L, 2, "ctrl"), lua_toboolean(L, -1)) flags |= kCGEventFlagMaskControl;
     if (lua_getfield(L, 2, "shift"), lua_toboolean(L, -1)) flags |= kCGEventFlagMaskShift;
     if (lua_getfield(L, 2, "fn"), lua_toboolean(L, -1)) flags |= kCGEventFlagMaskSecondaryFn;
-    
+
     CGEventSetFlags(event, flags);
-    
+
     return 0;
 }
 
@@ -98,13 +98,13 @@ static int eventtap_event_setkeycode(lua_State* L) {
 /// Posts the event to the system as if the user did it manually. If app is a valid application instance, posts this event only to that application (I think).
 static int eventtap_event_post(lua_State* L) {
     CGEventRef event = *(CGEventRef*)luaL_checkudata(L, 1, "mjolnir._asm.eventtap.event");
-    
+
     if (luaL_testudata(L, 2, "mjolnir.application")) {
         AXUIElementRef app = lua_touserdata(L, 2);
-        
+
         pid_t pid;
         AXUIElementGetPid(app, &pid);
-        
+
         ProcessSerialNumber psn;
         GetProcessForPID(pid, &psn);
         CGEventPostToPSN(&psn, event);
@@ -112,7 +112,7 @@ static int eventtap_event_post(lua_State* L) {
     else {
         CGEventPost(kCGSessionEventTap, event);
     }
-    
+
     return 0;
 }
 
@@ -155,14 +155,14 @@ static int eventtap_event_newkeyevent(lua_State* L) {
     luaL_checktype(L, 1, LUA_TTABLE);
     const char* key = luaL_checkstring(L, 2);
     bool isdown = lua_toboolean(L, 3);
-    
+
     lua_getglobal(L, "mjolnir");
     lua_getfield(L, -1, "keycodes");
     lua_pushstring(L, key);
     lua_gettable(L, -2);
     CGKeyCode keycode = lua_tonumber(L, -1);
     lua_pop(L, 2);
-    
+
     CGEventFlags flags = 0;
     lua_pushnil(L);
     while (lua_next(L, 1) != 0) {
@@ -173,13 +173,13 @@ static int eventtap_event_newkeyevent(lua_State* L) {
         else if (strcmp(lua_tostring(L, -1), "fn") == 0) flags |= kCGEventFlagMaskSecondaryFn;
         lua_pop(L, 1);
     }
-    
+
     CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
     CGEventRef keyevent = CGEventCreateKeyboardEvent(source, keycode, isdown);
     CGEventSetFlags(keyevent, flags);
     new_eventtap_event(L, keyevent);
     CFRelease(keyevent);
-    
+
     return 1;
 }
 
@@ -193,30 +193,30 @@ static int eventtap_event_newmouseevent(lua_State* L) {
     CGEventType type = luaL_checknumber(L, 1);
     CGPoint point = mjolnir_topoint(L, 2);
     const char* buttonString = luaL_checkstring(L, 3);
-    
+
     CGMouseButton button = kCGMouseButtonLeft;
-    
+
     if (strcmp(buttonString, "right") == 0)
         button = kCGMouseButtonRight;
     else if (strcmp(buttonString, "middle") == 0)
         button = kCGMouseButtonCenter;
-    
+
     CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
     CGEventRef event = CGEventCreateMouseEvent(source, type, point, button);
     new_eventtap_event(L, event);
     CFRelease(event);
-    
+
     return 1;
 }
 
 /// eventtap.event.types -> table
 /// Variable
 /// Table for use with `eventtap.new`, with the following keys:
-///   keydown, keyup,
-///   leftmousedown, leftmouseup, leftmousedragged,
-///   rightmousedown, rightmouseup, rightmousedragged,
-///   middlemousedown, middlemouseup, middlemousedragged,
-///   mousemoved, flagschanged, scrollwheel
+///    keydown, keyup,
+///    leftmousedown, leftmouseup, leftmousedragged,
+///    rightmousedown, rightmouseup, rightmousedragged,
+///    middlemousedown, middlemouseup, middlemousedragged,
+///    mousemoved, flagschanged, scrollwheel
 static void pushtypestable(lua_State* L) {
     lua_newtable(L);
     lua_pushnumber(L, kCGEventLeftMouseDown);     lua_setfield(L, -2, "leftmousedown");
@@ -238,59 +238,59 @@ static void pushtypestable(lua_State* L) {
 /// eventtap.event.properties -> table
 /// Variable
 /// For use with eventtap.event:{get,set}property; contains the following keys:
-///   - MouseEventNumber
-///   - MouseEventClickState
-///   - MouseEventPressure
-///   - MouseEventButtonNumber
-///   - MouseEventDeltaX
-///   - MouseEventDeltaY
-///   - MouseEventInstantMouser
-///   - MouseEventSubtype
-///   - KeyboardEventAutorepeat
-///   - KeyboardEventKeycode
-///   - KeyboardEventKeyboardType
-///   - ScrollWheelEventDeltaAxis1
-///   - ScrollWheelEventDeltaAxis2
-///   - ScrollWheelEventDeltaAxis3
-///   - ScrollWheelEventFixedPtDeltaAxis1
-///   - ScrollWheelEventFixedPtDeltaAxis2
-///   - ScrollWheelEventFixedPtDeltaAxis3
-///   - ScrollWheelEventPointDeltaAxis1
-///   - ScrollWheelEventPointDeltaAxis2
-///   - ScrollWheelEventPointDeltaAxis3
-///   - ScrollWheelEventInstantMouser
-///   - TabletEventPointX
-///   - TabletEventPointY
-///   - TabletEventPointZ
-///   - TabletEventPointButtons
-///   - TabletEventPointPressure
-///   - TabletEventTiltX
-///   - TabletEventTiltY
-///   - TabletEventRotation
-///   - TabletEventTangentialPressure
-///   - TabletEventDeviceID
-///   - TabletEventVendor1
-///   - TabletEventVendor2
-///   - TabletEventVendor3
-///   - TabletProximityEventVendorID
-///   - TabletProximityEventTabletID
-///   - TabletProximityEventPointerID
-///   - TabletProximityEventDeviceID
-///   - TabletProximityEventSystemTabletID
-///   - TabletProximityEventVendorPointerType
-///   - TabletProximityEventVendorPointerSerialNumber
-///   - TabletProximityEventVendorUniqueID
-///   - TabletProximityEventCapabilityMask
-///   - TabletProximityEventPointerType
-///   - TabletProximityEventEnterProximity
-///   - EventTargetProcessSerialNumber
-///   - EventTargetUnixProcessID
-///   - EventSourceUnixProcessID
-///   - EventSourceUserData
-///   - EventSourceUserID
-///   - EventSourceGroupID
-///   - EventSourceStateID
-///   - ScrollWheelEventIsContinuous
+///    - MouseEventNumber
+///    - MouseEventClickState
+///    - MouseEventPressure
+///    - MouseEventButtonNumber
+///    - MouseEventDeltaX
+///    - MouseEventDeltaY
+///    - MouseEventInstantMouser
+///    - MouseEventSubtype
+///    - KeyboardEventAutorepeat
+///    - KeyboardEventKeycode
+///    - KeyboardEventKeyboardType
+///    - ScrollWheelEventDeltaAxis1
+///    - ScrollWheelEventDeltaAxis2
+///    - ScrollWheelEventDeltaAxis3
+///    - ScrollWheelEventFixedPtDeltaAxis1
+///    - ScrollWheelEventFixedPtDeltaAxis2
+///    - ScrollWheelEventFixedPtDeltaAxis3
+///    - ScrollWheelEventPointDeltaAxis1
+///    - ScrollWheelEventPointDeltaAxis2
+///    - ScrollWheelEventPointDeltaAxis3
+///    - ScrollWheelEventInstantMouser
+///    - TabletEventPointX
+///    - TabletEventPointY
+///    - TabletEventPointZ
+///    - TabletEventPointButtons
+///    - TabletEventPointPressure
+///    - TabletEventTiltX
+///    - TabletEventTiltY
+///    - TabletEventRotation
+///    - TabletEventTangentialPressure
+///    - TabletEventDeviceID
+///    - TabletEventVendor1
+///    - TabletEventVendor2
+///    - TabletEventVendor3
+///    - TabletProximityEventVendorID
+///    - TabletProximityEventTabletID
+///    - TabletProximityEventPointerID
+///    - TabletProximityEventDeviceID
+///    - TabletProximityEventSystemTabletID
+///    - TabletProximityEventVendorPointerType
+///    - TabletProximityEventVendorPointerSerialNumber
+///    - TabletProximityEventVendorUniqueID
+///    - TabletProximityEventCapabilityMask
+///    - TabletProximityEventPointerType
+///    - TabletProximityEventEnterProximity
+///    - EventTargetProcessSerialNumber
+///    - EventTargetUnixProcessID
+///    - EventSourceUnixProcessID
+///    - EventSourceUserData
+///    - EventSourceUserID
+///    - EventSourceGroupID
+///    - EventSourceStateID
+///    - ScrollWheelEventIsContinuous
 static void pushpropertiestable(lua_State* L) {
     lua_newtable(L);
     lua_pushnumber(L, kCGMouseEventNumber);                               lua_setfield(L, -2, "MouseEventNumber");
@@ -345,14 +345,14 @@ static void pushpropertiestable(lua_State* L) {
     lua_pushnumber(L, kCGEventSourceUserID);                              lua_setfield(L, -2, "EventSourceUserID");
     lua_pushnumber(L, kCGEventSourceGroupID);                             lua_setfield(L, -2, "EventSourceGroupID");
     lua_pushnumber(L, kCGEventSourceStateID);                             lua_setfield(L, -2, "EventSourceStateID");
-    lua_pushnumber(L, kCGScrollWheelEventIsContinuous);                   lua_setfield(L, -2, "ScrollWheelEventIsContinuous");                    
+    lua_pushnumber(L, kCGScrollWheelEventIsContinuous);                   lua_setfield(L, -2, "ScrollWheelEventIsContinuous");
 }
 
 static luaL_Reg eventtapeventlib[] = {
     // module methods
     {"newkeyevent", eventtap_event_newkeyevent},
     {"newmouseevent", eventtap_event_newmouseevent},
-    
+
     // instance methods
     {"copy", eventtap_event_copy},
     {"getflags", eventtap_event_getflags},
@@ -361,30 +361,30 @@ static luaL_Reg eventtapeventlib[] = {
     {"setkeycode", eventtap_event_setkeycode},
     {"gettype", eventtap_event_gettype},
     {"post", eventtap_event_post},
-    
+
     {"getproperty", eventtap_event_getproperty},
     {"setproperty", eventtap_event_setproperty},
-    
+
     // metamethods
     {"__gc", eventtap_event_gc},
-    
+
     {}
 };
 
 int luaopen_mjolnir__asm_eventtap_event_internal(lua_State* L) {
     luaL_newlib(L, eventtapeventlib);
-    
+
     lua_pushvalue(L, -1);
     lua_setfield(L, -2, "__index");
-    
+
     lua_pushvalue(L, -1);
     lua_setfield(L, LUA_REGISTRYINDEX, "mjolnir._asm.eventtap.event");
-    
+
     pushtypestable(L);
     lua_setfield(L, -2, "types");
-    
+
     pushpropertiestable(L);
     lua_setfield(L, -2, "properties");
-    
+
     return 1;
 }
