@@ -135,6 +135,20 @@ static int eventtap_event_getproperty(lua_State* L) {
     return 1;
 }
 
+/// eventtap.event:getbuttonstate(#) -> bool
+/// Method
+/// Gets the state of the numbered mouse button (0-31) as down (true) or up (false). The left mouse button corresponds to 0, the right to 1, and the center to 2.  The remaining buttons are specified in USB order using the integers 3 to 31.
+static int eventtap_event_getbuttonstate(lua_State* L) {
+    CGEventRef event = *(CGEventRef*)luaL_checkudata(L, 1, "mjolnir._asm.eventtap.event");
+    CGMouseButton whichButton = luaL_checknumber(L, 2);
+
+    if (CGEventSourceButtonState(CGEventGetDoubleValueField(event, kCGEventSourceStateID), whichButton))
+        lua_pushboolean(L, YES) ;
+    else
+        lua_pushboolean(L, NO) ;
+    return 1;
+}
+
 /// eventtap.event:setproperty(prop, value)
 /// Sets the given property of the given event; prop is one of the values in the `mjolnir._asm.eventtap.event.properties` table; value is a number defined here: https://developer.apple.com/library/mac/documentation/Carbon/Reference/QuartzEventServicesRef/Reference/reference.html#//apple_ref/c/tdef/CGEventField
 static int eventtap_event_setproperty(lua_State* L) {
@@ -216,23 +230,30 @@ static int eventtap_event_newmouseevent(lua_State* L) {
 ///    leftmousedown, leftmouseup, leftmousedragged,
 ///    rightmousedown, rightmouseup, rightmousedragged,
 ///    middlemousedown, middlemouseup, middlemousedragged,
-///    mousemoved, flagschanged, scrollwheel
+///    mousemoved, flagschanged, scrollwheel,
+///    tabletpointer, tabletproximity,
+///    nullevent, tapdisabledbytimeout, tapdisabledbyuserinput
 static void pushtypestable(lua_State* L) {
     lua_newtable(L);
-    lua_pushnumber(L, kCGEventLeftMouseDown);     lua_setfield(L, -2, "leftmousedown");
-    lua_pushnumber(L, kCGEventLeftMouseUp);       lua_setfield(L, -2, "leftmouseup");
-    lua_pushnumber(L, kCGEventLeftMouseDragged);  lua_setfield(L, -2, "leftmousedragged");
-    lua_pushnumber(L, kCGEventRightMouseDown);    lua_setfield(L, -2, "rightmousedown");
-    lua_pushnumber(L, kCGEventRightMouseUp);      lua_setfield(L, -2, "rightmouseup");
-    lua_pushnumber(L, kCGEventRightMouseDragged); lua_setfield(L, -2, "rightmousedragged");
-    lua_pushnumber(L, kCGEventOtherMouseDown);    lua_setfield(L, -2, "middlemousedown");
-    lua_pushnumber(L, kCGEventOtherMouseUp);      lua_setfield(L, -2, "middlemouseup");
-    lua_pushnumber(L, kCGEventOtherMouseDragged); lua_setfield(L, -2, "middlemousedragged");
-    lua_pushnumber(L, kCGEventMouseMoved);        lua_setfield(L, -2, "mousemoved");
-    lua_pushnumber(L, kCGEventFlagsChanged);      lua_setfield(L, -2, "flagschanged");
-    lua_pushnumber(L, kCGEventScrollWheel);       lua_setfield(L, -2, "scrollwheel");
-    lua_pushnumber(L, kCGEventKeyDown);           lua_setfield(L, -2, "keydown");
-    lua_pushnumber(L, kCGEventKeyUp);             lua_setfield(L, -2, "keyup");
+    lua_pushnumber(L, kCGEventLeftMouseDown);           lua_setfield(L, -2, "leftmousedown");
+    lua_pushnumber(L, kCGEventLeftMouseUp);             lua_setfield(L, -2, "leftmouseup");
+    lua_pushnumber(L, kCGEventLeftMouseDragged);        lua_setfield(L, -2, "leftmousedragged");
+    lua_pushnumber(L, kCGEventRightMouseDown);          lua_setfield(L, -2, "rightmousedown");
+    lua_pushnumber(L, kCGEventRightMouseUp);            lua_setfield(L, -2, "rightmouseup");
+    lua_pushnumber(L, kCGEventRightMouseDragged);       lua_setfield(L, -2, "rightmousedragged");
+    lua_pushnumber(L, kCGEventOtherMouseDown);          lua_setfield(L, -2, "middlemousedown");
+    lua_pushnumber(L, kCGEventOtherMouseUp);            lua_setfield(L, -2, "middlemouseup");
+    lua_pushnumber(L, kCGEventOtherMouseDragged);       lua_setfield(L, -2, "middlemousedragged");
+    lua_pushnumber(L, kCGEventMouseMoved);              lua_setfield(L, -2, "mousemoved");
+    lua_pushnumber(L, kCGEventFlagsChanged);            lua_setfield(L, -2, "flagschanged");
+    lua_pushnumber(L, kCGEventScrollWheel);             lua_setfield(L, -2, "scrollwheel");
+    lua_pushnumber(L, kCGEventKeyDown);                 lua_setfield(L, -2, "keydown");
+    lua_pushnumber(L, kCGEventKeyUp);                   lua_setfield(L, -2, "keyup");
+    lua_pushnumber(L, kCGEventTabletPointer);           lua_setfield(L, -2, "tabletpointer");
+    lua_pushnumber(L, kCGEventTabletProximity);         lua_setfield(L, -2, "tabletproximity");
+    lua_pushnumber(L, kCGEventNull);                    lua_setfield(L, -2, "nullevent");
+    lua_pushnumber(L, kCGEventTapDisabledByTimeout);    lua_setfield(L, -2, "tapdisabledbytimeout");
+    lua_pushnumber(L, kCGEventTapDisabledByUserInput);  lua_setfield(L, -2, "tapdisabledbyuserinput");
 }
 
 /// eventtap.event.properties -> table
@@ -365,6 +386,7 @@ static luaL_Reg eventtapeventlib[] = {
     {"getproperty", eventtap_event_getproperty},
     {"setproperty", eventtap_event_setproperty},
 
+    {"getbuttonstate", eventtap_event_getbuttonstate},
     // metamethods
     {"__gc", eventtap_event_gc},
 
