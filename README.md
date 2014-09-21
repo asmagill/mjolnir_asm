@@ -25,9 +25,10 @@ Published modules are listed as *Currently Available*.  Follow their link for th
 
 ### Work In progress:
 
-|Module                                                                                | Version | Description                                              |
-|:-------------------------------------------------------------------------------------|:-------:|:---------------------------------------------------------|
-|[mjolnir._asm.script](https://github.com/asmagill/mjolnir_asm.script)                 | 0.1-1   | Hydra's Applescript module, + some shell stuff, planned. |
+|Module                                                                                | Version | Description                                                                    |
+|:-------------------------------------------------------------------------------------|:-------:|:-------------------------------------------------------------------------------|
+|[mjolnir._asm.script](https://github.com/asmagill/mjolnir_asm.script)                 | 0.1-1   | Hydra's Applescript module, + some shell stuff, planned.                       |
+|[mjolnir._asm.undocumented](https://github.com/asmagill/mjolnir_asm.undocumented)     |         | A collection, like this, of modules known to use private or undocumented APIs. |
 
 Also, see README.md in each modules directory.
 

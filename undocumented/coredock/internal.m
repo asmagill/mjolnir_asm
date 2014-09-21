@@ -194,18 +194,18 @@ static const luaL_Reg coredock_lib[] = {
 /// Variable
 /// Connivence array of all currently defined coredock options.
 ///<pre>
-///     .orientation[]  -- an array of the orientation options available for `set_orientation_and_pinning`
+///     options.orientation[]  -- an array of the orientation options available for `set_orientation_and_pinning`
 ///         top         -- put the dock at the top of the monitor
 ///         bottom      -- put the dock at the bottom of the monitor
 ///         left        -- put the dock at the left of the monitor
 ///         right       -- put the dock at the right of the monitor
 ///
-///     .pinning[]  -- an array of the pinning options available for `set_orientation_and_pinning`
+///     options.pinning[]  -- an array of the pinning options available for `set_orientation_and_pinning`
 ///         start       -- pin the dock at the start of its orientation
 ///         middle      -- pin the dock at the middle of its orientation
 ///         end         -- pin the dock at the end of its orientation
 ///
-///     .effect[]   -- an array of the dock animation options for  `set_animationeffect`
+///     options.effect[]   -- an array of the dock animation options for  `set_animationeffect`
 ///         genie       -- use the genie animation
 ///         scale       -- use the scale animation
 ///         suck        -- use the suck animation

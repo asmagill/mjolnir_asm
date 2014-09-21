@@ -81,7 +81,7 @@ static const luaL_Reg cgsdebug_lib[] = {
 /// mjolnir._asm.undocumented.cgsdebug.options[]
 /// Variable
 /// Connivence array of all currently defined debug options.
-///
+///<pre>
 ///     flashScreenUpdates
 ///         All screen updates are flashed in yellow. Regions under a DisableUpdate are flashed in orange. Regions that are hardware accellerated are painted green.
 ///
@@ -132,7 +132,7 @@ static const luaL_Reg cgsdebug_lib[] = {
 ///
 ///     dumpResourceUsageToFiles
 ///         Dumps information about an application's resource usage to `/tmp/CGResources_<NAME>_<PID>`.
-///
+///</pre>
 
 static void cgsdebug_options (lua_State *L) {
     lua_newtable(L) ;

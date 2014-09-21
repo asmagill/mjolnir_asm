@@ -3,7 +3,7 @@ mjolnir._asm.undocumented.cgsdebug
 
 Functions to get and set undocumented options and features within OS X.  These are undocumented features from the "private" api's for Mac OS X and are not guaranteed to work with any particular version of OS X or at all.  This code was based primarily on code samples and segments found at (https://code.google.com/p/undocumented-goodness/) and (https://code.google.com/p/iterm2/source/browse/branches/0.10.x/CGSInternal/CGSDebug.h?r=2).
 
---- This submodule provides access to CGSDebug related features.  Most notably, this contains the hydra.shadow(bool) functionality, and a specific function is provided for just that functionality.
+This submodule provides access to CGSDebug related features.  Most notably, this contains the hydra.shadow(bool) functionality, and a specific function is provided for just that functionality.
 
 I make no promises that these will work for you or work at all with any, past, current, or future versions of OS X.  I can confirm only that they didn't crash my machine during testing under 10.10pb2. You have been warned.
 
@@ -101,10 +101,10 @@ Connivence array of all currently defined debug options.
         Dumps a list of shadows to /tmp/WindowServer.shinfo.out.
 
     dumpWindowListToPlist
-        Leopard: Dumps a list of windows to `/tmp/WindowServer.winfo.plist`. This is what Quartz Debug on 10.5 uses to get the window list.
+        Dumps a list of windows to `/tmp/WindowServer.winfo.plist`. This is what Quartz Debug on 10.5 uses to get the window list.
 
     dumpResourceUsageToFiles
-        Leopard: Dumps information about an application's resource usage to `/tmp/CGResources_<NAME>_<PID>`.
+        Dumps information about an application's resource usage to `/tmp/CGResources_<NAME>_<PID>`.
 
 
 

@@ -25,77 +25,77 @@ coredock = require("mjolnir._asm.undocumented.coredock")
 ### Functions
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.get_animationeffect() -> int
+coredock.get_animationeffect() -> int
 ~~~
-Returns an integer indicating the animation effect used for window hiding to the Dock.  You can reference `mjolnir._asm.undocumented.coredock.options.effect[#]` to get a human-readable string indicating the effect.
+Returns an integer indicating the animation effect used for window hiding to the Dock.  You can reference `coredock.options.effect[#]` to get a human-readable string indicating the effect.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.get_autohide() -> bool
+coredock.get_autohide() -> bool
 ~~~
 Returns true or false, indicating whether Dock Hiding is turned on or not.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.get_magnification() -> bool
+coredock.get_magnification() -> bool
 ~~~
 Returns true or false, indicating whether Dock Magnification is turned on or not.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.get_magnification_size() -> float
+coredock.get_magnification_size() -> float
 ~~~
 Returns the Dock magnification size as a number between 0 and 1.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.get_orientation() -> int
+coredock.get_orientation() -> int
 ~~~
-Returns an integer indicating the orientation of the Dock.  You can reference `mjolnir._asm.undocumented.coredock.options.orientation[#]` to get a human-readable string indicating the orientation.
+Returns an integer indicating the orientation of the Dock.  You can reference `coredock.options.orientation[#]` to get a human-readable string indicating the orientation.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.get_pinning() -> int
+coredock.get_pinning() -> int
 ~~~
-Returns an integer indicating the pinning of the Dock.  You can reference `mjolnir._asm.undocumented.coredock.options.pinning[#]` to get a human-readable string indicating the pinning.
+Returns an integer indicating the pinning of the Dock.  You can reference `coredock.options.pinning[#]` to get a human-readable string indicating the pinning.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.get_tilesize() -> float
+coredock.get_tilesize() -> float
 ~~~
 Returns the Dock icon tile size as a number between 0 and 1.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.set_animationeffect(effect)
+coredock.set_animationeffect(effect)
 ~~~
-Sets the Dock animation effect used when hiding windows. You can reference `mjolnir._asm.undocumented.coredock.options.effect` to select the appropriate number for the desired effect.
+Sets the Dock animation effect used when hiding windows. You can reference `coredock.options.effect` to select the appropriate number for the desired effect.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.set_autohide(bool)
+coredock.set_autohide(bool)
 ~~~
 Set Dock Hiding to on (true) or off (false).
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.set_magnification(bool)
+coredock.set_magnification(bool)
 ~~~
 Set Dock Magnification to on (true) or off (false).
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.set_magnification_size(float)
+coredock.set_magnification_size(float)
 ~~~
 Sets the Dock icon magnification size to a number between 0 and 1.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.set_orientation(orientation)
+coredock.set_orientation(orientation)
 ~~~
-Sets the Dock orientation to the position indicated by orientation. You can reference `mjolnir._asm.undocumented.coredock.options.orientation` to select the appropriate number for the desired orientation.
+Sets the Dock orientation to the position indicated by orientation. You can reference `coredock.options.orientation` to select the appropriate number for the desired orientation.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.set_pinning(pinning)
+coredock.set_pinning(pinning)
 ~~~
-Sets the Dock pinning to the position indicated by pinning. You can reference `mjolnir._asm.undocumented.coredock.options.pinning` to select the appropriate number for the desired pinning.
+Sets the Dock pinning to the position indicated by pinning. You can reference `coredock.options.pinning` to select the appropriate number for the desired pinning.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.set_tilesize(float)
+coredock.set_tilesize(float)
 ~~~
 Sets the Dock icon tile size to a number between 0 and 1.
 
 ~~~lua
-mjolnir._asm.undocumented.coredock.RestartDock()
+coredock.RestartDock()
 ~~~
 This function restarts the user's Dock instance.  This is not required for any of the functionality of this module, but does come in handy if your dock gets "misplaced" when you change monitor resolution or detach an external monitor (I've seen this occasionally when the Dock is on the left or right.)
 

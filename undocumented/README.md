@@ -1,0 +1,46 @@
+mjolnir._asm.undocumented
+=========================
+
+Development space  for Mjolnir modules using undocumented or Private APIs.  To the best of my knowledge, all other modules I've created use only standard, stock OSX API functionality.  Since a large number were ported from a previous project that led to Mjolnir, I can't say that with absolute certainty, but it is certainly what I aim for.
+
+Any module I create which uses any undocumented or private API will be listed here.
+
+Because these use undocumented features, the mantra "Caveat Emptor" rings even more true than usual.  I make no claims or guarantees that these will work for you or that they will work with any past, present, or future version of OS X.  All I will state is that they do not crash on my primary machine, which is a MacBook Pro running 10.10pb2, and that they provide at least some of the desired functions (or else why bother?) for me.
+
+I hope they do for you as well, but re-read the above paragraph and the License, and decide for yourself.
+
+Most of these features currently come from one or both of the following sources:
+
+ 1. [Undocumented Goodness](https://code.google.com/p/undocumented-goodness/)
+ 2. [iTerm2's CGSInternal folder](https://github.com/gnachman/iterm2)
+
+Published modules are listed as *Currently Available*.  Follow their link for the code making up the deployed version.  This repository may contain updates which have not yet been published or *Work In Progress*.
+
+### Currently available:
+
+|Module                                                       | Method   | Version | Description                                          |
+|:------------------------------------------------------------|:---------|:-------:|:-----------------------------------------------------|
+
+### Work In progress:
+
+|Module                                            | Version | Description                                                                |
+|:-------------------------------------------------|:-------:|:---------------------------------------------------------------------------|
+|mjolnir._asm.undocumented.cgsdebug                | 0.1-1   | Includes Hydra's hydra.shadow function and other _windowserver debug stuff |
+|mjolnir._asm.undocumented.coredock                | 0.1-1   | Manipulate Dock features including position, tilesize, etc.                |
+
+Also, see README.md in each modules directory.
+
+**NOTE: README's for in progress modules may mention luarocks, but probably haven't been uploaded yet, unless it's a major change or rewrite of an existing, older module.**
+
+### License
+
+> Released under MIT license.
+>
+> Copyright (c) 2014 Aaron Magill
+>
+> Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+>
+> The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+>
