@@ -12,7 +12,7 @@ version = "0.1-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.undocumented/cgsdebug"
+local url = "github.com/asmagill/mjolnir_asm.undocumented"
 local desc = "Undocumented CGSDebug features, including Hydra's shadow command."
 
 source = {url = "git://" .. url}
@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.undocumented.cgsdebug"] = "init.lua",
-    ["mjolnir._asm.undocumented.cgsdebug.internal"] = "internal.m",
+    ["mjolnir._asm.undocumented.cgsdebug"] = "mjolnir_asm.undocumented/cgsdebug/init.lua",
+    ["mjolnir._asm.undocumented.cgsdebug.internal"] = "mjolnir_asm.undocumented/cgsdebug/internal.m",
   },
 }

@@ -12,7 +12,7 @@ version = "0.1-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.undocumented/coredock"
+local url = "github.com/asmagill/mjolnir_asm.undocumented"
 local desc = "Undocumented coredock features."
 
 source = {url = "git://" .. url}
@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.undocumented.coredock"] = "init.lua",
-    ["mjolnir._asm.undocumented.coredock.internal"] = "internal.m",
+    ["mjolnir._asm.undocumented.coredock"] = "mjolnir_asm.undocumented/coredock/init.lua",
+    ["mjolnir._asm.undocumented.coredock.internal"] = "mjolnir_asm.undocumented/coredock/internal.m",
   },
 }

@@ -9,6 +9,11 @@ I make no promises that these will work for you or work at all with any, past, c
 
 For what it's worth, under my 10.10pb2, pinning seems to be completely ignored and setting the Dock to the top orientation is also ignored, though left, right, and bottom work.
 
+### Luarocks Install
+~~~bash
+$ luarocks [--tree=mjolnir] install mjolnir._asm.undocumented.coredock
+~~~
+
 ### Local Install
 ~~~bash
 $ git clone https://github.com/asmagill/mjolnir_asm.undocumented

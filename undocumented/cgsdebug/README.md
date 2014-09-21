@@ -7,6 +7,10 @@ This submodule provides access to CGSDebug related features.  Most notably, this
 
 I make no promises that these will work for you or work at all with any, past, current, or future versions of OS X.  I can confirm only that they didn't crash my machine during testing under 10.10pb2. You have been warned.
 
+### Luarocks Install
+~~~bash
+$ luarocks [--tree=mjolnir] install mjolnir._asm.undocumented.cgsdebug
+~~~
 
 ### Local Install
 ~~~bash
