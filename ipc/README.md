@@ -12,18 +12,11 @@ line utility by [Steven Degutis](https://github.com/sdegutis/).
 
 
 ### Luarocks Install
-Note that `luarocks` will only install the ipc module and not the command line utility.  This will hopefully change soon, but right now you have to perform the extra steps which follow.
-
 ~~~bash
 $ luarocks [--tree=mjolnir] install mjolnir._asm.ipc
+$ [PREFIX=/usr/local] luarocks [--tree=mjolnir] install mjolnir._asm.ipc.cli
 ~~~
 
-###### *Extra Steps*
-~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.ipc
-$ cd mjolnir_asm.ipc
-$ [PREFIX=/usr/local] make install-cli
-~~~
 
 ### Local Install
 ~~~bash
