@@ -50,6 +50,7 @@ Sets whether OSX apps have shadows.
 undocumented.spaces[]
 ~~~
 Convenience module `spaces` containing just the Hydra spaces modules for Mjolnir with simplified names.
+
     spaces = require("mjolnir._asm.hydra.undocumented").spaces
 
     spaces.count()         -- see spaces_count()
