@@ -28,7 +28,6 @@ description = {
 supported_platforms = {"macosx"}
 dependencies = {
   "lua >= 5.2",
-  "mjolnir._asm.hydra.dockicon",
 }
 
 -- Build rules:

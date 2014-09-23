@@ -79,13 +79,13 @@ Returns a newly generated UUID as a string
 ~~~lua
 hydra.hydra_namespace() -> table
 ~~~
-Returns the full hydra name space replicated as closely as reasonable for Mjolnir.  Really more of a checklist then a real environment to choose to live in <grin>.
+Returns the full hydra name space replicated as closely as reasonable for Mjolnir.  Really more of a checklist then a real environment to choose to live in &lt;grin&gt;.
 
 This module attempts to require modules known to provide former Hydra functionality and prints a list to the Mjolnir console indicating what modules you don't have and which Hydra modules are currently have no known replacement in Mjolnir.  If you think that an existing module does exist to cover lost functionality, but it is not represented here, please let me know and I'll add it.
 
 This module returns a table of the Hydra namespace, as it has been able to be reconstituted with your installed modules.
 
-** NOTE:**  While this function does load the compatible modules into memory, it does so *only when you invoke this function*.  Until and unless you call this function, no additional modules are loaded into memory.
+**NOTE:**  While this function does load the compatible modules into memory, it does so *only when you invoke this function*.  Until and unless you call this function, no additional modules are loaded into memory.
 
 ### License
 
