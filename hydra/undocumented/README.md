@@ -1,6 +1,10 @@
 mjolnir._asm.hydra.undocumented
 ================================
 
+This module provides the functionality, as it was in Hydra, for `spaces` and `hydra.setosxshadows`.  As these functions use undocumented APIs, they are grouped together here.
+
+This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+
 
 ### Luarocks Install
 ~~~bash
