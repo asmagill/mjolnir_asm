@@ -1,0 +1,196 @@
+local module = {
+--[=[
+    _NAME        = 'mjolnir._asm.hydra',
+    _VERSION     = 'the 1st digit of Pi/0',
+    _URL         = 'https://github.com/asmagill/mjolnir_asm.hydra',
+    _LICENSE     = [[ See README.md ]]
+    _DESCRIPTION = [[
+
+--- === mjolnir._asm.hydra ===
+---
+--- Home: https://github.com/asmagill/mjolnir_asm.hydra
+---
+--- Minor functions from Hydra and a checklist function for indicating Hydra function replacements.
+---
+--- This module provides some of the functionality which Hydra had regarding its environment, but aren't currently in a module of their own for various reasons.
+---
+--- This module is not needed for any of the submodules, and the submodules can be loaded and installed independently of this one.
+Loads all of the modules corresponding to Hydra's internal functions.  This module is not strictly needed, as it will load as many of the modules as have been created so far.  Individual modules can be loaded if you prefer only specific support.
+---
+--- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+
+    ]],
+--]=]
+}
+
+local mjolnir_mod_name = "mjolnir._asm.hydra"
+local c_library = "internal"
+
+-- integration with C functions ------------------------------------------
+
+if c_library then
+	for i,v in pairs(require(mjolnir_mod_name.."."..c_library)) do module[i] = v end
+end
+
+-- private variables and methods -----------------------------------------
+
+local my_require = function(label, name)
+	if type(name) == "nil" then
+		print(label.."\t no module is known to exist for this yet.")
+		return nil
+	else
+    	local ok, value = xpcall(require, function(...) return ... end, name)
+    	if ok then
+        	return value
+    	else
+        	print(label.."\t is provided by "..name)
+        	return nil
+    	end
+    end
+end
+
+-- Public interface ------------------------------------------------------
+
+--- mjolnir._asm.hydra.call(fn, ...) -> ...
+--- Function
+--- Just like pcall, except that failures are handled using `mjolnir.showerror`
+module.call = function(fn, ...)
+    local results = table.pack(pcall(fn, ...))
+    if not results[1] then
+        -- print(debug.traceback())
+        mjolnir.showerror(results[2])
+    end
+    return table.unpack(results)
+end
+
+--- mjolnir._asm.hydra.exec(command) -> string
+--- Function
+--- Runs a shell function and returns stdout as a string (may include trailing newline).
+module.exec = function(command)
+    local f = io.popen(command)
+    local str = f:read('*a')
+    f:close()
+    return str
+end
+
+--- mjolnir._asm.hydra.hydra_namespace() -> table
+--- Function
+--- Returns the full hydra name space replicated as closely as reasonable for Mjolnir.  Really more of a checklist then a real environment to choose to live in <grin>.
+module.hydra_namespace = function()
+    local _H = {
+        _registry               = { "mjolnir userdata uses the stack registry, not this one." },
+        application             = my_require("application", "mjolnir.application"),
+        audiodevice             = my_require("audiodevice", nil),
+        battery                 = my_require("battery", nil),
+        brightness              = my_require("brightness", nil),
+        doc                     = my_require("doc", nil),
+        eventtap                = my_require("eventtap", "mjolnir._asm.eventtap"),
+        ext                     = {},
+        fnutils                 = my_require("fnutils", "mjolnir.fnutils"),
+        geometry                = my_require("geometry", "mjolnir.geometry"),
+        help                    = my_require("help", nil),
+        hotkey                  = my_require("hotkey", "mjolnir.hotkey"),
+        http                    = my_require("http", nil),
+        hydra = {
+            _initiate_documentation_system = nil,
+            alert               = my_require("hydra.alert", "mjolnir.alert"),
+            autolaunch          = { get = module.autolaunch, set = module.autolaunch },
+            call                = module.call,
+            check_accessibility = module.check_accessibilitiy,
+            dockicon            = my_require("hydra.docicon", "mjolnir._asm.hydra.dockicon"),
+            docsfile            = nil,
+            errorhandler        = mjolnir.showerror,
+            exec                = module.exec,
+            exit                = mjolnir._exit,
+            fileexists          = module.fileexists,
+            focushydra          = mjolnir.focus,
+            ipc                 = my_require("hydra.ipc", "mjolnir._asm.ipc"),
+            license             = {
+                    -- Table of functions used for license entry and verification of Hydra...
+                    -- never really used, but here solely for the sake of completeness (some
+                    -- would say analness; but consider that I thought, for about 2 seconds,
+                    -- about actually reproducing the code, rather than just the results).
+                                    enter = function() end,
+                                    haslicense = function() return true end,
+                                    _verify = function(...) return true end,
+                                },
+            licenses            = [[
+### Lua 5.2
+
+Copyright (c) 1994-2014 Lua.org, PUC-Rio.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+]],
+            menu                = my_require("hydra.menu", nil),
+            packages            = my_require("hydra.packages", nil),
+            reload              = mjolnir.reload,
+            resourcesdir        = module._paths().resourcePath,
+            runapplescript      = my_require("hydra.runapplescript", "mjolnir._asm.hydra.applescript"),
+            setosxshadows       = nil, -- see below
+            settings            = my_require("hydra.settings", "mjolnir._asm.settings"),
+            showabout           = module.showabout,
+            tryhandlingerror    = mjolnir.showerror,
+            updates             = my_require("update", nil),
+            uuid                = module.uuid,
+            version             = module._version(),
+        },
+        inspect                 = my_require("inspect", "inspect"),
+        json                    = nil, -- see below
+        logger                  = my_require("logger", nil),
+        mouse                   = my_require("mouse", "mjolnir.jstevenson.cursor"),
+        notify                  = my_require("notify", "mjolnir._asm.notify"),
+        pasteboard              = nil, -- see below
+        pathwatcher             = my_require("pathwatcher", "mjolnir._asm.pathwatcher"),
+        repl                    = { open = mjolnir.openconsole, path = module._paths().bundlePath, },
+        screen                  = my_require("screen", "mjolnir.screen"),
+        spaces                  = nil, -- see below
+        textgrid                = my_require("textgrid", nil),
+        timer                   = my_require("timer", "mjolnir._asm.timer"),
+        utf8                    = nil, -- see below
+        window                  = my_require("window", "mjolnir.window"),
+    }
+
+    --
+    -- Some cleanup to make things more Hydra like...
+    --
+    _H._notifysetup = package.loaded["mjolnir._asm.notify"] ~= nil
+    if type(_H.mouse[1]) == "nil" then
+        _H.mouse.get = _H.mouse.position
+        _H.mouse.set = function(xy) return _H.mouse.warptopoint(xy.x, xy.y) end
+    end
+    local undocumented = my_require("hydra.setosxshadows, spaces", "mjolnir._asm.hydra.undocumented")
+    if type(undocumented) == "table" then
+        _H.spaces = undocumented.spaces
+        _H.hydra.setosxshadows = undocumented.setosxshadows
+    end
+    local data = my_require("hydra.pasteboard, json, utf8", "mjolnir._asm.data")
+    if type(data) == "table" then
+        _H.utf8 = data.utf8
+        _H.pasteboard = data.pasteboard
+        _H.json = data.json
+    end
+    return _H
+end
+
+
+-- Return Module Object --------------------------------------------------
+
+return module
+

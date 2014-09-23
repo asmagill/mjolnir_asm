@@ -28,9 +28,12 @@ Published modules are listed as *Currently Available*.  Follow their link for th
 |Module                                                                                | Version | Description                                                                    |
 |:-------------------------------------------------------------------------------------|:-------:|:-------------------------------------------------------------------------------|
 |[mjolnir._asm.script](https://github.com/asmagill/mjolnir_asm.script)                 | 0.1-1   | Hydra's Applescript module, + some shell stuff, planned.                       |
+|[mjolnir._asm.hydra](https://github.com/asmagill/mjolnir_asm.hydra)                   | 0.1-1   | A collection, and provider of some of the individual functions from Hydra.     |
 |[mjolnir._asm.undocumented](https://github.com/asmagill/mjolnir_asm.undocumented)     |         | A collection, like this, of modules known to use private or undocumented APIs. |
 
 Also, see README.md in each modules directory.
+
+The Hydra collection contains submodules which share the same repository as the main module in an effort to clean up my repo list and start joining related modules. Some of the above modules may eventually be deprecated and moved into this collection, or into another one.  To the best of my ability, I will attempt to do this with minimal to no changes in their naming within Luarocks, unless it is a significant departure or change from the original intent of the module.
 
 **NOTE: README's for in progress modules may mention luarocks, but probably haven't been uploaded yet, unless it's a major change or rewrite of an existing, older module.**
 
