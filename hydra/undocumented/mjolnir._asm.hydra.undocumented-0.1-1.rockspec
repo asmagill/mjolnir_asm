@@ -12,7 +12,7 @@ version = "0.1-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.undocumented"
+local url = "github.com/asmagill/mjolnir_asm.hydra"
 local desc = "Hydra's spaces module setosxshadows function for Mjolnir. This module uses undocumented APIs."
 
 source = {url = "git://" .. url, dir = "mjolnir_asm.hydra/undocumented"}

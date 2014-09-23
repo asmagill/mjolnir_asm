@@ -84,5 +84,15 @@ setmetatable(module, { __call = function(_, ...) return module.applescript(...) 
 
 return module
 
+-- collection of return types I need to catch, and then maybe time to recursively parse through 'obj' results
+--
+-- > _h.hydra.runapplescript("")
+-- true	null()
+-- > _h.hydra.runapplescript("return true")
+-- true	'true'("true")
+-- > _h.hydra.runapplescript("return false")
+-- true	'fals'("false")
+-- > _h.hydra.runapplescript("return null")
+-- true	'null'
 
 
