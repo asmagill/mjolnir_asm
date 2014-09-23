@@ -1,21 +1,21 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.ipc.cli"
+package = "mjolnir._asm.ipc"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.1-2"
+version = "0.2-1"
 
 -- General metadata:
 
 local url = "github.com/asmagill/mjolnir_asm.ipc"
-local desc = "Mjolnir command line interface"
+local desc = "Provide IPC access to Mjolnir for command line acceess"
 
-source = {url = "git://" .. url, dir = "mjolnir_asm.ipc/"}
+source = {url = "git://" .. url}
 description = {
   summary = desc,
   detailed = desc,
@@ -28,13 +28,15 @@ description = {
 supported_platforms = {"macosx"}
 dependencies = {
   "lua >= 5.2",
-  "mjolnir._asm.ipc",
+  "mjolnir._asm.settings >= 0.2-1",
 }
 
 -- Build rules:
 
 build = {
-  type = "make",
-  build_target = "cli",
-  install_target = "install-cli",
+  type = "builtin",
+  modules = {
+    ["mjolnir._asm.ipc"] = "init.lua",
+    ["mjolnir._asm.ipc.internal"] = "internal.m",
+  },
 }

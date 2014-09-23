@@ -7,18 +7,14 @@ mjolnir._asm.ipc = {
     _URL         = 'https://github.com/asmagill/mjolnir_asm',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
-    
+
 --- === mjolnir._asm.ipc ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.ipc
 ---
 --- Interface with Mjolnir from the command line.
 ---
---- If you installed this module via Luarocks, please visit the homepage above, clone the repository, and enter the following from the command line while in module directory:
----
---- <pre>
----     [PREFIX=/usr/local] make install-cli
---- </pre>
+--- To install the command line tool, you also need to install `mjolnir._asm.ipc.cli`.
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
@@ -80,6 +76,43 @@ function mjolnir._asm.ipc._handler(raw, str)
 
   print = originalprint
   return str
+end
+
+--- mjolnir._asm.ipc.get_cli_colors() -> table
+--- Function
+---Returns a table containing three keys, `initial`, `input`, and `output`, which contain the terminal escape codes to generate the colors used in the command line interface.
+mjolnir._asm.ipc.get_cli_colors = function()
+	local settings = require("mjolnir._asm.settings")
+	local colors = {}
+	colors.initial = settings.get("_asm.ipc.cli.color_initial") or "\27[35m" ;
+	colors.input = settings.get("_asm.ipc.cli.color_input") or "\27[34m" ;
+	colors.output = settings.get("_asm.ipc.cli.color_output") or "\27[36m" ;
+	return colors
+end
+
+--- mjolnir._asm.ipc.set_cli_colors(table) -> table
+--- Function
+--- Takes as input a table containing one or more of the keys `initial`, `input`, or `output` to set the terminal escape codes to generate the colors used in the command line interface.  Each can be set to the empty string if you prefer to use the terminal window default.  Returns a table containing the changed color codes.
+---
+--- For a brief intro into terminal colors, you can visit a web site like this one (http://jafrog.com/2013/11/23/colors-in-terminal.html) (I have no affiliation with this site, it just seemed to be a clear one when I looked for an example... you can use Google to find many, many others).  Note that Lua doesn't support octal escapes in it's strings, so use `\x1b` or `\27` to indicate the `escape` character.
+---
+---    e.g. ipc.set_cli_colors{ initial = "", input = "\27[33m", output = "\27[38;5;11m" }
+mjolnir._asm.ipc.set_cli_colors = function(colors)
+	local settings = require("mjolnir._asm.settings")
+	if colors.initial then settings.set("_asm.ipc.cli.color_initial",colors.initial) end
+	if colors.input then settings.set("_asm.ipc.cli.color_input",colors.input) end
+	if colors.output then settings.set("_asm.ipc.cli.color_output",colors.output) end
+	return mjolnir._asm.ipc.get_cli_colors()
+end
+
+--- mjolnir._asm.ipc.reset_cli_colors()
+--- Function
+--- Erases any color changes you have made and resets the terminal to the original defaults.
+mjolnir._asm.ipc.reset_cli_colors = function()
+	local settings = require("mjolnir._asm.settings")
+	settings.clear("_asm.ipc.cli.color_initial")
+	settings.clear("_asm.ipc.cli.color_input")
+	settings.clear("_asm.ipc.cli.color_output")
 end
 
 -- Return Module Object --------------------------------------------------
