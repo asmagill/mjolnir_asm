@@ -8,14 +8,14 @@ package = "mjolnir._asm.undocumented.cgsdebug"
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.1-1"
+version = "0.1-2"
 
 -- General metadata:
 
 local url = "github.com/asmagill/mjolnir_asm.undocumented"
 local desc = "Undocumented CGSDebug features, including Hydra's shadow command."
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir="mjolnir_asm.undocumented/cgsdebug"}
 description = {
   summary = desc,
   detailed = desc,
@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.undocumented.cgsdebug"] = "mjolnir_asm.undocumented/cgsdebug/init.lua",
-    ["mjolnir._asm.undocumented.cgsdebug.internal"] = "mjolnir_asm.undocumented/cgsdebug/internal.m",
+    ["mjolnir._asm.undocumented.cgsdebug"] = "init.lua",
+    ["mjolnir._asm.undocumented.cgsdebug.internal"] = "internal.m",
   },
 }

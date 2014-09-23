@@ -8,14 +8,14 @@ package = "mjolnir._asm.undocumented.coredock"
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.1-1"
+version = "0.1-2"
 
 -- General metadata:
 
 local url = "github.com/asmagill/mjolnir_asm.undocumented"
 local desc = "Undocumented coredock features."
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir = "mjolnir_asm.undocumented/coredock/"}
 description = {
   summary = desc,
   detailed = desc,
@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.undocumented.coredock"] = "mjolnir_asm.undocumented/coredock/init.lua",
-    ["mjolnir._asm.undocumented.coredock.internal"] = "mjolnir_asm.undocumented/coredock/internal.m",
+    ["mjolnir._asm.undocumented.coredock"] = "init.lua",
+    ["mjolnir._asm.undocumented.coredock.internal"] = "internal.m",
   },
 }
