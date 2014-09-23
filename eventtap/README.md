@@ -6,7 +6,16 @@ For tapping into input events (mouse, keyboard, trackpad) for observation and po
 This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 ### Luarocks Install
-This module is not available via luarocks yet... clone the repository (or download the zip file), enter the created directory and do the following (Note that you will have to install [mjolnir_asm.eventtap.event](https://github.com/asmagill/mjolnir_asm.eventtap.event) first):
+~~~bash
+$ luarocks [--tree=mjolnir] install mjolnir._asm.eventtap
+~~~
+
+### Local Install
+~~~bash
+$ git clone https://github.com/asmagill/mjolnir_asm.eventtap
+$ cd mjolnir_asm.eventtap
+$ [PREFIX=/usr/local] make install
+~~~
 
 ~~~bash
 $ luarocks [--tree=mjolnir] make

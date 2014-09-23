@@ -12,6 +12,8 @@ line utility by [Steven Degutis](https://github.com/sdegutis/).
 
 
 ### Luarocks Install
+If you are specifying a tree for your Mjolnir modules, make sure to specify the same one for both modules, as Luarocks will check the prerequisite requirements from the specified tree by default.
+
 ~~~bash
 $ luarocks [--tree=mjolnir] install mjolnir._asm.ipc
 $ [PREFIX=/usr/local] luarocks [--tree=mjolnir] install mjolnir._asm.ipc.cli
