@@ -2,13 +2,13 @@ local module = {
 --[=[
     _NAME        = 'mjolnir._asm.undocumented.cgsdebug',
     _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.undocumented/cgsdebug',
+    _URL         = 'https://github.com/asmagill/mjolnir_asm.undocumented',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
 
 --- === mjolnir._asm.undocumented.cgsdebug ===
 ---
---- Home: https://github.com/asmagill/mjolnir_asm.undocumented/cgsdebug
+--- Home: https://github.com/asmagill/mjolnir_asm.undocumented
 ---
 --- Functions to get and set undocumented options and features within OS X.  These are undocumented features from the "private" api's for Mac OS X and are not guaranteed to work with any particular version of OS X or at all.  This code was based primarily on code samples and segments found at (https://code.google.com/p/undocumented-goodness/) and (https://code.google.com/p/iterm2/source/browse/branches/0.10.x/CGSInternal/CGSDebug.h?r=2).
 ---
