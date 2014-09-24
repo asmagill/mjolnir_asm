@@ -28,7 +28,7 @@ description = {
 supported_platforms = {"macosx"}
 dependencies = {
   "lua >= 5.2",
-  "mjolnir._asm.eventtap.event",
+  "mjolnir._asm.eventtap.event >= 0.2-1",
 }
 
 -- Build rules:
