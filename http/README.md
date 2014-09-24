@@ -1,39 +1,54 @@
-mjolnir._asm.settings
-=====================
+mjolnir._asm.http
+=================
 
-Functions for user-defined settings that persist across Hydra launches.
+For making HTTP/HTTPS requests
 
 This module is based on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 ### Luarocks Install
 ~~~bash
-$ luarocks [--tree=mjolnir] install mjolnir._asm.settings
+$ luarocks [--tree=mjolnir] install mjolnir._asm.http
 ~~~
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.settings
-$ cd mjolnir_asm.settings
+$ git clone https://github.com/asmagill/mjolnir_asm.http
+$ cd mjolnir_asm.http
 $ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require
 
 ~~~lua
-settings = require("mjolnir._asm.settings")
+http = require("mjolnir._asm.http")
 ~~~
 
 ### Functions
 
 ~~~lua
-settings.set(key, val)
+http.send(url, method, timeout, headers, body, fn(code, header, data, err)) -> http
 ~~~
-Saves the given value for the string key; value must be a string, number, boolean, nil, or a table of any of these, recursively.
+Send an HTTP request using the given method, with the following parameters:
+    url must be a string
+    method must be a string (i.e. "GET")
+    timeout must be a number
+    headers must be a table; may be empty; any keys and values present must both be strings
+    body may be a string or nil
+    fn must be a valid function, and is called with the following parameters:
+    code is a number (is sometimes 0, I think?)
+    header is a table of string->string pairs
+    data is a string on success, nil on failure
+    err is a string on failure, nil on success
 
 ~~~lua
-settings.get(key) -> val
+http:completed() -> boolean
 ~~~
-Gets the Lua value for the given string key.
+Returns true or false to indicate if the request has been completed.  True indicates that the request is no longer in the queue and the callback function has been invoked, while false indicates that it is still awaiting a result or timeout.
+
+~~~lua
+http:cancel() -> self
+~~~
+If the request is still waiting to complete, then this cancels the request.  If the request has been completed, then this method simply returns.  Used for garbage collection to abort incomplete requests during reloads.
 
 ### License
 

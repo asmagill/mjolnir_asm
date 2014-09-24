@@ -1,6 +1,28 @@
 #import <Cocoa/Cocoa.h>
 #import <lauxlib.h>
 
+// a = require("mjolnir._asm.http").send("http://www.asmagill.com","GET",10,{},nil,function(...) req=table.pack(...) ; print(req[1]) end)
+
+typedef struct _http_t {
+    NSURLSession*   session;
+    BOOL            completed;
+    int             fn;
+    int             self;
+} http_t;
+
+static NSMutableIndexSet* httphandlers;
+
+static int store_http(lua_State* L, int idx) {
+    lua_pushvalue(L, idx);
+    int x = luaL_ref(L, LUA_REGISTRYINDEX);
+    [httphandlers addIndex: x];
+    return x;
+}
+
+static void remove_http(lua_State* L, int x) {
+    luaL_unref(L, LUA_REGISTRYINDEX, x);
+    [httphandlers removeIndex: x];
+}
 
 // mjolnir._asm.http._send(url, method, timeout, headers, body, fn(code, header, data, err))
 // Send an HTTP request using the given method, with the following parameters:
@@ -42,46 +64,105 @@ static int http_send(lua_State* L) {
     lua_pushvalue(L, 6);
     int fn = luaL_ref(L, LUA_REGISTRYINDEX);
 
-    [NSURLConnection
-         sendAsynchronousRequest:req
-                           queue:[NSOperationQueue mainQueue]
-               completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                   lua_rawgeti(L, LUA_REGISTRYINDEX, fn);
+// build the userdata object
+    http_t* httpreq = lua_newuserdata(L, sizeof(http_t));
+    memset(httpreq, 0, sizeof(http_t));
+// define it's parts
+    httpreq->completed = NO;
+    httpreq->fn = fn;
 
-                   NSHTTPURLResponse* httpresponse = (NSHTTPURLResponse*)response;
-                   lua_pushnumber(L, [httpresponse statusCode]);
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:req
+        completionHandler:^(NSData *data,
+                          NSURLResponse *response,
+                          NSError *connectionError) {
+            if (!httpreq->completed) {
+                lua_rawgeti(L, LUA_REGISTRYINDEX, fn);
 
-                   lua_newtable(L);
-                   for (NSString* key in [httpresponse allHeaderFields]) {
-                       NSString* val = [[httpresponse allHeaderFields] objectForKey:key];
-                       lua_pushstring(L, [key UTF8String]);
-                       lua_pushstring(L, [val UTF8String]);
-                       lua_settable(L, -3);
-                   }
+                NSHTTPURLResponse* httpresponse = (NSHTTPURLResponse*)response;
+                lua_pushnumber(L, [httpresponse statusCode]);
 
-                   if (data) {
-                       lua_pushlstring(L, [data bytes], [data length]);
-                       lua_pushnil(L);
-                   }
-                   else {
-                       lua_pushnil(L);
-                       lua_pushstring(L, [[connectionError localizedDescription] UTF8String]);
-                   }
+                lua_newtable(L);
+                for (NSString* key in [httpresponse allHeaderFields]) {
+                NSString* val = [[httpresponse allHeaderFields] objectForKey:key];
+                lua_pushstring(L, [key UTF8String]);
+                lua_pushstring(L, [val UTF8String]);
+                lua_settable(L, -3);
+                }
 
-                   lua_call(L, 4, 0) ;
+                if (data) {
+                lua_pushlstring(L, [data bytes], [data length]);
+                lua_pushnil(L);
+                }
+                else {
+                lua_pushnil(L);
+                lua_pushstring(L, [[connectionError localizedDescription] UTF8String]);
+                }
 
-                   luaL_unref(L, LUA_REGISTRYINDEX, fn);
-               }];
+                lua_call(L, 4, 0) ;
 
-    return 0;
+                luaL_unref(L, LUA_REGISTRYINDEX, fn);
+                httpreq->completed = YES;
+            }
+        }]
+    resume];
+
+    httpreq->session = session ;
+// store registry reference for connection userdata
+    httpreq->self = store_http(L, 1) ;
+// add the metatable
+    luaL_getmetatable(L, "mjolnir._asm.http");
+    lua_setmetatable(L, -2);
+
+    return 1;
+//    return 0;
+}
+
+/// mjolnir._asm.http:completed() -> boolean
+/// Method
+/// Returns true or false to indicate if the request has been completed.  True indicates that the request is no longer in the queue and the callback function has been invoked, while false indicates that it is still awaiting a result or timeout.
+static int http_completed(lua_State* L) {
+    http_t* httpreq = luaL_checkudata(L, 1, "mjolnir._asm.http");
+//    lua_settop(L, 1);
+
+    lua_pushboolean(L, httpreq->completed);
+    return 1;
+}
+
+/// mjolnir._asm.http:cancel() -> self
+/// Method
+/// If the request is still waiting to complete, then this cancels the request.  If the request has been completed, then this method simply returns.  Used for garbage collection to abort incomplete requests during reloads.
+static int http_cancel(lua_State* L) {
+    http_t* httpreq = luaL_checkudata(L, 1, "mjolnir._asm.http");
+    lua_settop(L, 1);
+
+    if (!httpreq->completed) {
+        [httpreq->session invalidateAndCancel];
+        luaL_unref(L, LUA_REGISTRYINDEX, httpreq->fn);
+        httpreq->completed = YES;
+    }
+    remove_http(L, httpreq->self);
+    return 1;
 }
 
 static const luaL_Reg http_lib[] = {
-    {"_send", http_send},
+    {"_send",       http_send},
+    {"completed",   http_completed},
+    {"cancel",      http_cancel},
+    {"__gc",        http_cancel},
     {NULL, NULL}
 };
 
 int luaopen_mjolnir__asm_http_internal(lua_State* L) {
     luaL_newlib(L, http_lib);
+
+// http.__index = http
+    lua_pushvalue(L, -1);
+    lua_setfield(L, -2, "__index");
+
+// put http in registry; necessary for luaL_checkudata()
+    lua_pushvalue(L, -1);
+    lua_setfield(L, LUA_REGISTRYINDEX, "mjolnir._asm.http");
+
     return 1;
 }
