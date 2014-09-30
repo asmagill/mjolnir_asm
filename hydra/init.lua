@@ -63,14 +63,19 @@ module.call = function(fn, ...)
     return table.unpack(results)
 end
 
---- mjolnir._asm.hydra.exec(command) -> string
+--- mjolnir._asm.hydra.exec(command[, with_user_env]) -> string
 --- Function
---- Runs a shell function and returns stdout as a string (may include trailing newline).
-module.exec = function(command)
-    local f = io.popen(command)
-    local str = f:read('*a')
+--- Runs a shell command and returns stdout as a string (may include a trailing newline).  If `with_user_env` is `true`, then invoke the user's default shell as an interactive login shell in which to execute the provided command in order to make sure their setup files are properly evaluated so extra path and environment variables can be set.  This is not done, if `with_user_env` is `false` or not provided, as it does add some overhead and is not always strictly necessary.
+module.exec = function(command, user_env)
+    local f
+    if user_env then
+        f = io.popen(os.getenv("SHELL").." -l -i -c \""..command.."\"", 'r')
+    else
+        f = io.popen(command, 'r')
+    end
+    local s = f:read('*a')
     f:close()
-    return str
+    return s
 end
 
 --- mjolnir._asm.hydra.hydra_namespace() -> table

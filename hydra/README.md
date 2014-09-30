@@ -45,9 +45,9 @@ hydra.check_accessibility(shouldprompt) -> isenabled
 Returns whether accessibility is enabled. If passed `true`, prompts the user to enable it.
 
 ~~~lua
-hydra.exec(command) -> string
+hydra.exec(command[, with_user_env]) -> string
 ~~~
-Runs a shell function and returns stdout as a string (may include trailing newline).
+Runs a shell command and returns stdout as a string (may include a trailing newline).  If `with_user_env` is `true`, then invoke the user's default shell as an interactive login shell in which to execute the provided command in order to make sure their setup files are properly evaluated so extra path and environment variables can be set.  This is not done, if `with_user_env` is `false` or not provided, as it does add some overhead and is not always strictly necessary.
 
 ~~~lua
 hydra.fileexists(path) -> exists, isdir
