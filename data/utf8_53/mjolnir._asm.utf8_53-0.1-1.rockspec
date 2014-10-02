@@ -1,7 +1,7 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.data.utf8_53"
+package = "mjolnir._asm.utf8_53"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
@@ -38,7 +38,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.data.utf8_53"] = "init.lua",
-    ["mjolnir._asm.data.utf8_53.internal-utf8"] = "lutf8lib.c",
+    ["mjolnir._asm.utf8_53"] = "init.lua",
+    ["mjolnir._asm.utf8_53.internal-utf8"] = "lutf8lib.c",
   },
 }
