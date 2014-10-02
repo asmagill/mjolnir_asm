@@ -1,6 +1,8 @@
 #import <Cocoa/Cocoa.h>
 #import <lauxlib.h>
 
+// Check out NSScriptClassDescription for expanding obj return values...
+
 static int runapplescript(lua_State* L) {
     NSString* source = [NSString stringWithUTF8String:luaL_checkstring(L, 1)];
 
