@@ -28,6 +28,7 @@ description = {
 supported_platforms = {"macosx"}
 dependencies = {
   "lua >= 5.2",
+  "mjolnir._asm >= 0.1-1",
 }
 
 -- Build rules:
