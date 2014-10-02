@@ -1,5 +1,5 @@
-mjolnir._asm.utf8
-===================
+mjolnir._asm.data.utf8
+======================
 
 Functions providing basic support for UTF-8 encodings within Mjolnir.  These functions are primarily based upon the UTF-8 Library as provided by the [Lua 5.3.alpha programming language](http://www.lua.org/work/). All I have provided is a wrapper to allow easy inclusion within the Mjolnir environment.
 
@@ -11,19 +11,19 @@ The following text is from the preliminary [reference documentation](http://www.
 
 ### Luarocks Install (actually, not yet; needs further testing first...)
 ~~~bash
-$ luarocks [--tree=mjolnir] install mjolnir._asm.utf8_53
+$ luarocks [--tree=mjolnir] install mjolnir._asm.data.utf8_53
 ~~~
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.utf8_53
-$ cd mjolnir_asm.utf8_53
+$ git clone https://github.com/asmagill/mjolnir_asm.data
+$ cd mjolnir_asm.data/utf8_53
 $ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require
 ~~~lua
-utf8_53 = require("mjolnir._asm.utf8_53")
+utf8_53 = require("mjolnir._asm.data.utf8_53")
 ~~~
 
 ### Functions

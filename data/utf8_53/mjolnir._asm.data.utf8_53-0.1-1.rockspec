@@ -1,7 +1,7 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.utf8_53"
+package = "mjolnir._asm.data.utf8_53"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
@@ -12,10 +12,10 @@ version = "0.1-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.utf8_53"
+local url = "github.com/asmagill/mjolnir_asm.data"
 local desc = "Functions providing basic support for UTF-8 encodings within Mjolnir."
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir = "mjolnir_asm.data/utf8_53"}
 description = {
   summary = desc,
   detailed = desc..[[
@@ -38,7 +38,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.utf8_53"] = "init.lua",
-    ["mjolnir._asm.utf8_53.internal-utf8"] = "lutf8lib.c",
+    ["mjolnir._asm.data.utf8_53"] = "init.lua",
+    ["mjolnir._asm.data.utf8_53.internal-utf8"] = "lutf8lib.c",
   },
 }
