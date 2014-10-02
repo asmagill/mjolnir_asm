@@ -1,14 +1,15 @@
 #import <Cocoa/Cocoa.h>
 #import <lauxlib.h>
 
-// a = require("mjolnir._asm.http").send("http://www.asmagill.com","GET",10,{},nil,function(...) req=table.pack(...) ; print(req[1]) end)
-
-typedef struct _http_t {
-    NSURLSession*   session;
-    BOOL            completed;
-    int             fn;
-    int             self;
-} http_t;
+typedef struct _datatask_t {
+//    NSURLSession*           session;
+    NSURLSessionDataTask*   task;
+	BOOL					started;
+    BOOL                    completed;
+    BOOL                    cancelled;
+    int                     fn;
+    int                     self;
+} datatask_t;
 
 static NSMutableIndexSet* httphandlers;
 
@@ -24,8 +25,8 @@ static void remove_http(lua_State* L, int x) {
     [httphandlers removeIndex: x];
 }
 
-// mjolnir._asm.http._send(url, method, timeout, headers, body, fn(code, header, data, err))
-// Send an HTTP request using the given method, with the following parameters:
+// mjolnir._asm.http._new(url, method, timeout, headers, body, fn(code, header, data, err))
+// Create an HTTP request using the given method, with the following parameters:
 //   url must be a string
 //   method must be a string (i.e. "GET")
 //   timeout must be a number
@@ -36,7 +37,7 @@ static void remove_http(lua_State* L, int x) {
 //     header is a table of string->string pairs
 //     data is a string on success, nil on failure
 //     err is a string on failure, nil on success
-static int http_send(lua_State* L) {
+static int http_new(lua_State* L) {
     NSURL* url = [NSURL URLWithString:[NSString stringWithUTF8String: luaL_checkstring(L, 1)]];
     NSString* method = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
     NSTimeInterval timeout = luaL_checknumber(L, 3);
@@ -65,51 +66,53 @@ static int http_send(lua_State* L) {
     int fn = luaL_ref(L, LUA_REGISTRYINDEX);
 
 // build the userdata object
-    http_t* httpreq = lua_newuserdata(L, sizeof(http_t));
-    memset(httpreq, 0, sizeof(http_t));
+    datatask_t* my_data = lua_newuserdata(L, sizeof(datatask_t));
+    memset(my_data, 0, sizeof(datatask_t));
 // define it's parts
-    httpreq->completed = NO;
-    httpreq->fn = fn;
+    my_data->started   = NO;
+    my_data->completed = NO;
+    my_data->cancelled = NO;
+    my_data->fn        = fn;
+//     my_data->session   = [NSURLSession sharedSession];
+//     my_data->task      = [my_data->session
+    my_data->task      = [[NSURLSession sharedSession]
+        dataTaskWithRequest:req
+          completionHandler:^(NSData *data, NSURLResponse *response, NSError *connectionError) {
+            if ([my_data->task state] == NSURLSessionTaskStateCompleted) {
 
-    NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithRequest:req
-        completionHandler:^(NSData *data,
-                          NSURLResponse *response,
-                          NSError *connectionError) {
-            if (!httpreq->completed) {
-                lua_rawgeti(L, LUA_REGISTRYINDEX, fn);
+			// cancelling a request actually invokes this callback immediately, so skip if cancelled.
+            if (my_data->started && !(my_data->cancelled || my_data->completed)) {
+                lua_rawgeti(L, LUA_REGISTRYINDEX, my_data->fn);
 
                 NSHTTPURLResponse* httpresponse = (NSHTTPURLResponse*)response;
                 lua_pushnumber(L, [httpresponse statusCode]);
 
                 lua_newtable(L);
                 for (NSString* key in [httpresponse allHeaderFields]) {
-                NSString* val = [[httpresponse allHeaderFields] objectForKey:key];
-                lua_pushstring(L, [key UTF8String]);
-                lua_pushstring(L, [val UTF8String]);
-                lua_settable(L, -3);
+                	NSString* val = [[httpresponse allHeaderFields] objectForKey:key];
+                	lua_pushstring(L, [key UTF8String]);
+                	lua_pushstring(L, [val UTF8String]);
+                	lua_settable(L, -3);
                 }
 
                 if (data) {
-                lua_pushlstring(L, [data bytes], [data length]);
-                lua_pushnil(L);
-                }
-                else {
-                lua_pushnil(L);
-                lua_pushstring(L, [[connectionError localizedDescription] UTF8String]);
+                	lua_pushlstring(L, [data bytes], [data length]);
+                	lua_pushnil(L);
+                } else {
+                	lua_pushnil(L);
+                	lua_pushstring(L, [[connectionError localizedDescription] UTF8String]);
                 }
 
                 lua_call(L, 4, 0) ;
 
+                my_data->completed = YES;
                 luaL_unref(L, LUA_REGISTRYINDEX, fn);
-                httpreq->completed = YES;
-            }
-        }]
-    resume];
+                remove_http(L, my_data->self);
+            }}
+        }];
 
-    httpreq->session = session ;
 // store registry reference for connection userdata
-    httpreq->self = store_http(L, 1) ;
+    my_data->self = store_http(L, 1) ;
 // add the metatable
     luaL_getmetatable(L, "mjolnir._asm.http");
     lua_setmetatable(L, -2);
@@ -118,38 +121,54 @@ static int http_send(lua_State* L) {
 //    return 0;
 }
 
-/// mjolnir._asm.http:completed() -> boolean
+/// mjolnir._asm.http:start() -> self
 /// Method
-/// Returns true or false to indicate if the request has been completed.  True indicates that the request is no longer in the queue and the callback function has been invoked, while false indicates that it is still awaiting a result or timeout.
-static int http_completed(lua_State* L) {
-    http_t* httpreq = luaL_checkudata(L, 1, "mjolnir._asm.http");
-//    lua_settop(L, 1);
+/// Begin the URL data request. Returns nil if the task has already been started or cancelled, otherwise returns self.
+static int http_start(lua_State* L) {
+    datatask_t* my_data = luaL_checkudata(L, 1, "mjolnir._asm.http");
 
-    lua_pushboolean(L, httpreq->completed);
+	if (my_data->started || my_data->cancelled) {
+		lua_pushnil(L) ;
+	} else {
+		my_data->started = YES;
+		lua_settop(L, 1);
+    	[my_data->task resume];
+	}
     return 1;
 }
 
-/// mjolnir._asm.http:cancel() -> self
+/// mjolnir._asm.http:status() -> started, completed, cancelled
 /// Method
-/// If the request is still waiting to complete, then this cancels the request.  If the request has been completed, then this method simply returns.  Used for garbage collection to abort incomplete requests during reloads.
-static int http_cancel(lua_State* L) {
-    http_t* httpreq = luaL_checkudata(L, 1, "mjolnir._asm.http");
-    lua_settop(L, 1);
+/// Returns true or false for each of the flags indicating if the request has been started, if it has been completed, and if it has been cancelled.
+static int http_status(lua_State* L) {
+    datatask_t* my_data = luaL_checkudata(L, 1, "mjolnir._asm.http");
 
-    if (!httpreq->completed) {
-        [httpreq->session invalidateAndCancel];
-        luaL_unref(L, LUA_REGISTRYINDEX, httpreq->fn);
-        httpreq->completed = YES;
+    lua_pushboolean(L, my_data->started);
+    lua_pushboolean(L, my_data->completed);
+    lua_pushboolean(L, my_data->cancelled);
+    return 3;
+}
+
+/// mjolnir._asm.http:cancel() -> bool
+/// Method
+/// If the request is still waiting to complete, then this cancels the request.  Returns true if the request was actually cancelled, otherwise false.
+static int http_cancel(lua_State* L) {
+    datatask_t* my_data = luaL_checkudata(L, 1, "mjolnir._asm.http");
+
+    if (my_data->started && !(my_data->completed || my_data->cancelled)) {
+        my_data->cancelled = YES;
+        [my_data->task cancel];
     }
-    remove_http(L, httpreq->self);
+	lua_pushboolean(L, my_data->cancelled) ;
     return 1;
 }
 
 static const luaL_Reg http_lib[] = {
-    {"_send",       http_send},
-    {"completed",   http_completed},
-    {"cancel",      http_cancel},
-    {"__gc",        http_cancel},
+    {"_new",                http_new},
+    {"start",               http_start},
+    {"status",              http_status},
+    {"cancel",              http_cancel},
+    {"__gc",                http_cancel},
     {NULL, NULL}
 };
 
@@ -166,3 +185,5 @@ int luaopen_mjolnir__asm_http_internal(lua_State* L) {
 
     return 1;
 }
+
+// h = require("mjolnir._asm.http") ; b = h.new("http://www.google.com","GET",10,{},nil,function(...) rb = table.pack(...) ; print("b", rb[1]) end) ; a = h.new("http://10.255.255.1","GET",10,{},nil,function(...) ra = table.pack(...) ; print("a", ra[1]) end) ;

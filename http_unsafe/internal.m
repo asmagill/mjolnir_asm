@@ -1,29 +1,6 @@
 #import <Cocoa/Cocoa.h>
 #import <lauxlib.h>
 
-// require("mjolnir._asm.http_unsafe").send("http://www.asmagill.com","GET",10,{},nil,     function(...) req=table.pack(...) ; print(req[1]) end)
-
-//
-// typedef struct _http_t {
-//     NSURLConnection*        connection;
-//     int                     self;
-// } http_t;
-//
-// static NSMutableIndexSet* httphandlers;
-//
-// static int store_http(lua_State* L, int idx) {
-//     lua_pushvalue(L, idx);
-//     int x = luaL_ref(L, LUA_REGISTRYINDEX);
-//     [httphandlers addIndex: x];
-//     return x;
-// }
-//
-// static void remove_http(lua_State* L, int x) {
-//     luaL_unref(L, LUA_REGISTRYINDEX, x);
-//     [httphandlers removeIndex: x];
-// }
-//
-
 // mjolnir._asm.http._send(url, method, timeout, headers, body, fn(code, header, data, err))
 // Send an HTTP request using the given method, with the following parameters:
 //   url must be a string
@@ -94,52 +71,11 @@ static int http_send(lua_State* L) {
 
                    luaL_unref(L, LUA_REGISTRYINDEX, fn);
                }];
-
-// // build the userdata object
-//     http_t* httpreq = lua_newuserdata(L, sizeof(http_t));
-//     memset(httpreq, 0, sizeof(http_t));
-// // define it's parts
-//     httpreq->connection = my_connection ;
-// // store registry reference for connection userdata
-//     httpreq->self = store_http(L, 1) ;
-// // add the metatable
-//     luaL_getmetatable(L, "mjolnir._asm.http");
-//     lua_setmetatable(L, -2);
-//     return 1;
     return 0;
 }
 
-// /// mjolnir._asm.http:completed() -> boolean
-// /// Method
-// /// Returns true or false to indicate if the request has been completed.  True indicates that the request is no longer in the queue and the callback function has been invoked, while false indicates that it is still awaiting a result or timeout.
-// static int http_completed(lua_State* L) {
-//     http_t* httpreq = luaL_checkudata(L, 1, "mjolnir._asm.http");
-// //    lua_settop(L, 1);
-//
-//     lua_pushboolean(L, [httpreq->connection isFinished]);
-//     return 1;
-// }
-
-// /// mjolnir._asm.http:cancel() -> self
-// /// Method
-// /// If the request is still waiting to complete, then this cancels the request.  If the request has been completed, then this method simply returns.  Used for garbage collection to abort incomplete requests during reloads.
-// static int http_cancel(lua_State* L) {
-//     http_t* httpreq = luaL_checkudata(L, 1, "mjolnir._asm.http");
-// //    lua_settop(L, 1);
-//
-// //    if (![httpreq->connection isFinished]) {
-//         [NSURLConnection cancelActuallyAsynchronousRequest:httpreq->connection];
-// //    }
-//     remove_http(L, httpreq->self);
-//     return 0;
-// }
-
-
 static const luaL_Reg http_lib[] = {
     {"_send",       http_send},
-//     {"completed",   http_completed},
-//     {"cancel",      http_cancel},
-//     {"__gc",        http_cancel},
     {NULL, NULL}
 };
 

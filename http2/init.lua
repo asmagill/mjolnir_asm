@@ -18,15 +18,17 @@ local module = {
 --]=]
 }
 
-local mjolnir_mod_name = "mjolnir._asm.http"
+local mjolnir_mod_name = "mjolnir._asm.http2"
 local c_library = "internal"
 local internal = {}
 
 -- integration with C functions ------------------------------------------
 
-if c_library then
-	for i,v in pairs(require(mjolnir_mod_name.."."..c_library)) do module[i] = v end
-end
+--if c_library then
+--	for i,v in pairs(require(mjolnir_mod_name.."."..c_library)) do module[i] = v end
+--end
+
+module = require(mjolnir_mod_name.."."..c_library)
 
 -- private variables and methods -----------------------------------------
 
