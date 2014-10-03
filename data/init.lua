@@ -6,22 +6,6 @@
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
---- === mjolnir._asm.data.utf8 ===
----
---- Home: https://github.com/asmagill/mjolnir_asm.data
----
---- This is a submodule of mjolnir._asm.data.  This submodule contains the ported Hydra utf8 functions.
----
---- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
-
---- === mjolnir._asm.data.pasteboard ===
----
---- Home: https://github.com/asmagill/mjolnir_asm.data
----
---- This is a submodule of mjolnir._asm.data.  This submodule contains the ported Hydra pasteboard functions.
----
---- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
-
 local mjolnir_mod_name = "mjolnir._asm.data.internal"
 local module = require(mjolnir_mod_name)
 

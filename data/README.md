@@ -46,22 +46,6 @@ data.hexdump(string [, count]) -> string
 Treats the input string as a binary blob and returns a prettied up hex dump of it's contents. By default, a newline character is inserted after every 16 bytes, though this can be changed by also providing the optional count argument.
 
 ~~~lua
-data.pasteboard.changecount() -> number
-~~~
-The number of times the pasteboard owner changed
-(useful to see if the pasteboard was updated, by seeing if the value of this function changes).
-
-~~~lua
-data.pasteboard.getcontents() -> string
-~~~
-Returns the contents of the pasteboard as a string, or nil if it can't be done
-
-~~~lua
-data.pasteboard.setcontents(string) -> boolean
-~~~
-Sets the contents of the pasteboard to the string value passed in.  Returns success status as true or false.
-
-~~~lua
 data.userdata_tostring(userdata) -> string
 ~~~
 Returns the userdata object as a binary string.
