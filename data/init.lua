@@ -1,24 +1,8 @@
-local module = {
---[=[
-    _NAME        = 'mjolnir._asm.data',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.data',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-
 --- === mjolnir._asm.data ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.data
 ---
 --- Functions for data encoding and decoding data within Mjolnir.  This module contains a variety of modules that were separated in Hydra, but seemed too small/somewhat related enough that combining them seemed reasonable.
----
---- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
-
---- === mjolnir._asm.data.json ===
----
---- Home: https://github.com/asmagill/mjolnir_asm.data
----
---- This is a submodule of mjolnir._asm.data.  This submodule contains the ported Hydra json functions.
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
@@ -38,18 +22,8 @@ local module = {
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-    ]],
---]=]
-}
-
-local mjolnir_mod_name = "mjolnir._asm.data"
-local c_library = "internal"
-
--- integration with C functions ------------------------------------------
-
-if c_library then
-	for i,v in pairs(require(mjolnir_mod_name.."."..c_library)) do module[i] = v end
-end
+local mjolnir_mod_name = "mjolnir._asm.data.internal"
+local module = require(mjolnir_mod_name)
 
 -- private variables and methods -----------------------------------------
 
@@ -102,7 +76,6 @@ module.applekeys = {
 --- mjolnir._asm.data.hexdump(string [, count]) -> string
 --- Function
 --- Treats the input string as a binary blob and returns a prettied up hex dump of it's contents. By default, a newline character is inserted after every 16 bytes, though this can be changed by also providing the optional count argument.
-
 module.hexdump = function(stuff, linemax)
 	local ascii = ""
 	local count = 0
