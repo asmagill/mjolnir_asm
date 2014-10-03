@@ -7,6 +7,19 @@ combining them seemed reasonable.
 
 This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
+### Special Note
+In keeping with the Mjolnir penchant for minimalism in it's modules, I have started breaking this module up into separate modules, with this core acting as an organizational focus and repository for a handful of related functions which don't really fit anywhere else.
+
+The following have been removed and/or replaced (or is in the works):
+
+1. json is now a separate module and is no longer directly included in this collection. It is also much more robust, though still has some limitations with serialization of complex structures, but this is a work in progress. See the json directory of this git repository, or install the mjolnir._asm.data.json luarock.
+
+2. utf8 has been removed entirely and is replaced by mjolnir._asm.data.utf8_53, which provides the basic utf8 support Hydra did plus more.  See the utf8_53 directory of this git repository, or install the mjolnir._asm.data.utf8_53 luarock.  Check out the readme for how to replicate utf8.count and utf8.chars
+
+3. pasteboard is now a separate module and is no longer directly included in this collection. See the pasteboard directory of this git repository, or install the mjolnir._asm.data.pasteboard luarock.
+
+Additional encoding or data related modules under `mjolnir._asm.data` may also be available as time progresses.
+
 ### Luarocks Install
 ~~~bash
 $ luarocks [--tree=mjolnir] install mjolnir._asm.data
@@ -52,18 +65,6 @@ Sets the contents of the pasteboard to the string value passed in.  Returns succ
 data.userdata_tostring(userdata) -> string
 ~~~
 Returns the userdata object as a binary string.
-
-~~~lua
-data.utf8.chars(str) -> {str, ...}
-~~~
-Splits the string into groups of (UTF-8 encoded) strings representing what humans would consider individual characters.
-
-The result is a sequential table, such that table.concat(result) produces the original string.
-
-~~~lua
-data.utf8.count(str) -> int
-~~~
-Returns the number of characters as humans would count them.
 
 ~~~lua
 data.uuid() -> string

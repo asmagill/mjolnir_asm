@@ -174,7 +174,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         spaces                  = nil, -- see below
         textgrid                = my_require("textgrid", nil),
         timer                   = my_require("timer", "mjolnir._asm.timer"),
-        utf8                    = nil, -- see below
+        utf8                    = my_require("utf8", "mjolnir._asm.data.utf8_53"),
         window                  = my_require("window", "mjolnir.window"),
     }
 
@@ -182,7 +182,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     -- Some cleanup to make things more Hydra like...
     --
     _H._notifysetup = package.loaded["mjolnir._asm.notify"] ~= nil
-    if type(_H.mouse[1]) == "nil" then
+    if type(_H.mouse) == "table" then
         _H.mouse.get = _H.mouse.position
         _H.mouse.set = function(xy) return _H.mouse.warptopoint(xy.x, xy.y) end
     end
@@ -191,10 +191,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         _H.spaces = undocumented.spaces
         _H.hydra.setosxshadows = undocumented.setosxshadows
     end
-    local data = my_require("hydra.pasteboard, utf8", "mjolnir._asm.data")
+    local data = my_require("hydra.pasteboard", "mjolnir._asm.data")
     if type(data) == "table" then
-        _H.utf8 = data.utf8
         _H.pasteboard = data.pasteboard
+    end
+    if type(_H.utf8) == "table" then
+        _H.utf8.count = _H.utf8.len
+        _H.utf8.chars = function(str)
+            local t = {}
+            str:gsub(utf8_53.charpatt,function(c) t[#r+1] = c end)
+            return t
+        end
     end
     return _H
 end

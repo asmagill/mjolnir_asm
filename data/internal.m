@@ -38,45 +38,6 @@ static int pasteboard_changecount(lua_State* L) {
     return 1;
 }
 
-/// mjolnir._asm.data.utf8.count(str) -> int
-/// Function
-/// Returns the number of characters as humans would count them.
-static int utf8_count(lua_State* L) {
-    NSString* str = [NSString stringWithUTF8String:luaL_checkstring(L, 1)];
-
-    NSInteger len = 0;
-    for (NSInteger i = 0; i < [str length]; i++, len++) {
-        NSRange r = [str rangeOfComposedCharacterSequenceAtIndex:i];
-        i = NSMaxRange(r) - 1;
-    }
-
-    lua_pushnumber(L, len);
-    return 1;
-}
-
-/// mjolnir._asm.data.utf8.chars(str) -> {str, ...}
-/// Function
-/// Splits the string into groups of (UTF-8 encoded) strings representing what humans would consider individual characters.
-///
-/// The result is a sequential table, such that table.concat(result) produces the original string.
-static int utf8_chars(lua_State* L) {
-    NSString* str = [NSString stringWithUTF8String:luaL_checkstring(L, 1)];
-
-    lua_newtable(L);
-    int pos = 0;
-
-    for (NSInteger i = 0; i < [str length]; i++) {
-        NSRange r = [str rangeOfComposedCharacterSequenceAtIndex:i];
-        i = NSMaxRange(r) - 1;
-
-        NSString* substr = [str substringWithRange:r];
-        lua_pushstring(L, [substr UTF8String]);
-        lua_rawseti(L, -2, ++pos);
-    }
-
-    return 1;
-}
-
 /// mjolnir._asm.data.userdata_tostring(userdata) -> string
 /// Function
 /// Returns the userdata object as a binary string.
@@ -94,12 +55,6 @@ static int ud_tostring (lua_State *L) {
     }
 }
 
-static const luaL_Reg utf8lib[] = {
-    {"count", utf8_count},
-    {"chars", utf8_chars},
-    {NULL, NULL}
-};
-
 static luaL_Reg pasteboardlib[] = {
     {"getcontents", pasteboard_getcontents},
     {"setcontents", pasteboard_setcontents},
@@ -111,7 +66,6 @@ static const luaL_Reg datalib[] = {
     {"uuid", data_uuid},
     {"userdata_tostring", ud_tostring},
     {"pasteboard", NULL},   // Placeholder
-    {"utf8", NULL},         // Placeholder
     {NULL, NULL}
 };
 
@@ -119,7 +73,5 @@ int luaopen_mjolnir__asm_data_internal(lua_State* L) {
     luaL_newlib(L, datalib);
     luaL_newlib(L, pasteboardlib);
     lua_setfield(L, -2, "pasteboard");
-    luaL_newlib(L, utf8lib);
-    lua_setfield(L, -2, "utf8");
     return 1;
 }
