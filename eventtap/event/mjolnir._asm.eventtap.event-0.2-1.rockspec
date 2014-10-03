@@ -12,10 +12,10 @@ version = "0.2-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.eventtap.event"
+local url = "github.com/asmagill/mjolnir_asm.eventtap"
 local desc = "Functionality to inspect, modify, and create events for mjolnir_asm.eventtap is provided by this module."
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir="mjolnir_asm.eventtap/event"}
 description = {
   summary = desc,
   detailed = desc,

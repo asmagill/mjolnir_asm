@@ -1,5 +1,5 @@
 PREFIX ?= /usr/local
-MODULE = eventtap
+MODULE = evettap/eventtap
 LUAFILE  = init.lua
 OBJCFILE = internal.m
 HEADERS   = 
