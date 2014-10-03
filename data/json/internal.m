@@ -43,23 +43,27 @@ static int json_encode(lua_State* L) {
         if (lua_toboolean(L, 2))
             opts = NSJSONWritingPrettyPrinted;
 
-        NSError* error;
-        NSData* data = [NSJSONSerialization dataWithJSONObject:obj options:opts error:&error];
+        if ([NSJSONSerialization isValidJSONObject:obj]) {
+            NSError* error;
+            NSData* data = [NSJSONSerialization dataWithJSONObject:obj options:opts error:&error];
 
-        if (data) {
-            NSString* str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            lua_pushstring(L, [str UTF8String]);
-            return 1;
-        }
-        else {
-            lua_pushstring(L, [[error localizedDescription] UTF8String]);
-            lua_error(L);
-            return 0; // unreachable
+            if (data) {
+                NSString* str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                lua_pushstring(L, [str UTF8String]);
+                return 1;
+            }
+            else {
+                lua_pushstring(L, [[error localizedDescription] UTF8String]);
+                lua_error(L);
+                return 0; // unreachable
+            }
+        } else {
+            luaL_error(L, "object cannot be encoded as a json string") ;
+            return 0;
         }
     } else {
         lua_pop(L, 1) ;
-        lua_pushliteral(L, "non-table object given to json");
-        lua_error(L);
+        luaL_error(L, "non-table object given to json encoder");
         return 0;
     }
 }

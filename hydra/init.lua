@@ -163,7 +163,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             version             = module._version(),
         },
         inspect                 = my_require("inspect", "inspect"),
-        json                    = nil, -- see below
+        json                    = my_require("json", "mjolnir._asm.data.json"),
         logger                  = my_require("logger", nil),
         mouse                   = my_require("mouse", "mjolnir.jstevenson.cursor"),
         notify                  = my_require("notify", "mjolnir._asm.notify"),
@@ -191,11 +191,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         _H.spaces = undocumented.spaces
         _H.hydra.setosxshadows = undocumented.setosxshadows
     end
-    local data = my_require("hydra.pasteboard, json, utf8", "mjolnir._asm.data")
+    local data = my_require("hydra.pasteboard, utf8", "mjolnir._asm.data")
     if type(data) == "table" then
         _H.utf8 = data.utf8
         _H.pasteboard = data.pasteboard
-        _H.json = data.json
     end
     return _H
 end

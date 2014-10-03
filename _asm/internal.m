@@ -19,7 +19,7 @@
 //      encode_json     escape_table = true, numeric_key="split"
 //
 //  deal with loops:
-//      a = { a=1,b=2,c=3} ; a.d = a ; json_encode(a) is pathological.  we need a way to deep scan for loops and non-data types.
+//      a = { a=1,b=2,c=3 } ; a.d = a ; json_encode(a) is pathological.  we need a way to deep scan for loops and non-data types.
 
 id lua_to_NSObject(lua_State* L, int idx) {
     idx = lua_absindex(L,idx);
