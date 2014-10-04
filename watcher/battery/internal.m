@@ -100,11 +100,8 @@ static int battery_watcher_stop(lua_State* L) {
 static int battery_watcher_gc(lua_State* L) {
     battery_watcher_t* watcher = luaL_checkudata(L, 1, USERDATA_TAG);
 
-    if (watcher->started) {
-        watcher->started = NO;
-        remove_udhandler(L, batteryHandlers, watcher->self);
-        CFRunLoopRemoveSource(CFRunLoopGetMain(), watcher->t, kCFRunLoopCommonModes);
-    }
+    lua_pushcfunction(L, battery_watcher_stop) ; lua_pushvalue(L,1); lua_call(L, 1, 1);
+
     luaL_unref(L, LUA_REGISTRYINDEX, watcher->fn);
     CFRunLoopSourceInvalidate(watcher->t);
     CFRelease(watcher->t);

@@ -124,12 +124,8 @@ static int watcher_path_stop(lua_State* L) {
 static int watcher_path_gc(lua_State* L) {
     watcher_path_t* watcher_path = luaL_checkudata(L, 1, USERDATA_TAG);
 
-    if (watcher_path->started) {
-        watcher_path->started = NO;
-        remove_udhandler(L, pathHandlers, watcher_path->self);
-        FSEventStreamStop(watcher_path->stream);
-        FSEventStreamUnscheduleFromRunLoop(watcher_path->stream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-    }
+    lua_pushcfunction(L, watcher_path_stop) ; lua_pushvalue(L,1); lua_call(L, 1, 1);
+
     FSEventStreamInvalidate(watcher_path->stream);
     FSEventStreamRelease(watcher_path->stream);
 
