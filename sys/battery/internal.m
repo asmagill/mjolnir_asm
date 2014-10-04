@@ -236,9 +236,9 @@ static int battery_isfinishingcharge(lua_State* L) {
     return _push_dict_key_value(L, get_iops_battery_info(), @kIOPSIsFinishingChargeKey);
 }
 
-/// mjolnir._asm.sys.battery.isfinishingcharge() -> boolean
+/// mjolnir._asm.sys.battery.powersource() -> boolean
 /// Function
-/// Returns true if battery is finishing charge.
+/// Returns current source of power. One of {AC Power, Battery Power, Off Line}.
 static int battery_powersource(lua_State* L) {
     return _push_dict_key_value(L, get_iops_battery_info(), @kIOPSPowerSourceStateKey);
 }
