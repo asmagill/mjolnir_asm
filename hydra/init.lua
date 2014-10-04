@@ -178,14 +178,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         window                  = my_require("window", "mjolnir.window"),
     }
 
-    if _H.battery then
-        _H.battery.watcher = my_require("battery.watcher", "mjolnir._asm.watcher.battery")
-    end
-
     --
     -- Some cleanup to make things more Hydra like...
     --
     _H._notifysetup = package.loaded["mjolnir._asm.notify"] ~= nil
+    local battery_watcher = my_require("battery.watcher", "mjolnir._asm.watcher.battery")
+    if type(battery_watcher) == "table" then
+        if type(_H.battery) == "nil" then _H.battery = {} end
+        _H.battery.watcher = battery_watcher
+    end
+
+    local screen_watcher = my_require("screen.watcher", "mjolnir._asm.watcher.screen")
+    if type(screen_watcher) == "table" then
+        if type(_H.screen) == "nil" then _H.screen = {} end
+        _H.screen.watcher = screen_watcher
+    end
     if type(_H.mouse) == "table" then
         _H.mouse.get = _H.mouse.position
         _H.mouse.set = function(xy) return _H.mouse.warptopoint(xy.x, xy.y) end
