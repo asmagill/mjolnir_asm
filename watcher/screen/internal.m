@@ -50,7 +50,7 @@ typedef struct _screenwatcher_t {
     void* obj;
 } screenwatcher_t;
 
-// screen.watcher.new(fn) -> watcher
+// mjolnir._asm.watcher.screen.new(fn) -> watcher
 // Function
 // Creates a new screen-watcher that can be started; fn will be called when your screen layout changes in any way, whether by adding/removing/moving monitors or like whatever.
 static int screen_watcher_new(lua_State* L) {
@@ -75,7 +75,7 @@ static int screen_watcher_new(lua_State* L) {
     return 1;
 }
 
-/// screen.watcher:start() -> watcher
+/// mjolnir._asm.watcher.screen:start() -> watcher
 /// Function
 /// Starts the screen watcher, making it so fn is called each time the screen arrangement changes.
 static int screen_watcher_start(lua_State* L) {
@@ -93,7 +93,7 @@ static int screen_watcher_start(lua_State* L) {
     return 1;
 }
 
-/// screen.watcher:stop() -> watcher
+/// mjolnir._asm.watcher.screen:stop() -> watcher
 /// Function
 /// Stops the screen watcher's fn from getting called until started again.
 static int screen_watcher_stop(lua_State* L) {
