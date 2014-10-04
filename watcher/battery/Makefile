@@ -1,8 +1,8 @@
 PREFIX ?= /usr/local
-MODULE = pathwatcher
+MODULE = watcher/battery
 LUAFILE  = init.lua
 OBJCFILE = internal.m
-HEADERS   = 
+HEADERS   =
 
 CFLAGS  += -Wall -Wextra
 LDFLAGS += -dynamiclib -undefined dynamic_lookup
@@ -17,7 +17,7 @@ install: install-library install-lua
 install-library: $(SOFILE)
 	mkdir -p $(PREFIX)/lib/lua/5.2/mjolnir/_asm/$(MODULE)
 	install -m 0644 $(SOFILE) $(PREFIX)/lib/lua/5.2/mjolnir/_asm/$(MODULE)
-	
+
 install-lua: $(LUAFILE)
 	mkdir -p $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)
 	install -m 0644 $(LUAFILE) $(PREFIX)/share/lua/5.2/mjolnir/_asm/$(MODULE)

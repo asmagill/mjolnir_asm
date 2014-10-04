@@ -1,7 +1,7 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.pathwatcher"
+package = "mjolnir._asm.watcher.battery"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
@@ -12,10 +12,10 @@ version = "0.1-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.pathwatcher"
+local url = "github.com/asmagill/mjolnir_asm.watcher"
 local desc = "Watch paths recursively for changes in Mjolnir"
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir = "mjolnir_asm.watcher/battery"}
 description = {
   summary = desc,
   detailed = desc,
@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.pathwatcher"] = "init.lua",
-    ["mjolnir._asm.pathwatcher.internal"] = "internal.m",
+    ["mjolnir._asm.watcher.battery"] = "init.lua",
+    ["mjolnir._asm.watcher.battery.internal"] = "internal.m",
   },
 }
