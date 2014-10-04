@@ -71,12 +71,12 @@ Returns the watts into or out of the battery in Watt (will be negative if batter
 ~~~lua
 battery.health() -> string
 ~~~
-Returns the health status of the battery. One of {Good, Fair, Poor} [^1]
+Returns the health status of the battery. One of {Good, Fair, Poor}  [^1]
 
 ~~~lua
 battery.healthcondition() -> string
 ~~~
-Returns the health condition status of the battery. One of {Check Battery, Permanent Battery Failure}. Nil if there is no health condition set. [^1]
+Returns the health condition status of the battery. One of {Check Battery, Permanent Battery Failure}. Nil if there is no health condition set.  [^1]
 
 ~~~lua
 battery.percentage() -> number
@@ -113,7 +113,9 @@ battery.powersource() -> string
 ~~~
 Returns current source of power. One of {AC Power, Battery Power, Off Line}.
 
-[^1]: Exact text may differ depending upon battery manufacturer and date.  These are the current recommendations to manufacturers.
+------------------
+
+[^1]: Exact text may differ depending upon battery manufacturer and date.  These are the current Apple recommendations to manufacturers.
 
 ### License
 
