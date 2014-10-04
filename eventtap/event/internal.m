@@ -38,7 +38,7 @@ static int eventtap_event_copy(lua_State* L) {
     return 1;
 }
 
-/// eventtap.event:getflags() -> table
+/// mjolnir._asm.eventtap.event:getflags() -> table
 /// Method
 /// Returns a table with any of the strings {"cmd", "alt", "shift", "ctrl", "fn"} as keys pointing to the value `true`
 static int eventtap_event_getflags(lua_State* L) {
@@ -54,7 +54,7 @@ static int eventtap_event_getflags(lua_State* L) {
     return 1;
 }
 
-/// eventtap.event:setflags(table)
+/// mjolnir._asm.eventtap.event:setflags(table)
 /// Method
 /// The table may have any of the strings {"cmd", "alt", "shift", "ctrl", "fn"} as keys pointing to the value `true`
 static int eventtap_event_setflags(lua_State* L) {
@@ -74,7 +74,7 @@ static int eventtap_event_setflags(lua_State* L) {
     return 0;
 }
 
-/// eventtap.event:getkeycode() -> keycode
+/// mjolnir._asm.eventtap.event:getkeycode() -> keycode
 /// Method
 /// Gets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes.map` table.
 static int eventtap_event_getkeycode(lua_State* L) {
@@ -83,7 +83,7 @@ static int eventtap_event_getkeycode(lua_State* L) {
     return 1;
 }
 
-/// eventtap.event:setkeycode(keycode)
+/// mjolnir._asm.eventtap.event:setkeycode(keycode)
 /// Method
 /// Sets the keycode for the given event; only applicable for key-related events. The keycode is a numeric value from the `mjolnir.keycodes.map` table.
 static int eventtap_event_setkeycode(lua_State* L) {
@@ -93,7 +93,7 @@ static int eventtap_event_setkeycode(lua_State* L) {
     return 0;
 }
 
-/// eventtap.event:post(app = nil)
+/// mjolnir._asm.eventtap.event:post(app = nil)
 /// Method
 /// Posts the event to the system as if the user did it manually. If app is a valid application instance, posts this event only to that application (I think).
 static int eventtap_event_post(lua_State* L) {
@@ -116,7 +116,7 @@ static int eventtap_event_post(lua_State* L) {
     return 0;
 }
 
-/// eventtap.event:gettype() -> number
+/// mjolnir._asm.eventtap.event:gettype() -> number
 /// Method
 /// Gets the type of the given event; return value will be one of the values in the `mjolnir._asm.eventtap.event.types` table.
 static int eventtap_event_gettype(lua_State* L) {
@@ -125,7 +125,7 @@ static int eventtap_event_gettype(lua_State* L) {
     return 1;
 }
 
-/// eventtap.event:getproperty(prop) -> number
+/// mjolnir._asm.eventtap.event:getproperty(prop) -> number
 /// Method
 /// Gets the given property of the given event; prop is one of the values in the `mjolnir._asm.eventtap.event.properties` table; return value is a number defined here: https://developer.apple.com/library/mac/documentation/Carbon/Reference/QuartzEventServicesRef/Reference/reference.html#//apple_ref/c/tdef/CGEventField
 static int eventtap_event_getproperty(lua_State* L) {
@@ -135,7 +135,7 @@ static int eventtap_event_getproperty(lua_State* L) {
     return 1;
 }
 
-/// eventtap.event:getbuttonstate(#) -> bool
+/// mjolnir._asm.eventtap.event:getbuttonstate(#) -> bool
 /// Method
 /// Gets the state of the numbered mouse button (0-31) as down (true) or up (false). The left mouse button corresponds to 0, the right to 1, and the center to 2.  The remaining buttons are specified in USB order using the integers 3 to 31.
 static int eventtap_event_getbuttonstate(lua_State* L) {
@@ -149,7 +149,7 @@ static int eventtap_event_getbuttonstate(lua_State* L) {
     return 1;
 }
 
-/// eventtap.event:setproperty(prop, value)
+/// mjolnir._asm.eventtap.event:setproperty(prop, value)
 /// Sets the given property of the given event; prop is one of the values in the `mjolnir._asm.eventtap.event.properties` table; value is a number defined here: https://developer.apple.com/library/mac/documentation/Carbon/Reference/QuartzEventServicesRef/Reference/reference.html#//apple_ref/c/tdef/CGEventField
 static int eventtap_event_setproperty(lua_State* L) {
     CGEventRef event = *(CGEventRef*)luaL_checkudata(L, 1, "mjolnir._asm.eventtap.event");
@@ -159,7 +159,7 @@ static int eventtap_event_setproperty(lua_State* L) {
     return 0;
 }
 
-/// eventtap.event.newkeyevent(mods, key, isdown) -> event
+/// mjolnir._asm.eventtap.event.newkeyevent(mods, key, isdown) -> event
 /// Function
 /// Creates a keyboard event.
 ///   - mods is a table with any of: {'ctrl', 'alt', 'cmd', 'shift', 'fn'}
@@ -197,10 +197,10 @@ static int eventtap_event_newkeyevent(lua_State* L) {
     return 1;
 }
 
-/// eventtap.event.newmouseevent(type, point, button) -> event
+/// mjolnir._asm.eventtap.event.newmouseevent(type, point, button) -> event
 /// Function
 /// Creates a new mouse event.
-///   - type is one of the values in eventtap.event.types
+///   - type is one of the values in mjolnir._asm.eventtap.event.types
 ///   - point is a table with keys {x,y}
 ///   - button is a string of one of the values: {'left', 'right', 'middle'}
 static int eventtap_event_newmouseevent(lua_State* L) {
@@ -223,9 +223,9 @@ static int eventtap_event_newmouseevent(lua_State* L) {
     return 1;
 }
 
-/// eventtap.event.types -> table
+/// mjolnir._asm.eventtap.event.types -> table
 /// Variable
-/// Table for use with `eventtap.new`, with the following keys:
+/// Table for use with `mjolnir._asm.eventtap.new`, with the following keys:
 ///    keydown, keyup,
 ///    leftmousedown, leftmouseup, leftmousedragged,
 ///    rightmousedown, rightmouseup, rightmousedragged,
@@ -256,9 +256,9 @@ static void pushtypestable(lua_State* L) {
     lua_pushnumber(L, kCGEventTapDisabledByUserInput);  lua_setfield(L, -2, "tapdisabledbyuserinput");
 }
 
-/// eventtap.event.properties -> table
+/// mjolnir._asm.eventtap.event.properties -> table
 /// Variable
-/// For use with eventtap.event:{get,set}property; contains the following keys:
+/// For use with mjolnir._asm.eventtap.event:{get,set}property; contains the following keys:
 ///    - MouseEventNumber
 ///    - MouseEventClickState
 ///    - MouseEventPressure
