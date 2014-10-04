@@ -42,7 +42,7 @@ end
 
 -- Public interface ------------------------------------------------------
 
---- eventtap.new(types, fn) -> eventtap
+--- mjolnir._asm.eventtap.new(types, fn) -> eventtap
 --- Constructor
 --- Returns a new event tap with the given function as the callback for the given event types; the eventtap not started automatically. The types param is a table which may contain values from table `mjolnir._asm.eventtap.event.types`. The event types are specified as bit-fields and are exclusively-or'ed together (see {"all"} below for why this is done.  This means { ...keyup, ...keydown, ...keyup }  is equivalent to { ...keydown }.
 ---

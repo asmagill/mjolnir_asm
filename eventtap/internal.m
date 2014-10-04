@@ -66,7 +66,7 @@ CGEventRef eventtap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef
         return event;
 }
 
-// eventtap.new(types, callback(event) -> ignoreevent, moreevents) -> eventtap
+// mjolnir._asm.eventtap.new(types, callback(event) -> ignoreevent, moreevents) -> eventtap
 // Returns a new event tap with the given callback for the given event type; the eventtap not started automatically.
 // The types param is a table which may contain values from table `eventtap.event.types`.
 // The callback takes an event object as its only parameter. It can optionally return two values: if the first one is truthy, this event is deleted from the system input event stream and not seen by any other app; if the second one is a table of events, they will each be posted along with this event.
@@ -104,7 +104,7 @@ static int eventtap_new(lua_State* L) {
     return 1;
 }
 
-/// eventtap:start()
+/// mjolnir._asm.eventtap:start()
 /// Method
 /// Starts an event tap; must be in stopped state.
 static int eventtap_start(lua_State* L) {
@@ -129,7 +129,7 @@ static int eventtap_start(lua_State* L) {
     return 0;
 }
 
-/// eventtap:stop()
+/// mjolnir._asm.eventtap:stop()
 /// Method
 /// Stops an event tap; must be in started state.
 static int eventtap_stop(lua_State* L) {
