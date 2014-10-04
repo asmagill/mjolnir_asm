@@ -14,8 +14,7 @@ local module = {
 ---
 --- This module provides some of the functionality which Hydra had regarding its environment, but aren't currently in a module of their own for various reasons.
 ---
---- This module is not needed for any of the submodules, and the submodules can be loaded and installed independently of this one.
-Loads all of the modules corresponding to Hydra's internal functions.  This module is not strictly needed, as it will load as many of the modules as have been created so far.  Individual modules can be loaded if you prefer only specific support.
+--- This module is not needed for any of the submodules, and the submodules can be loaded and installed independently of this one. Loads all of the modules corresponding to Hydra's internal functions.  This module is not strictly needed, as it will load as many of the modules as have been created so far.  Individual modules can be loaded if you prefer only specific support.
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
