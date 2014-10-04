@@ -68,7 +68,7 @@ static int json_encode(lua_State* L) {
     }
 }
 
-///  mjolnir._asm.data.json.decode(str) -> val
+/// mjolnir._asm.data.json.decode(str) -> val
 /// Function
 /// Returns a Lua value representing the given JSON string.
 ///
