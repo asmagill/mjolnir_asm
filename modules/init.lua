@@ -1,11 +1,3 @@
-local modules = {
---[=[
-    _NAME        = 'mjolnir._asm.modules',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.modules',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-
 --- === mjolnir._asm.modules ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.modules
@@ -49,10 +41,6 @@ local modules = {
 ---     }
 --- </pre>
 
-    ]],
---]=]
-}
-
 --- mjolnir._asm.modules.default_tree = string
 --- Variable
 --- By default, this module assumes the default luarocks tree is "mjolnir".  You
@@ -67,6 +55,8 @@ local modules = {
 ---             default_tree = "mjolnir",
 ---        }
 --- </pre>
+
+local modules = {}
 
 local ok, value = pcall(function()
     return dofile(os.getenv("HOME").."/.mjolnir/.mjolnir._asm.modules.lua")
@@ -112,7 +102,7 @@ local compare_versions = function(a,b)
 --    the z part.
 --
 -- repeat the following for each part:
--- 1. if the version matches so far, and a has more components, then return 
+-- 1. if the version matches so far, and a has more components, then return
 --    a > b. e.g. 3.0.1 > 3.0 (of course 3.0.0 > 3.0 as well... should that
 --    change?)
 -- 2. if either part n of a or part n of b cannot be successfully changed to
@@ -133,19 +123,19 @@ local compare_versions = function(a,b)
 
     a = a or ""
     b = b or ""
-    
+
     a = a:match("^[vr]?(%d.*)$") or a
     b = b:match("^[vr]?(%d.*)$") or b
 
 --    print(a,b)
-    
+
     local aver, ars = a:match("([%w%._]*)-?([%w%._]*)")
     local bver, brs = b:match("([%w%._]*)-?([%w%._]*)")
     local averp, arsp = {}, {}
     local bverp, brsp = {}, {}
 
     aver, ars, bver, brs = aver or "", ars or "", bver or "", brs or ""
-    
+
     for p in aver:gmatch("([^%._]+)") do table.insert(averp, p) end
     for p in bver:gmatch("([^%._]+)") do table.insert(bverp, p) end
     for p in ars:gmatch("([^%._]+)") do table.insert(arsp, p) end
@@ -199,7 +189,7 @@ end
 
 local function add_io(self, real_io, ...)
     captured_output = captured_output..table.concat({...})
-    
+
     return real_io:write(...)
 end
 
@@ -369,19 +359,19 @@ modules.remove = function(name, tree, ...)
     local results = {}
     local trees = modules.trees(tree)
     local extraArgs = table.pack(...)
-    
+
     if #trees ~= 1 then
         return nil, "Tree '"..tostring(tree).."' does not exist."
     end
-    
+
     path.use_tree(trees[1])
-    
+
     capture_io()
     results = table.pack(lua51.pcall(function() return remove.run("--tree="..tree, name, table.unpack(extraArgs)) end))
     release_io()
     table.insert(modules.output, captured_output)
     captured_output = ""
-    
+
     if results[1] then
         if type(results[2]) == "nil" then results[2] = false end
         table.remove(results, 1)
@@ -407,7 +397,7 @@ modules.install = function(name, tree, ...)
     if #trees ~= 1 then
         return nil, "Tree '"..tostring(tree).."' does not exist."
     end
-    
+
     path.use_tree(trees[1])
 
     capture_io()

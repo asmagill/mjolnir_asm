@@ -10,7 +10,7 @@ local module = {
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.eventtap
 ---
---- For tapping into input events (mouse, keyboard, trackpad) for observation and possibly overriding them. This module requires [mjolnir_asm.eventtap.event](https://github.com/asmagill/mjolnir_asm.eventtap.event).
+--- For tapping into input events (mouse, keyboard, trackpad) for observation and possibly overriding them. This module requires `mjolnir_asm.eventtap.event` which can be found in the event folder of this repository.
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 

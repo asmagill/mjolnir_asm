@@ -1,7 +1,7 @@
 mjolnir._asm.eventtap.event
 ===========================
 
-Functionality to inspect, modify, and create events for [mjolnir_asm.eventtap](https://github.com/asmagill/mjolnir_asm.eventtap) is provided by this module.
+Functionality to inspect, modify, and create events for `mjolnir_asm.eventtap` is provided by this module.
 
 This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 

@@ -1,13 +1,3 @@
-if not mjolnir._asm then mjolnir._asm = {} end
-
-mjolnir._asm.ipc = {
---[=[
-    _NAME        = 'mjolnir.module_name',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-
 --- === mjolnir._asm.ipc ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.ipc
@@ -18,9 +8,58 @@ mjolnir._asm.ipc = {
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-    ]],
---]=]
-}
+--- === mjolnir._asm.ipc.cli ===
+---
+--- Home: https://github.com/asmagill/mjolnir_asm.ipc
+---
+--- Interface with Mjolnir from the command line.
+---
+--- This package contains no Lua functions, but instead provides the `mjolnir` command line tool.  By default, it is installed into /usr/local/bin.
+---
+--- To install, type: `[PREFIX=/usr/local/bin] luarocks [--tree=mjolnir] install mjolnir._asm.ipc.cli`
+---
+--- The man page is provided here:
+---
+--- mjolnir(1)                BSD General Commands Manual               mjolnir(1)
+---
+--- NAME
+---      mjolnir -- Command line interface to Mjolnir.app
+---
+--- SYNOPSIS
+---      mjolnir [-i | -s | -c code] [-r] [-n]
+---
+--- DESCRIPTION
+---      Runs code from within Mjolnir, and prints the results. The given code is
+---      passed to "mjolnir.ipc.handler" which normally executes it as plain Lua
+---      code, but may be overridden to do some custom evaluation.
+---
+---      When no args are given, -i is implied.
+---
+---      -i       Runs in interactive-mode; uses each line as code . Prints in
+---               color unless otherwise specified.
+---
+---      -c       Uses the given argument as code
+---
+---      -s       Uses stdin as code
+---
+---      -r       Forces Mjolnir to interpret code as raw Lua code; the function
+---               "mjolnir.ipc.handler" is not called.
+---
+---      -n       When specified, interactive-mode does not use colors.
+---
+--- EXIT STATUS
+---      The mjolnir utility exits 0 on success, and >0 if an error occurs.
+---
+--- MORE INFO
+---      Visit https://github.com/sdegutis/mjolnir/
+---
+--- Darwin                          October 4, 2014                         Darwin
+---
+--- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+---
+
+if not mjolnir._asm then mjolnir._asm = {} end
+mjolnir._asm.ipc = {}
 
 local internal = require("mjolnir._asm.ipc.internal")
 local internal_mt = {

@@ -1,11 +1,3 @@
-local module = {
---[=[
-    _NAME        = 'mjolnir._asm.data.utf8_53',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.data',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-
 --- === mjolnir._asm.data.utf8_53 ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.data
@@ -18,6 +10,17 @@ local module = {
 --- >
 --- > Unless stated otherwise, all functions that expect a byte position as a parameter assume that the given position is either the start of a byte sequence or one plus the length of the subject string. As in the string library, negative indices count from the end of the string.
 ---
+--- ### Notes
+--- Hydra provided 2 UTF-8 functions which are no longer a part of the Mjolnir environment, but which can be replicated by this module.
+---
+--- For `hydra.utf8.count(str)` use `utf8_53.len(str)`
+---
+--- For `hydra.utf8.chars(str)`, which provided an array of the individual UTF-8 characters of `str`, use the following:
+---
+---     t = {} ; str:gsub(utf8_53.charpatt,function(c) t[#r+1] = c end)
+---
+
+
 
 --- mjolnir._asm.data.utf8_53.char(...) -> string
 --- Function
@@ -48,18 +51,7 @@ local module = {
 --- Variable
 ---The pattern (a string, not a function) "[\0-\x7F\xC2-\xF4][\x80-\xBF]*" (see 6.4.1 in [reference documentation](http://www.lua.org/work/doc/)), which matches exactly one UTF-8 byte sequence, assuming that the subject is a valid UTF-8 string.
 
-    ]],
---]=]
-}
-
-local mjolnir_mod_name = "mjolnir._asm.data.utf8_53"
-local c_library = "internal-utf8"
-
--- integration with C functions ------------------------------------------
-
-if c_library then
-	for i,v in pairs(require(mjolnir_mod_name.."."..c_library)) do module[i] = v end
-end
+local module = require("mjolnir._asm.data.utf8_53.internal-utf8")
 
 -- private variables and methods -----------------------------------------
 
