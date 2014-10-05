@@ -1,21 +1,21 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.hydra.applescript"
+package = "mjolnir._asm.hydra.dockicon"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.1-1"
+version = "0.2-1"
 
 -- General metadata:
 
 local url = "github.com/asmagill/mjolnir_asm.hydra"
-local desc = "Execute Applescript from within Mjolnir."
+local desc = "Control the Mjolnir dock icon."
 
-source = {url = "git://" .. url, dir = "mjolnir_asm.hydra/applescript" }
+source = {url = "git://" .. url, dir = "mjolnir_asm.hydra/dockicon/"}
 description = {
   summary = desc,
   detailed = desc,
@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.hydra.applescript"] = "init.lua",
-    ["mjolnir._asm.hydra.applescript.internal"] = "internal.m",
+    ["mjolnir._asm.hydra.dockicon"] = "init.lua",
+    ["mjolnir._asm.hydra.dockicon.internal"] = "internal.m",
   },
 }

@@ -1,14 +1,6 @@
-local module = {
---[=[
-    _NAME        = 'mjolnir._asm.modal_hotkey',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.modal_hotkey',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-
 --- === mjolnir._asm.modal_hotkey ===
 ---
---- Home: https://github.com/asmagill/mjolnir_asm.modal_hotkey
+--- Home: https://github.com/asmagill/mjolnir_asm.hydra
 ---
 --- This module extends mjolnir.hotkey for conveniently binding modal hotkeys in the same manner as in Hydra.
 ---
@@ -24,9 +16,7 @@ local module = {
 --- ~~~
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-    ]],
---]=]
-}
+local module = {}
 
 -- private variables and methods -----------------------------------------
 
