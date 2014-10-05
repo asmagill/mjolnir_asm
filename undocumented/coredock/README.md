@@ -7,7 +7,7 @@ This submodule provides access to CoreDock related features.  This allows you to
 
 I make no promises that these will work for you or work at all with any, past, current, or future versions of OS X.  I can confirm only that they didn't crash my machine during testing under 10.10pb2. You have been warned.
 
-For what it's worth, under my 10.10pb2, pinning seems to be completely ignored and setting the Dock to the top orientation is also ignored, though left, right, and bottom work.
+For what it's worth, under my setup, pinning seems to be completely ignored and setting the Dock to the top orientation is also ignored, though left, right, and bottom work.
 
 ### Luarocks Install
 ~~~bash

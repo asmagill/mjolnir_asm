@@ -17,10 +17,11 @@ Most of these features currently come from one or both of the following sources:
 ### Sub Modules (See folder README.md)
 The following submodules are located in this repository for organizational purposes.  In most cases, they do not require this base or the other submodules.  Where this is not the case, the README in the repository folder will make this clear and if you install them via Luarocks, dependancies will be taken care of for you.
 
-|Module                             | Available | Description                                                                |
-|:----------------------------------|:---------:|:---------------------------------------------------------------------------|
-|mjolnir._asm.undocumented.cgsdebug | Luarocks  | Includes Hydra's hydra.shadow function and other _windowserver debug stuff |
-|mjolnir._asm.undocumented.coredock | Luarocks  | Manipulate Dock features including position, tilesize, etc.                |
+|Module                              | Available | Description                                                                |
+|:-----------------------------------|:---------:|:---------------------------------------------------------------------------|
+|mjolnir._asm.undocumented.bluetooth | Luarocks  | Toggle bluetooth power and discoverability.                                |
+|mjolnir._asm.undocumented.cgsdebug  | Luarocks  | Includes Hydra's hydra.shadow function and other _windowserver debug stuff |
+|mjolnir._asm.undocumented.coredock  | Luarocks  | Manipulate Dock features including position, tilesize, etc.                |
 
 **NOTE: README's for in progress modules may mention luarocks, but may or may not actually be there.  Be patient, or check the README file for how to compile them yourself.**
 
