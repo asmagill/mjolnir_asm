@@ -1,6 +1,6 @@
---- === mjolnir._asm.watcher.path ===
+--- === mjolnir._asm.pathwatcher ===
 ---
---- Home: https://github.com/asmagill/mjolnir_asm.watcher.path
+--- Home: https://github.com/asmagill/mjolnir_asm.watcher
 ---
 --- Watch paths recursively for changes.
 ---
@@ -10,7 +10,7 @@
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-local module = require("mjolnir._asm.watcher.path.internal")
+local module = require("mjolnir._asm.pathwatcher.internal")
 
 -- private variables and methods -----------------------------------------
 
@@ -25,7 +25,7 @@ end
 
 -- Public interface ------------------------------------------------------
 
---- mjolnir._asm.watcher.path.new(path, fn) -> watcher.path
+--- mjolnir._asm.pathwatcher.new(path, fn) -> watcher
 --- Constructor
 --- Returns a new watcher.path that can be started and stopped.  The function registered receives as it's argument, a table containing a list of the files which have changed since it was last invoked.
 function module.new(path, fn)

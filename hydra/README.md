@@ -9,6 +9,18 @@ This module is not needed for any of the submodules, and the submodules can be l
 
 This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
+### Sub Modules (See folder README.md)
+The following submodules are located in this repository for organizational purposes.  In most cases, they do not require this base or the other submodules.  Where this is not the case, the README in the repository folder will make this clear and if you install them via Luarocks, dependancies will be taken care of for you.
+
+|Module                          | Available | Description                                                                |
+|:-------------------------------|:---------:|:---------------------------------------------------------------------------|
+|mjolnir._asm.hydra.applescript  | Luarocks  | Functions for executing AppleScript from within Mjolnir.                   |
+|mjolnir._asm.hydra.dockicon     | Luarocks  | Functions for controlling Mjolnir's own dock icon.                         |
+|mjolnir._asm.modal_hotkey       | Luarocks  | This module extends mjolnir.hotkey for conveniently binding modal hotkeys. |
+|mjolnir._asm.hydra.undocumented | Luarocks  | This module provides Hydra's `spaces` and `hydra.setosxshadows`.           |
+
+**NOTE: README's for in progress modules may mention luarocks, but may or may not actually be there.  Be patient, or check the README file for how to compile them yourself.**
+
 ### Luarocks Install
 ~~~bash
 $ luarocks [--tree=mjolnir] install mjolnir._asm.hydra

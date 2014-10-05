@@ -1,7 +1,7 @@
 mjolnir._asm.sys.audiodevice
 ============================
 
-Manipulate the system's audio devices.
+Manipulate the system's audio devices. **This module requires `mjolnir._asm`.**
 
 This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 

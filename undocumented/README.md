@@ -1,9 +1,9 @@
 mjolnir._asm.undocumented
 =========================
 
-Development space  for Mjolnir modules using undocumented or Private APIs.  To the best of my knowledge, all other modules I've created use only standard, stock OSX API functionality.  Since a large number were ported from a previous project that led to Mjolnir, I can't say that with absolute certainty, but it is certainly what I aim for.
+Organizational space for Mjolnir modules using undocumented or Private APIs.  To the best of my knowledge, all other modules I've created use only standard, stock OSX API functionality.  Since a large number were ported from a previous project that led to Mjolnir, I can't say that with absolute certainty, but it is certainly what I aim for.
 
-Any module I create which uses any undocumented or private API will be listed here.
+Any module I knowingly create which uses any undocumented or private API will be listed here.
 
 Because these use undocumented features, the mantra "Caveat Emptor" rings even more true than usual.  I make no claims or guarantees that these will work for you or that they will work with any past, present, or future version of OS X.  All I will state is that they do not crash on my primary machine, which is a MacBook Pro running 10.10pb2, and that they provide at least some of the desired functions (or else why bother?) for me.
 
@@ -14,23 +14,15 @@ Most of these features currently come from one or both of the following sources:
  1. [Undocumented Goodness](https://code.google.com/p/undocumented-goodness/)
  2. [iTerm2's CGSInternal folder](https://github.com/gnachman/iterm2)
 
-Published modules are listed as *Currently Available*.  Follow their link for the code making up the deployed version.  This repository may contain updates which have not yet been published or *Work In Progress*.
+### Sub Modules (See folder README.md)
+The following submodules are located in this repository for organizational purposes.  In most cases, they do not require this base or the other submodules.  Where this is not the case, the README in the repository folder will make this clear and if you install them via Luarocks, dependancies will be taken care of for you.
 
-### Currently available:
+|Module                             | Available | Description                                                                |
+|:----------------------------------|:---------:|:---------------------------------------------------------------------------|
+|mjolnir._asm.undocumented.cgsdebug | Luarocks  | Includes Hydra's hydra.shadow function and other _windowserver debug stuff |
+|mjolnir._asm.undocumented.coredock | Luarocks  | Manipulate Dock features including position, tilesize, etc.                |
 
-|Module                                                       | Method   | Version | Description                                          |
-|:------------------------------------------------------------|:---------|:-------:|:-----------------------------------------------------|
-
-### Work In progress:
-
-|Module                                            | Version | Description                                                                |
-|:-------------------------------------------------|:-------:|:---------------------------------------------------------------------------|
-|mjolnir._asm.undocumented.cgsdebug                | 0.1-1   | Includes Hydra's hydra.shadow function and other _windowserver debug stuff |
-|mjolnir._asm.undocumented.coredock                | 0.1-1   | Manipulate Dock features including position, tilesize, etc.                |
-
-Also, see README.md in each modules directory.
-
-**NOTE: README's for in progress modules may mention luarocks, but probably haven't been uploaded yet, unless it's a major change or rewrite of an existing, older module.**
+**NOTE: README's for in progress modules may mention luarocks, but may or may not actually be there.  Be patient, or check the README file for how to compile them yourself.**
 
 ### License
 

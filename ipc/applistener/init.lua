@@ -5,12 +5,12 @@ local module = {
     _URL         = 'https://github.com/asmagill/mjolnir_asm.applistener',
     _LICENSE     = [[ See README.md ]]
     _DESCRIPTION = [[
-    
+
 --- === mjolnir._asm.applistener ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.applistener
 ---
---- Listen to notifications sent by other apps, and maybe send some yourself.
+--- Listen to notifications sent by other apps.
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 

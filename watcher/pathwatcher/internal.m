@@ -4,7 +4,7 @@
 
 // Common Code
 
-#define USERDATA_TAG    "mjolnir._asm.watcher.path"
+#define USERDATA_TAG    "mjolnir._asm.pathwatcher"
 
 static int store_udhandler(lua_State* L, NSMutableIndexSet* theHandler, int idx) {
     lua_pushvalue(L, idx);
@@ -53,7 +53,7 @@ void event_callback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, s
     lua_call(L, 1, 0) ;
 }
 
-// mjolnir._asm.watcher.path.new(path, fn()) -> watcher
+// mjolnir._asm.pathwatcher.new(path, fn()) -> watcher
 // Constructor
 // Returns a new watcher that can be started and stopped.
 static int watcher_path_new(lua_State* L) {
@@ -87,7 +87,7 @@ static int watcher_path_new(lua_State* L) {
     return 1;
 }
 
-/// mjolnir._asm.watcher.path:start()
+/// mjolnir._asm.pathwatcher:start()
 /// Method
 /// Registers watcher's fn as a callback for when watcher's path or any descendent changes.
 static int watcher_path_start(lua_State* L) {
@@ -104,9 +104,9 @@ static int watcher_path_start(lua_State* L) {
     return 1;
 }
 
-/// mjolnir._asm.watcher.path:stop()
+/// mjolnir._asm.pathwatcher:stop()
 /// Method
-/// Unregisters watcher's fn so it won't be called again until the watcher.path is restarted.
+/// Unregisters watcher's fn so it won't be called again until the watcher is restarted.
 static int watcher_path_stop(lua_State* L) {
     watcher_path_t* watcher_path = luaL_checkudata(L, 1, USERDATA_TAG);
     lua_settop(L, 1);

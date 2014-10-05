@@ -1,5 +1,5 @@
 PREFIX ?= /usr/local
-MODULE = data/utf8_53
+MODULE = utf8_53
 LUAFILE  = init.lua
 OBJCFILE = lutf8lib.c
 HEADERS = 

@@ -8,17 +8,19 @@ combining them seemed reasonable.
 This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 ### Special Note
-In keeping with the Mjolnir penchant for minimalism in it's modules, I have started breaking this module up into separate modules, with this core acting as an organizational focus and repository for a handful of related functions which don't really fit anywhere else.
+In keeping with the Mjolnir penchant for minimalism in it's modules, if you've used this module before, you'll notice that I have broken this module up into separate modules, with this core acting as an organizational focus and repository for a handful of related functions which don't really fit anywhere else.
 
-The following have been removed and/or replaced (or is in the works):
+### Sub Modules (See folder README.md)
+The following submodules are located in this repository for organizational purposes.  In most cases, they do not require this base or the other submodules.  Where this is not the case, the README in the repository folder will make this clear and if you install them via Luarocks, dependancies will be taken care of for you.
 
-1. json is now a separate module and is no longer directly included in this collection. It is also much more robust, though still has some limitations with serialization of complex structures, but this is a work in progress. See the json directory of this git repository, or install the mjolnir._asm.data.json luarock.
+|Module                        | Available | Description                                                                |
+|:-----------------------------|:---------:|:---------------------------------------------------------------------------|
+|mjolnir._asm.data.base64      | Luarocks  | This module provides base64 encoding and decoding for Mjolnir.             |
+|mjolnir._asm.data.json        | Luarocks  | This module provides JSON encoding and decoding for Mjolnir.               |
+|mjolnir._asm.data.pasteboard  | Luarocks  | This module provides access to the OS X clipboard from within Mjolnir.     |
+|mjolnir._asm.utf8_53          | Luarocks  | Functions providing basic support for UTF-8 encodings within Mjolnir.      |
 
-2. utf8 has been removed entirely and is replaced by mjolnir._asm.data.utf8_53, which provides the basic utf8 support Hydra did plus more.  See the utf8_53 directory of this git repository, or install the mjolnir._asm.data.utf8_53 luarock.  Check out the readme for how to replicate utf8.count and utf8.chars
-
-3. pasteboard is now a separate module and is no longer directly included in this collection. See the pasteboard directory of this git repository, or install the mjolnir._asm.data.pasteboard luarock.
-
-Additional encoding or data related modules under `mjolnir._asm.data` may also be available as time progresses.
+**NOTE: README's for in progress modules may mention luarocks, but may or may not actually be there.  Be patient, or check the README file for how to compile them yourself.**
 
 ### Luarocks Install
 ~~~bash
