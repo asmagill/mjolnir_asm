@@ -33,13 +33,6 @@ end
 
 -- Public interface ------------------------------------------------------
 
---- mjolnir._asm.undocumented.function() -> value
---- Type
---- Description
---function module.function()
---
---end
-
 local options_reverse = {}
 
 for i,v in pairs(module.options) do options_reverse[v] = i end

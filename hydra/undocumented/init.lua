@@ -1,11 +1,4 @@
 local module = {
---[=[
-    _NAME        = 'mjolnir._asm.undocumented.spaces',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.hydra',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-
 --- === mjolnir._asm.hydra.undocumented ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.hydra
