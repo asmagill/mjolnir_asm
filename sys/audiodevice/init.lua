@@ -15,14 +15,14 @@ local module = require("mjolnir._asm.sys.audiodevice.internal")
 --- mjolnir._asm.sys.audiodevice.current() -> table
 --- Function
 --- Convenience function which returns a table with the following keys and values:
---- <pre>
+--- ~~~lua
 ---     {
 ---         name = defaultoutputdevice():name(),
 ---         muted = defaultoutputdevice():muted(),
 ---         volume = defaultoutputdevice():volume(),
 ---         device = defaultoutputdevice(),
 ---     }
---- </pre>
+--- ~~~
 module.current = function()
     return {
         name = module.defaultoutputdevice():name(),
