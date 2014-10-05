@@ -13,7 +13,7 @@ local module = {
 --- This module extends mjolnir.hotkey for conveniently binding modal hotkeys in the same manner as in Hydra.
 ---
 --- Example usage:
----
+--- ~~~lua
 ---     k = modal_hotkey.new({"cmd", "shift"}, "d")
 ---
 ---     function k:entered() mjolnir.alert('Entered mode') end
@@ -21,7 +21,7 @@ local module = {
 ---
 ---     k:bind({}, 'escape', function() k:exit() end)
 ---     k:bind({}, 'J', function() mjolnir.alert("Pressed J") end)
----
+--- ~~~
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
     ]],
@@ -93,9 +93,9 @@ end
 --- Injects this module into `mjolnir.hotkey` as `mjolnir.hotkey.modal`.  This is to provide bindings similar to those used in Hydra, when modal was expected to be found attached to the `hydra.hotkey` name space.  Because of the caching used by Lua with `require`, invoking this function once will cause these functions to silently be available to any other module or lua input which has required `mjolnir.hotkey`.
 ---
 --- To activate this behavior, put the following somewhere at the top of your `~/.mjolnir/init.lua` file:
---- <pre>
+--- ~~~lua
 ---     require("mjolnir._asm.modal_hotkey").inject()
---- </pre>
+--- ~~~
 ---
 --- Calling this function is not a requirement to using this module; it is provided for backwards similarity/compatibility.
 module.inject = function()

@@ -29,13 +29,13 @@ end
 --- Convenience module `spaces` containing just the Hydra spaces modules for Mjolnir with simplified names.
 ---
 --- e.g.
---- <pre>
+--- ~~~lua
 ---      spaces = require("mjolnir._asm.hydra.undocumented").spaces
 ---
 ---      spaces.count()         -- see spaces_count()
 ---      spaces.currentspace()  -- see spaces_currentspace()
 ---      spaces.movetospace(#)  -- see spaces_movetospace(#)
----</pre>
+--- ~~~
 ---
 module.spaces = {
     count = module.spaces_count,

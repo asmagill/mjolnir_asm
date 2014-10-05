@@ -13,13 +13,13 @@
 --- These tools assume a default Luarocks tree named "mjolnir" exists.  You can always
 --- specify a different tree name if you wish.  To use the "mjolnir" tree, make sure
 --- something like the following is in your `~/.luarocks/config.lua` file:
---- <pre>
+--- ~~~lua
 ---        rocks_trees = {
 ---                { name = [[user]], root = home..[[/.luarocks]] },
 ---                { name = [[mjolnir]], root = home..[[/.mjolnir/rocks]] },
 ---                { name = [[system]], root = [[/usr/local]] },
 ---        }
---- </pre>
+--- ~~~
 --- Note that this ends up loading practically all of the luarocks modules into memory
 --- and may leave Mjolnir in an inconsistent state concerning available modules.  You
 --- should probably only require this module when you specifically want it, and then
@@ -34,12 +34,12 @@
 --- `default_tree` variable (see Variables), or to make it permanent, create a file in your
 --- `.mjolnir` directory named `.mjolnir._asm.modules.lua` and put the following into it
 --- (change "mjolnir" to match your preferred default tree):
---- <pre>
+--- ~~~lua
 ---     return {
 ---         -- default_tree: is the luarocks tree to use by default
 ---         default_tree = "mjolnir",
 ---     }
---- </pre>
+--- ~~~
 
 --- mjolnir._asm.modules.default_tree = string
 --- Variable
@@ -49,12 +49,12 @@
 --- If you want to permanently change the default tree to something else, create
 --- a file in your .mjolnir/ directory named ".mjolnir._asm.modules.lua" and put
 --- the following into it (change "mjolnir" to match your preferred default tree):
---- <pre>
+--- ~~~lua
 ---        return {
 ---             -- default_tree: is the luarocks tree to use by default
 ---             default_tree = "mjolnir",
 ---        }
---- </pre>
+--- ~~~
 
 local modules = {}
 

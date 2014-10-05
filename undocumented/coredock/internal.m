@@ -193,7 +193,7 @@ static const luaL_Reg coredock_lib[] = {
 /// mjolnir._asm.undocumented.coredock.options[]
 /// Variable
 /// Connivence array of all currently defined coredock options.
-///<pre>
+/// ~~~lua
 ///     options.orientation[]  -- an array of the orientation options available for `set_orientation_and_pinning`
 ///         top         -- put the dock at the top of the monitor
 ///         bottom      -- put the dock at the bottom of the monitor
@@ -209,7 +209,7 @@ static const luaL_Reg coredock_lib[] = {
 ///         genie       -- use the genie animation
 ///         scale       -- use the scale animation
 ///         suck        -- use the suck animation
-///</pre>
+/// ~~~
 static void coredock_options (lua_State *L) {
     lua_newtable(L) ;
         lua_newtable(L) ;

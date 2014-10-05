@@ -20,7 +20,7 @@
 ---
 --- The man page is provided here:
 ---
---- <pre>
+--- ```
 --- mjolnir(1)                BSD General Commands Manual               mjolnir(1)
 ---
 --- NAME
@@ -55,7 +55,7 @@
 ---      Visit https://github.com/sdegutis/mjolnir/
 ---
 --- Darwin                          October 4, 2014                         Darwin
---- </pre>
+--- ```
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 ---

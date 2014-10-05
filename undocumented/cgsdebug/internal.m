@@ -81,7 +81,7 @@ static const luaL_Reg cgsdebug_lib[] = {
 /// mjolnir._asm.undocumented.cgsdebug.options[]
 /// Variable
 /// Connivence array of all currently defined debug options.
-///<pre>
+/// ~~~lua
 ///     flashScreenUpdates
 ///         All screen updates are flashed in yellow. Regions under a DisableUpdate are flashed in orange. Regions that are hardware accellerated are painted green.
 ///
@@ -110,10 +110,10 @@ static const luaL_Reg cgsdebug_lib[] = {
 ///         Dumps a list of connections to /tmp/WindowServer.cinfo.out.
 ///
 ///     verboseLogging
-///         Dumps a very verbose debug log of the WindowServer to /tmp/CGLog_WinServer_<PID>.
+///         Dumps a very verbose debug log of the WindowServer to /tmp/CGLog_WinServer_&lt;PID&gt;.
 ///
 ///     verboseLoggingAllApps
-///         Dumps a very verbose debug log of all processes to /tmp/CGLog_<NAME>_<PID>.
+///         Dumps a very verbose debug log of all processes to /tmp/CGLog_&lt;NAME&gt;_<PID>.
 ///
 ///     dumpHotKeyListToFile
 ///         Dumps a list of hotkeys to /tmp/WindowServer.keyinfo.out.
@@ -131,8 +131,8 @@ static const luaL_Reg cgsdebug_lib[] = {
 ///         Dumps a list of windows to `/tmp/WindowServer.winfo.plist`. This is what Quartz Debug on 10.5 uses to get the window list.
 ///
 ///     dumpResourceUsageToFiles
-///         Dumps information about an application's resource usage to `/tmp/CGResources_<NAME>_<PID>`.
-///</pre>
+///         Dumps information about an application's resource usage to `/tmp/CGResources_&lt;NAME&gt;_&lt;PID&gt;`.
+/// ~~~
 
 static void cgsdebug_options (lua_State *L) {
     lua_newtable(L) ;
