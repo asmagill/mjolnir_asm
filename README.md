@@ -3,29 +3,21 @@ mjolnir_asm -- undergoing a facelift
 
 Development space for Mjolnir modules under mjolnir._asm
 
----------------------
-**Note that I am undergoing a re-organization of the separate repositories and location of source code for modules I have provided for Mjolnir.  Modules with names that have been submitted to Moonrocks/Luarocks will not changed, only source code locations will change.  Since I routinely upload source as well as binary rocks, this shouldn't affect you unless you have previously used Git to download these modules... those links may need to change as this irons out.**
-
-I apologize for the inconvenience this may cause, but my number of repositories was about to get out of control.
----------------------
-
 ### Modules and Collections
 
-*Here is a list of the modules and collections of modules and their GitHub page for review.  Check each module or collection out for a status of the released version of the modules, as this particular repository may contain things that are incomplete or broken or being updated, but aren't quite stable yet.*
+*Here is a list of the collections of modules for Mjolnir and their GitHub page for review.  Check each collection out for a status of the released versions of the modules, as this particular repository may contain things that are incomplete or broken or being updated, but aren't quite stable yet.*
 
-|Collection                  | Description                                                            |
-|:---------------------------:------------------------------------------------------------------------|
-|*mjolnir._asm*              | Compatibility, standalone, shared libraries, etc.                      |
-|*mjolnir._asm.data*         | Encode, decode, manipulate data, etc.                                  |
-|*mjolnir._asm.hydra*        | Backwards compatibility, modules which may move if they get more work. |
-|*mjolnir._asm.ipc*          | Inter process communication, command line, etc.                        |
-|*mjolnir._asm.sys*          | Modify or retrieve system settings and devices.                        |
-|*mjolnir._asm.undocumented* | Modules that knowingly use undocumented APIs or questionable code.     |
-|*mjolnir._asm.watcher*      | Modules that act on external events; some crossover with ipc.          |
+|Collection                                                                        | Description                                                            |
+|:---------------------------------------------------------------------------------|:-----------------------------------------------------------------------|
+|[mjolnir._asm](https://github.com/asmagill/mjolnir_asm._asm)                      | Compatibility, standalone, shared libraries, etc.                      |
+|[mjolnir._asm.data](https://github.com/asmagill/mjolnir_asm.data)                 | Encode, decode, manipulate data, etc.                                  |
+|[mjolnir._asm.hydra](https://github.com/asmagill/mjolnir_asm.hydra)               | Backwards compatibility, modules which may move if they get more work. |
+|[mjolnir._asm.ipc](https://github.com/asmagill/mjolnir_asm.ipc)                   | Inter process communication, command line, etc.                        |
+|[mjolnir._asm.sys](https://github.com/asmagill/mjolnir_asm.sys)                   | Modify or retrieve system settings and devices.                        |
+|[mjolnir._asm.undocumented](https://github.com/asmagill/mjolnir_asm.undocumented) | Modules that knowingly use undocumented APIs or questionable code.     |
+|[mjolnir._asm.watcher](https://github.com/asmagill/mjolnir_asm.watcher)           | Modules that act on external events; some crossover with ipc.          |
 
-See README.md in each modules directory.
-
-**NOTE: README's for in progress modules may mention luarocks, but probably haven't been uploaded yet, unless it's a major change or rewrite of an existing, older module.**
+See README.md in each collection's directory.
 
 ### License
 
