@@ -1,5 +1,5 @@
-mjolnir_asm -- undergoing a facelift
-====================================
+mjolnir_asm
+===========
 
 Development space for Mjolnir modules under mjolnir._asm
 
