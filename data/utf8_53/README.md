@@ -75,7 +75,7 @@ For `hydra.utf8.count(str)` use `utf8_53.len(str)`
 For `hydra.utf8.chars(str)`, which provided an array of the individual UTF-8 characters of `str`, use the following:
 
 ~~~lua
-t = {} ; str:gsub(utf8_53.charpatt,function(c) t[#r+1] = c end)
+t = {} ; str:gsub(utf8_53.charpatt,function(c) t[#t+1] = c end)
 ~~~
 
 ### License

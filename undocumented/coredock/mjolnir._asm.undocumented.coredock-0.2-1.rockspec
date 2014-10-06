@@ -1,21 +1,21 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.notify"
+package = "mjolnir._asm.undocumented.coredock"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.3-1"
+version = "0.2-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.notify"
-local desc = "Apple's built-in notifications system for Mjolnir."
+local url = "github.com/asmagill/mjolnir_asm.undocumented"
+local desc = "Undocumented coredock features."
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir = "mjolnir_asm.undocumented/coredock/"}
 description = {
   summary = desc,
   detailed = desc,
@@ -35,7 +35,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.notify"] = "init.lua",
-    ["mjolnir._asm.notify.internal"] = "internal.m",
+    ["mjolnir._asm.undocumented.coredock"] = "init.lua",
+    ["mjolnir._asm.undocumented.coredock.internal"] = "internal.m",
   },
 }

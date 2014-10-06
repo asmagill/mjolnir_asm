@@ -28,9 +28,9 @@ eet = e.event.types
 eep = e.event.properties
 
 et = {
-    all = { eet.keydown, eet.keyup, eet.leftmousedown, eet.leftmouseup, eet.leftmousedragged, eet.rightmousedown, eet.rightmouseup, eet.rightmousedragged, eet.middlemousedown, eet.middlemouseup, eet.middlemousedragged, eet.mousemoved, eet.flagschanged, eet.scrollwheel },
+    all = { eet.keydown, eet.keyup, eet.leftmousedown, eet.leftmouseup, eet.leftmousedragged, eet.rightmousedown, eet.rightmouseup, eet.rightmousedragged, eet.middlemousedown, eet.middlemouseup, eet.middlemousedragged, eet.mousemoved, eet.flagschanged, eet.scrollwheel, eet.tabletpointer, eet.tabletproximity },
     key = { eet.keydown, eet.keyup, eet.flagschanged },
-    mouse = { eet.leftmousedown, eet.leftmouseup, eet.leftmousedragged, eet.rightmousedown, eet.rightmouseup, eet.rightmousedragged, eet.middlemousedown, eet.middlemouseup, eet.middlemousedragged, eet.mousemoved, eet.scrollwheel }
+    mouse = { eet.leftmousedown, eet.leftmouseup, eet.leftmousedragged, eet.rightmousedown, eet.rightmouseup, eet.rightmousedragged, eet.middlemousedown, eet.middlemouseup, eet.middlemousedragged, eet.mousemoved, eet.scrollwheel, eet.tabletpointer, eet.tabletproximity }
 }
 
 f = function(o)
@@ -91,6 +91,16 @@ f = function(o)
             EventSourceGroupID = o:getproperty(eep.EventSourceGroupID) ~= 0 and o:getproperty(eep.EventSourceGroupID) or nil,
             EventSourceStateID = o:getproperty(eep.EventSourceStateID) ~= 0 and o:getproperty(eep.EventSourceStateID) or nil,
             ScrollWheelEventIsContinuous = o:getproperty(eep.ScrollWheelEventIsContinuous) ~= 0 and o:getproperty(eep.ScrollWheelEventIsContinuous) or nil,
+            MouseButtons = {
+                o:getbuttonstate( 0), o:getbuttonstate( 1), o:getbuttonstate( 2), o:getbuttonstate( 3),
+                o:getbuttonstate( 4), o:getbuttonstate( 5), o:getbuttonstate( 6), o:getbuttonstate( 7),
+                o:getbuttonstate( 8), o:getbuttonstate( 9), o:getbuttonstate(10), o:getbuttonstate(11),
+                o:getbuttonstate(12), o:getbuttonstate(13), o:getbuttonstate(14), o:getbuttonstate(15),
+                o:getbuttonstate(16), o:getbuttonstate(17), o:getbuttonstate(18), o:getbuttonstate(19),
+                o:getbuttonstate(20), o:getbuttonstate(21), o:getbuttonstate(22), o:getbuttonstate(23),
+                o:getbuttonstate(24), o:getbuttonstate(25), o:getbuttonstate(26), o:getbuttonstate(27),
+                o:getbuttonstate(28), o:getbuttonstate(29), o:getbuttonstate(30), o:getbuttonstate(31),
+            },
         },
     }
     print(i(event_details))

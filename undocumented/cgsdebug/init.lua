@@ -1,11 +1,3 @@
-local module = {
---[=[
-    _NAME        = 'mjolnir._asm.undocumented.cgsdebug',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.undocumented',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-
 --- === mjolnir._asm.undocumented.cgsdebug ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.undocumented
@@ -16,18 +8,7 @@ local module = {
 ---
 --- I make no promises that these will work for you or work at all with any, past, current, or future versions of OS X.  I can confirm only that they didn't crash my machine during testing under 10.10pb2. You have been warned.
 
-    ]],
---]=]
-}
-
-local mjolnir_mod_name = "mjolnir._asm.undocumented.cgsdebug"
-local c_library = "internal"
-
--- integration with C functions ------------------------------------------
-
-if c_library then
-	for i,v in pairs(require(mjolnir_mod_name.."."..c_library)) do module[i] = v end
-end
+local module = require("mjolnir._asm.undocumented.cgsdebug.internal")
 
 -- private variables and methods -----------------------------------------
 

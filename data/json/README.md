@@ -5,7 +5,7 @@ This module provides JSON encoding and decoding for Mjolnir utilizing the NSJSON
 
 This module is based partially on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-This module also requires [mjolnir._asm](https://github.com/asmagill/mjolnir_asm) for NSObject traversal.
+This module also requires `mjolnir._asm` for NSObject traversal.
 
 ### Luarocks Install
 ~~~bash

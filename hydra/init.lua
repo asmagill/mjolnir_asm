@@ -154,7 +154,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         spaces                  = nil, -- see below
         textgrid                = my_require("textgrid", nil),
         timer                   = my_require("timer", "mjolnir._asm.timer"),
-        utf8                    = my_require("utf8", "mjolnir._asm.data.utf8_53"),
+        utf8                    = my_require("utf8", "mjolnir._asm.utf8_53"),
         window                  = my_require("window", "mjolnir.window"),
     }
 

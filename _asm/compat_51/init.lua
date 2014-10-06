@@ -1,11 +1,3 @@
-local module = {
---[=[
-    _NAME        = 'mjolnir._asm.compat_51',
-    _VERSION     = 'the 2nd digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.compat_51',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-    
 --- === mjolnir._asm.compat_51 ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.compat_51
@@ -28,16 +20,8 @@ local module = {
 --- 
 --- See (http://www.lua.org/manual/5.2/manual.html#8) for more details.
 
-    ]],
---]=]
-}
-
-local mod_name = "mjolnir._asm.compat_51"
-local c_library = "internal"
-
--- integration with C functions ------------------------------------------
-
-local lua51 = require(mod_name.."."..c_library)
+local module = {}
+local lua51 = require("mjolnir._asm.compat_51.internal")
 
 -- private variables and methods -----------------------------------------
 

@@ -42,8 +42,8 @@ $ luarocks [--tree=mjolnir] install mjolnir._asm.modules
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.modules
-$ cd mjolnir_asm.modules
+$ git clone https://github.com/asmagill/mjolnir_asm._asm
+$ cd mjolnir_asm._asm/modules
 $ [PREFIX=/usr/local] make install
 ~~~
 

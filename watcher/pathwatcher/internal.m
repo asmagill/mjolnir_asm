@@ -158,7 +158,7 @@ static const luaL_Reg meta_gcLib[] = {
     {NULL,      NULL}
 };
 
-int luaopen_mjolnir__asm_watcher_path_internal(lua_State* L) {
+int luaopen_mjolnir__asm_pathwatcher_internal(lua_State* L) {
 // Metatable for created objects
     luaL_newlib(L, path_metalib);
         lua_pushvalue(L, -1);

@@ -1,6 +1,6 @@
 --- === mjolnir._asm.modules ===
 ---
---- Home: https://github.com/asmagill/mjolnir_asm.modules
+--- Home: https://github.com/asmagill/mjolnir_asm._asm
 ---
 --- Functions to capture information about, install and remove luarocks for mjolnir modules.
 --- While it is tailored specifically to use with the mjolnir modules, it should

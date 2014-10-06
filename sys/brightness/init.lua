@@ -6,7 +6,6 @@
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-require("mjolnir._asm")
 local module = require("mjolnir._asm.sys.brightness.internal")
 
 -- private variables and methods -----------------------------------------

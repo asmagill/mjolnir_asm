@@ -1,13 +1,13 @@
 mjolnir._asm.settings
 =====================
 
-Home: https://github.com/asmagill/mjolnir_asm.settings
+Home: https://github.com/asmagill/mjolnir_asm.sys
 
 Functions for manipulating user defaults for the Mjolnir application, allowing for the creation of user-defined settings which persist across Mjolnir launches and reloads.  Settings must have a string key and must be made up of serializable Lua objects (string, number, boolean, nil, tables of such, etc.)
 
 This module is based partially on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-This module also requires [mjolnir._asm](https://github.com/asmagill/mjolnir_asm) for NSObject traversal.
+This module also requires `mjolnir._asm` for NSObject traversal.
 
 ### Luarocks Install
 ~~~bash
@@ -16,8 +16,8 @@ $ luarocks [--tree=mjolnir] install mjolnir._asm.settings
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.settings
-$ cd mjolnir_asm.settings
+$ git clone https://github.com/asmagill/mjolnir_asm.sys
+$ cd mjolnir_asm.sys/settings
 $ [PREFIX=/usr/local] make install
 ~~~
 

@@ -1,7 +1,7 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.compat_51"
+package = "mjolnir._asm.ipc"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
@@ -12,10 +12,10 @@ version = "0.3-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.compat_51"
-local desc = "Provide Lua 5.1 compatibility functions in Mjolnir"
+local url = "github.com/asmagill/mjolnir_asm.ipc"
+local desc = "Provide IPC access to Mjolnir for command line acceess"
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir = "mjolnir_asm.ipc/"}
 description = {
   summary = desc,
   detailed = desc,
@@ -28,6 +28,7 @@ description = {
 supported_platforms = {"macosx"}
 dependencies = {
   "lua >= 5.2",
+  "mjolnir._asm.settings >= 0.2-1",
 }
 
 -- Build rules:
@@ -35,7 +36,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.compat_51"] = "init.lua",
-    ["mjolnir._asm.compat_51.internal"] = "internal.m",
+    ["mjolnir._asm.ipc"] = "init.lua",
+    ["mjolnir._asm.ipc.internal"] = "internal.m",
   },
 }

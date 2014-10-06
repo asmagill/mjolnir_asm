@@ -12,8 +12,8 @@ $ luarocks [--tree=mjolnir] install mjolnir._asm.applistener
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.applistener
-$ cd mjolnir_asm.applistener
+$ git clone https://github.com/asmagill/mjolnir_asm.ipc
+$ cd mjolnir_asm.ipc/applistener
 $ [PREFIX=/usr/local] make install
 ~~~
 

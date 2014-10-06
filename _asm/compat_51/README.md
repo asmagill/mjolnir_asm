@@ -31,8 +31,8 @@ $ luarocks [--tree=mjolnir] install mjolnir._asm.compat_51
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.compat_51
-$ cd mjolnir_asm.compat_51
+$ git clone https://github.com/asmagill/mjolnir_asm._asm
+$ cd mjolnir_asm._asm/compat_51
 $ [PREFIX=/usr/local] make install
 ~~~
 

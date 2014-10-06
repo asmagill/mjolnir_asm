@@ -12,10 +12,10 @@ version = "0.3-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.settings"
+local url = "github.com/asmagill/mjolnir_asm.sys"
 local desc = "Functions for user-defined settings that persist across Mjolnir launches."
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir = "mjolnir_asm.sys/settings"}
 description = {
   summary = desc,
   detailed = desc,

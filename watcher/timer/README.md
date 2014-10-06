@@ -12,8 +12,8 @@ $ luarocks [--tree=mjolnir] install mjolnir._asm.timer
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.timer
-$ cd mjolnir_asm.timer
+$ git clone https://github.com/asmagill/mjolnir_asm.watcher
+$ cd mjolnir_asm.watcher/timer
 $ [PREFIX=/usr/local] make install
 ~~~
 

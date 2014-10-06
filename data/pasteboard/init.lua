@@ -7,10 +7,7 @@
 --- This module is based partially on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 
-require("mjolnir._asm")
-
-local mjolnir_mod_name = "mjolnir._asm.data.pasteboard.internal"
-local module = require(mjolnir_mod_name)
+local module = require("mjolnir._asm.data.pasteboard.internal")
 
 -- private variables and methods -----------------------------------------
 

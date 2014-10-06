@@ -12,8 +12,8 @@ $ luarocks [--tree=mjolnir] install mjolnir._asm.notify
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.notify
-$ cd mjolnir_asm.notify
+$ git clone https://github.com/asmagill/mjolnir_asm._asm
+$ cd mjolnir_asm._asm/notify
 $ [PREFIX=/usr/local] make install
 ~~~
 

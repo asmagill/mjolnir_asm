@@ -6,10 +6,7 @@
 ---
 --- Portions sourced from (https://gist.github.com/shpakovski/1902994).
 
-require("mjolnir._asm")
-
-local mjolnir_mod_name = "mjolnir._asm.data.base64.internal"
-local module = require(mjolnir_mod_name)
+local module = require("mjolnir._asm.data.base64.internal")
 
 -- private variables and methods -----------------------------------------
 

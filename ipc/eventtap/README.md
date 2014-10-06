@@ -12,8 +12,8 @@ $ luarocks [--tree=mjolnir] install mjolnir._asm.eventtap
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm.eventtap
-$ cd mjolnir_asm.eventtap
+$ git clone https://github.com/asmagill/mjolnir_asm.ipc
+$ cd mjolnir_asm.ipc/eventtap
 $ [PREFIX=/usr/local] make install
 ~~~
 

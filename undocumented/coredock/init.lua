@@ -1,11 +1,3 @@
-local module = {
---[=[
-    _NAME        = 'mjolnir._asm.undocumented.coredock',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.undocumented',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-
 --- === mjolnir._asm.undocumented.coredock ===
 ---
 --- Home: https://github.com/asmagill/mjolnir_asm.undocumented
@@ -18,18 +10,7 @@ local module = {
 ---
 --- For what it's worth, under my 10.10pb2, pinning seems to be completely ignored and setting the Dock to the top orientation is also ignored, though left, right, and bottom work.
 
-    ]],
---]=]
-}
-
-local mjolnir_mod_name = "mjolnir._asm.undocumented.coredock"
-local c_library = "internal"
-
--- integration with C functions ------------------------------------------
-
-if c_library then
-	for i,v in pairs(require(mjolnir_mod_name.."."..c_library)) do module[i] = v end
-end
+local module = require("mjolnir._asm.undocumented.coredock.internal")
 
 -- private variables and methods -----------------------------------------
 

@@ -1,31 +1,12 @@
-local module = {
---[=[
-    _NAME        = 'mjolnir._asm.notify',
-    _VERSION     = 'the 1st digit of Pi/0',
-    _URL         = 'https://github.com/asmagill/mjolnir_asm.notify',
-    _LICENSE     = [[ See README.md ]]
-    _DESCRIPTION = [[
-    
 --- === mjolnir._asm.notify ===
 ---
---- Home: https://github.com/asmagill/mjolnir_asm.notify
+--- Home: https://github.com/asmagill/mjolnir_asm._asm
 ---
 --- Apple's built-in notifications system.
 ---
 --- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
-    ]],
---]=]
-}
-
-local mjolnir_mod_name = "mjolnir._asm.notify"
-local c_library = "internal"
-
--- integration with C functions ------------------------------------------
-
-if c_library then
-	for i,v in pairs(require(mjolnir_mod_name.."."..c_library)) do module[i] = v end
-end
+local module = require("mjolnir._asm.notify.internal")
 
 -- private variables and methods -----------------------------------------
 

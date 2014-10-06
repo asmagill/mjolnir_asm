@@ -1,7 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import <lauxlib.h>
 
-#define _VERSION_TAG_   "0.0.1-prealpha"
+#define _VERSION_TAG_   "0.1-1"
 
 //  Add Base64 encode/decode?
 //
@@ -77,7 +77,7 @@ id lua_to_NSObject(lua_State* L, int idx) {
 // NSUserDefaults to lua data type
 //   data type (as deduced from 'man defaults') is missing... add it?
 void NSObject_to_lua(lua_State* L, id obj) {
-    NSLog(@"NSO2l: %@",obj) ;
+//    NSLog(@"NSO2l: %@",obj) ;
     if (obj == nil || [obj isEqual: [NSNull null]]) { lua_pushnil(L); }
     else if ([obj isKindOfClass: [NSDictionary class]]) {
         BOOL handled = NO;

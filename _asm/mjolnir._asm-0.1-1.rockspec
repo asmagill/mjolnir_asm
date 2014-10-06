@@ -15,7 +15,7 @@ version = "0.1-1"
 local url = "github.com/asmagill/mjolnir_asm._asm"
 local desc = "Shared functions for mjolnir._asm modules."
 
-source = {url = "git://" .. url}
+source = {url = "git://" .. url, dir = "mjolnir_asm._asm"}
 description = {
   summary = desc,
   detailed = desc,
