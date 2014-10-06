@@ -28,27 +28,27 @@ bluetooth = require("mjolnir._asm.undocumented.bluetooth")
 ~~~
 
 ### Functions
-~~lua
+~~~lua
 bluetooth.available() -> bool
 ~~~
 Returns true or false, indicating whether bluetooth is available on this machine.
 
-~~lua
+~~~lua
 bluetooth.power() -> bool
 ~~~
 Returns true or false, indicating whether bluetooth is enabled for this machine.
 
-~~lua
+~~~lua
 bluetooth.discoverable() -> bool
 ~~~
 Returns true or false, indicating whether this machine is currently discoverable via bluetooth.
 
-~~lua
+~~~lua
 bluetooth.set_power(bool)
 ~~~
 Set bluetooth power state to on (true) or off (false).
 
-~~lua
+~~~lua
 bluetooth.set_discoverable(bool)
 ~~~
 Set bluetooth discoverable state to on (true) or off (false).
