@@ -4,7 +4,9 @@ mjolnir._asm
 Organizational repository for modules providing compatibility, shared libraries, or other things that "just don't quite fit" anywhere else yet.
 
 ### Module Details
-At present this module does not provide any direct functionality which can be included in your Lua scripts, but it does contain C functions which are used in other modules and are contained here for easy maintenance and bug fixes.  I will provide further documentation at a later date, but unless you're coding your own modules and linking external libraries, you don't need to worry about this module -- it will be installed if another module requires it and the necessary functions will be loaded only when required.
+This module provides to Lua some functions I've found useful in debugging.
+
+It also contain C functions which are used in other modules and are contained here for easy maintenance and bug fixes.  I will provide further documentation at a later date, but unless you're coding your own modules and linking external libraries, you don't need to worry about this module -- it will be installed if another module requires it and the necessary functions will be loaded only when required.
 
 ### Sub Modules (See folder README.md)
 The following submodules are located in this repository for organizational purposes.  In most cases, they do not require this base or the other submodules.  Where this is not the case, the README in the repository folder will make this clear and if you install them via Luarocks, dependancies will be taken care of for you.
@@ -34,12 +36,14 @@ $ [PREFIX=/usr/local] make install
 ### Require
 
 ~~~lua
-require("mjolnir._asm")
+tools = require("mjolnir._asm")
 ~~~
 
-### Functions
-
-Testing for access to extern c functions.
+### Lua Functions
+~~lua
+tools.nslog(lua-value)
+~~~
+Send a representation of the lua value passed in to the Console application via NSLog.
 
 ### License
 

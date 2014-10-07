@@ -17,6 +17,7 @@
 //  defaults:
 //      set             escape_table = true, escape_null = true, numeric_key = "split"
 //      encode_json     escape_table = true, numeric_key="split"
+//      nslog           escape_table = ?, bad_key="tostring"
 //
 //  deal with loops:
 //      a = { a=1,b=2,c=3 } ; a.d = a ; json_encode(a) is pathological.  we need a way to deep scan for loops and non-data types.
@@ -149,8 +150,17 @@ void NSObject_to_lua(lua_State* L, id obj) {
     }
 }
 
+/// mjolnir._asm.nslog(luavalue)
+/// Function
+/// Send a representation of the lua value passed in to the Console application via NSLog.
+static int asm_nslog(lua_State* L) {
+    id val = lua_to_NSObject(L, 1);
+    NSLog(@"%@", val);
+    return 0;
+}
+
 static const luaL_Reg settingslib[] = {
-//    {"_version", NULL},
+    {"nslog", asm_nslog},
     {NULL, NULL}
 };
 
