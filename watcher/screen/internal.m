@@ -67,7 +67,6 @@ static int screen_watcher_new(lua_State* L) {
     object.fn = screenwatcher->fn;
     screenwatcher->obj = (__bridge_retained void*)object;
     screenwatcher->running = NO;
-    screenwatcher->registryHandle = store_udhandler(L, screenHandlers, 1);
 
     luaL_getmetatable(L, USERDATA_TAG);
     lua_setmetatable(L, -2);
@@ -84,6 +83,7 @@ static int screen_watcher_start(lua_State* L) {
 
     if (screenwatcher->running) return 1;
     screenwatcher->running = YES;
+    screenwatcher->registryHandle = store_udhandler(L, screenHandlers, 1);
 
     [[NSNotificationCenter defaultCenter] addObserver:(__bridge id)screenwatcher->obj
                                              selector:@selector(screensChanged:)
