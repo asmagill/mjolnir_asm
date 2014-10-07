@@ -13,7 +13,7 @@ version = "0.1-1"
 -- General metadata:
 
 local url = "github.com/asmagill/mjolnir_asm.ui"
-local desc = "Apple's built-in notifications system for Mjolnir."
+local desc = "A more powerful use of Apple's built-in notifications system for Mjolnir."
 
 source = {url = "git://" .. url, dir = "mjolnir_asm.ui/notification"}
 description = {

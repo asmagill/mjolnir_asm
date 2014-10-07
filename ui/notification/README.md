@@ -1,65 +1,68 @@
-mjolnir._asm.notify
-===================
+mjolnir._asm.ui.notification
+============================
 
-Apple's built-in notifications system.
+A more powerful use of Apple's built-in notifications system for Mjolnir.
 
-This module is based on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+This module also provides backwards compatibility with `mjolnir._asm.notify` and Hydra's `notify` command.  Even if you don't use the new methods, you really should discard `mjolnir._asm.notify` in favor of this -- under some conditions, the built in notifications for Mjolnir (updates available, `mjolnir._notify`, etc.) can cause odd behavior with `mjolnir._asm.notify`.
+
+This module is based in part on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 ### Luarocks Install
 ~~~bash
-$ luarocks [--tree=mjolnir] install mjolnir._asm.notify
+$ luarocks [--tree=mjolnir] install mjolnir._asm.ui.notification
 ~~~
 
 ### Local Install
 ~~~bash
-$ git clone https://github.com/asmagill/mjolnir_asm._asm
-$ cd mjolnir_asm._asm/notify
+$ git clone https://github.com/asmagill/mjolnir_asm.ui
+$ cd mjolnir_asm.ui/notification
 $ [PREFIX=/usr/local] make install
 ~~~
 
 ### Require
 
 ~~~lua
-notify = require("mjolnir._asm.notify")
+notification = require("mjolnir._asm.ui.notification")
 ~~~
 
 ### Functions
 
+notification.new(...) -> notification
+
+notification:show()
+notification:withdraw()
+notification:release()
+
+
+
+Backwards compatibility functions:
+
 ~~~lua
-notify.register(tag, fn) -> id
+notification.register(tag, fn) -> id
 ~~~
 Registers a function to be called when an Apple notification with the given tag is clicked.
 
 ~~~lua
-notify.show(title, subtitle, text, tag)
+notification.show(title, subtitle, text, tag)
 ~~~
 Show an Apple notification. Tag is a unique string that identifies this notification; any functions registered for the given tag will be called if the notification is clicked. None of the strings are optional, though they may each be blank.
 
 ~~~lua
-notify.unregister(id)
+notification.unregister(id)
 ~~~
 Unregisters a function to no longer be called when an Apple notification with the given tag is clicked.
 
 ~~~lua
-notify.unregisterall()
+notification.unregisterall()
 ~~~
-Unregisters all functions registered for notification-clicks; called automatically when user config 
-
-~~~lua
-mjolnir._asm.notify.withdraw_all()
-~~~
-Withdraw all posted notifications.  This is called automatically during a reload to prevent crashes upon user activation of a notification, so you should seldom need to use this directly.
+Unregisters all functions registered for notification-clicks; called automatically when user config
 
 ### Variables
 
 ~~~lua
-notify.registry[]
+notification.registry[]
 ~~~
-This table contains the list of registered tags and their functions.  It should not be modified directly, but instead by the mjolnir._asm.notify.register(tag, fn) and mjolnir._asm.notify.unregister(id) functions.
-
-### Known Issues
-
-Fixed bug which caused notifications from a running state of Lua that no longer existed (i.e. the user had reloaded their configuration) to crash Mjolnir by adding garbage collector to remove all notifications that had been delivered when reloading.  This is an interim fix, as the validity of the notification may still have value to the end-user, and a better solution is to rethink how the callback function works.
+This table contains the list of registered tags and their functions.  It should not be modified directly, but instead by the `notification.register(tag, fn)` and `notification.unregister(id)` functions.
 
 ### License
 
