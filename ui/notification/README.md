@@ -31,11 +31,6 @@ notification.new(fn[,attributes]) -> notification
 ~~~
 Returns a new notification object with the assigned callback function after applying the attributes specified in the attributes argument.  The attribute table can contain one or key-value pairs where the key corrosponds to the short name of a notification attribute function. Attribute functions can also be invoked individually as methods on the returned notification object as well.  The callback function receives as it's argument the notification object. Note that a notification without a title will not be delivered.
 
-~~~lua
-notification.defaultSoundName() -> string
-~~~
-Returns the string representation of the default notification sound.
-
 ##### Notification Methods
 ~~~lua
 notification:send() -> self
@@ -73,7 +68,7 @@ If a string argument is provided, first set the notification's informativeText t
 ~~~lua
 notification:actionButtonTitle([string]) -> string
 ~~~
-If a string argument is provided, first set the notification's action button title to that value.  Returns current value for notification action button title.
+If a string argument is provided, first set the notification's action button title to that value.  Returns current value for notification action button title.  Can be blank, but not `nil`.  Defaults to "Notification".
 
 ~~~lua
 notification:otherButtonTitle([string]) -> string
@@ -83,12 +78,22 @@ If a string argument is provided, first set the notification's cancel button's t
 ~~~lua
 notification:hasActionButton([bool]) -> bool
 ~~~
-If a boolean argument is provided, first set whether or not the notification has an action button.  Returns current presence of notification action button.
+If a boolean argument is provided, first set whether or not the notification has an action button.  Returns current presence of notification action button. Defaults to true.
 
 ~~~lua
 notification:soundName([string]) -> string
 ~~~
-If a string argument is provided, first set the notification's delivery sound to that value.  Returns current value for notification delivery sound.  If it's nil, no sound will be played.
+If a string argument is provided, first set the notification's delivery sound to that value.  Returns current value for notification delivery sound.  If it's nil, no sound will be played. Defaults to nil.
+
+~~~lua
+notification:alwaysPresent([bool]) -> bool
+~~~
+If a boolean argument is provided, determines whether or not the notification should be presented, even if the Notification Center's normal decision would be not to.  This does not affect the return value of the `presented` attribute -- that will still reflect the decision of the Notification Center. Returns the current status. Defaults to true.
+
+~~~lua
+notification:autoWithdraw([bool]) -> bool
+~~~
+If a boolean argument is provided, sets whether or not a notification should be automatically withdrawn once activated. Returns the current status.  Defaults to true.
 
 ##### Result Methods
 The following methods are useful for checking the status of a notification or for use within the callback function.
@@ -96,7 +101,12 @@ The following methods are useful for checking the status of a notification or fo
 ~~~lua
 notification:presented() -> bool
 ~~~
-Returns whether the notification has been presented.
+Returns whether the notification was presented by the decision of the Notification Center.  Under certain conditions (most notably if you're currently active in the application which sent the notification), the Notification Center can decide not to present a notification.  This flag represents that decision.
+
+~~~lua
+notification:delivered() -> bool
+~~~
+Returns whether the notification has been delivered to the Notification Center.
 
 ~~~lua
 notification:remote() -> bool
@@ -145,6 +155,11 @@ Convenience array of the possible activation types for a notification, and their
     ActionButtonClicked         User clicked on Action button
     Replied                     User used Reply button (10.9) (not implemented yet)
     AdditionalActionClicked     Additional Action selected (10.10) (not implemented yet)
+
+~~~lua
+notification.defaultNotificationSound -> string
+~~~
+The string representation of the default notification sound.  Set `soundName` attribute to this if you want to use the default sound.
 
 ##### Backwards compatibility:
 ~~~lua

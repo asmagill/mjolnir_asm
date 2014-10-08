@@ -58,6 +58,8 @@ static id <NSUserNotificationCenterDelegate>    old_delegate ;
 
 typedef struct _notification_t {
     bool                delivered;
+    bool                autoWithdraw;
+    bool                alwaysPresent;
     int                 fn;
     NSUserNotification* note;
     int                 registryHandle;
@@ -106,6 +108,8 @@ typedef struct _notification_t {
             lua_State* L = self.L;
             lua_rawgeti(L, LUA_REGISTRYINDEX, (int)myHandle);
             notification_t* thisNote = lua_touserdata(L, -1);
+            [thisNote->note release];
+            thisNote->note = [notification copy];
             lua_pop(L,1);
             if (thisNote) {
                 thisNote->delivered = YES;
@@ -128,6 +132,11 @@ typedef struct _notification_t {
                     lua_State* L = self.L;
                     lua_rawgeti(L, LUA_REGISTRYINDEX, (int)myHandle);
                     notification_t* thisNote = lua_touserdata(L, -1);
+                    [thisNote->note release];
+                    thisNote->note = [notification copy];
+                    if (thisNote->autoWithdraw) {
+                        [[NSUserNotificationCenter defaultUserNotificationCenter] removeDeliveredNotification: notification];
+                    }
 //                    lua_pop(L,1);
                     if (thisNote) {
                         lua_rawgeti(L, LUA_REGISTRYINDEX, thisNote->fn);
@@ -149,7 +158,26 @@ typedef struct _notification_t {
 // Should notification show, even if we're the foremost application?
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
     shouldPresentNotification:(NSUserNotification *)notification {
-        return YES;
+         NSNumber* value = [[notification userInfo] objectForKey:@"handler"];
+        if (value) {
+            [self.ActiveCallbacks setObject:@1 forKey:value];
+            int myHandle = [value intValue];
+            lua_State* L = self.L;
+            lua_rawgeti(L, LUA_REGISTRYINDEX, (int)myHandle);
+            notification_t* thisNote = lua_touserdata(L, -1);
+            [thisNote->note release];
+            thisNote->note = [notification copy];
+            lua_pop(L,1);
+            if (thisNote) {
+                return thisNote->alwaysPresent;
+            } else {
+                NSLog(@"didDeliverNotification: userdata NULL");
+               return YES;
+            }
+        } else {
+            NSLog(@"didDeliverNotification: no tagged handler -- not ours?");
+           return YES;
+        }
     }
 @end
 
@@ -165,14 +193,6 @@ static int notification_delegate_setup(lua_State* L) {
 
 // End of delegate definition
 
-/// mjolnir._asm.ui.notification.defaultSoundName() -> string
-/// Function
-/// Returns the string representation of the default notification sound.
-static int notification_defaultSound(lua_State* L) {
-    lua_pushstring(L, [NSUserNotificationDefaultSoundName UTF8String]) ;
-    return 1;
-}
-
 // mjolnir._asm.ui.notification.new(fn) -> notification
 // Constructor
 // Returns a new notification object with the specified information and the assigned callback function.
@@ -184,6 +204,8 @@ static int notification_new(lua_State* L) {
     notification_t* notification = lua_newuserdata(L, sizeof(notification_t)) ;
     memset(notification, 0, sizeof(notification_t)) ;
     notification->delivered = NO;
+    notification->alwaysPresent = YES;
+    notification->autoWithdraw = YES;
     notification->fn        = theFunction ;
     notification->registryHandle = store_udhandler(L, notificationHandlers, -1);
 
@@ -233,7 +255,7 @@ static int notification_withdraw(lua_State* L) {
 
 /// mjolnir._asm.ui.notification:title([string]) -> string
 /// Attribute
-/// If a string argument is provided, first set the notification's title to that value.  Returns current value for notification title.
+/// If a string argument is provided, first set the notification's title to that value.  Returns current value for notification title. Can be blank, but not nil.  Defaults to "Notification".
 static int notification_title(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
     if (!lua_isnone(L, 2)) {
@@ -249,7 +271,11 @@ static int notification_title(lua_State* L) {
 static int notification_subtitle(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
     if (!lua_isnone(L, 2)) {
-        notification->note.subtitle = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
+        if (lua_isnil(L,2)) {
+            notification->note.subtitle = nil;
+        } else {
+            notification->note.subtitle = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
+        }
     }
     lua_pushstring(L, [notification->note.subtitle UTF8String]);
     return 1;
@@ -261,7 +287,11 @@ static int notification_subtitle(lua_State* L) {
 static int notification_informativeText(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
     if (!lua_isnone(L, 2)) {
-        notification->note.informativeText = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
+        if (lua_isnil(L,2)) {
+            notification->note.informativeText = nil;
+        } else {
+            notification->note.informativeText = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
+        }
     }
     lua_pushstring(L, [notification->note.informativeText UTF8String]);
     return 1;
@@ -273,7 +303,11 @@ static int notification_informativeText(lua_State* L) {
 static int notification_actionButtonTitle(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
     if (!lua_isnone(L, 2)) {
-        notification->note.actionButtonTitle = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
+        if (lua_isnil(L,2)) {
+            notification->note.actionButtonTitle = nil;
+        } else {
+            notification->note.actionButtonTitle = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
+        }
     }
     lua_pushstring(L, [notification->note.actionButtonTitle UTF8String]);
     return 1;
@@ -285,7 +319,11 @@ static int notification_actionButtonTitle(lua_State* L) {
 static int notification_otherButtonTitle(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
     if (!lua_isnone(L, 2)) {
-        notification->note.otherButtonTitle = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
+        if (lua_isnil(L,2)) {
+            notification->note.otherButtonTitle = nil;
+        } else {
+            notification->note.otherButtonTitle = [NSString stringWithUTF8String: luaL_checkstring(L, 2)];
+        }
     }
     lua_pushstring(L, [notification->note.otherButtonTitle UTF8String]);
     return 1;
@@ -293,7 +331,7 @@ static int notification_otherButtonTitle(lua_State* L) {
 
 /// mjolnir._asm.ui.notification:hasActionButton([bool]) -> bool
 /// Attribute
-/// If a boolean argument is provided, first set whether or not the notification has an action button.  Returns current presence of notification action button.
+/// If a boolean argument is provided, first set whether or not the notification has an action button.  Returns current presence of notification action button. Defaults to true.
 static int notification_hasActionButton(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
     if (!lua_isnone(L, 2)) {
@@ -303,9 +341,33 @@ static int notification_hasActionButton(lua_State* L) {
     return 1;
 }
 
+/// mjolnir._asm.ui.notification:alwaysPresent([bool]) -> bool
+/// Attribute
+/// If a boolean argument is provided, determines whether or not the notification should be presented, even if the Notification Center's normal decision would be not to.  This does not affect the return value of the `presented` attribute -- that will still reflect the decision of the Notification Center. Returns the current status. Defaults to true.
+static int notification_alwaysPresent(lua_State* L) {
+    notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
+    if (!lua_isnone(L, 2)) {
+        notification->alwaysPresent = lua_toboolean(L, 2);
+    }
+    lua_pushboolean(L, notification->alwaysPresent);
+    return 1;
+}
+
+/// mjolnir._asm.ui.notification:autoWithdraw([bool]) -> bool
+/// Attribute
+/// If a boolean argument is provided, sets whether or not a notification should be automatically withdrawn once activated. Returns the current status.  Defaults to true.
+static int notification_autoWithdraw(lua_State* L) {
+    notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
+    if (!lua_isnone(L, 2)) {
+        notification->autoWithdraw = lua_toboolean(L, 2);
+    }
+    lua_pushboolean(L, notification->autoWithdraw);
+    return 1;
+}
+
 /// mjolnir._asm.ui.notification:soundName([string]) -> string
 /// Attribute
-/// If a string argument is provided, first set the notification's delivery sound to that value.  Returns current value for notification delivery sound.  If it's nil, no sound will be played.
+/// If a string argument is provided, first set the notification's delivery sound to that value.  Returns current value for notification delivery sound.  If it's nil, no sound will be played.  Defaults to nil.
 static int notification_soundName(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
     if (!lua_isnone(L, 2)) {
@@ -321,10 +383,19 @@ static int notification_soundName(lua_State* L) {
 
 /// mjolnir._asm.ui.notification:presented() -> bool
 /// Attribute
-/// Returns whether the notification has been presented.
+/// Returns whether the notification was presented by the decision of the Notification Center.  Under certain conditions (most notably if you're currently active in the application which sent the notification), the Notification Center can decide not to present a notification.  This flag represents that decision.
 static int notification_presented(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
     lua_pushboolean(L, notification->note.presented);
+    return 1;
+}
+
+/// mjolnir._asm.ui.notification:delivered() -> bool
+/// Attribute
+/// Returns whether the notification has been delivered to the Notification Center.
+static int notification_delivered(lua_State* L) {
+    notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
+    lua_pushboolean(L, notification->delivered);
     return 1;
 }
 
@@ -342,7 +413,7 @@ static int notification_remote(lua_State* L) {
 /// Returns whether the notification was generated by a push notification (remotely).  Currently unused, but perhaps not forever.
 static int notification_activationType(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
-    lua_pushinteger(L, notification->note.activationType);
+    lua_pushnumber(L, notification->note.activationType);
     return 1;
 }
 
@@ -351,7 +422,7 @@ static int notification_activationType(lua_State* L) {
 /// Returns the delivery date of the notification in seconds since 1970-01-01 00:00:00 +0000 (e.g. `os.time()`).
 static int notification_actualDeliveryDate(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
-    lua_pushinteger(L, [notification->note.actualDeliveryDate timeIntervalSince1970]);
+    lua_pushnumber(L, [notification->note.actualDeliveryDate timeIntervalSince1970]);
     return 1;
 }
 
@@ -393,7 +464,7 @@ static int notification_gc(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
 
     lua_pushcfunction(L, notification_release) ; lua_pushvalue(L,1); lua_call(L, 1, 1);
-
+    [notification->note release];
     return 0;
 }
 
@@ -415,6 +486,8 @@ static const luaL_Reg notification_metalib[] = {                        // Notif
     {"otherButtonTitle",            notification_otherButtonTitle},
     {"hasActionButton",             notification_hasActionButton},
     {"soundName",                   notification_soundName},
+    {"alwaysPresent",               notification_alwaysPresent},
+    {"autoWithdraw",                notification_autoWithdraw},
 //    {"deliveryDate",                notification_deliveryDate},             // requires scheduleNotification
 //    {"deliveryRepeatInterval",      notification_deliveryRepeatInterval},   // requires scheduleNotification
 //    {"deliveryTimeZone",            notification_deliveryTimeZone},         // requires scheduleNotification
@@ -424,6 +497,7 @@ static const luaL_Reg notification_metalib[] = {                        // Notif
 //    {"hasReplyButton",              NULL},                                  // 10.9
 //    {"additionalActions",           NULL},                                  // 10.10
     {"presented",                   notification_presented},            // Result methods
+    {"delivered",                   notification_delivered},
     {"remote",                      notification_remote},
     {"activationType",              notification_activationType},
     {"actualDeliveryDate",          notification_actualDeliveryDate},
@@ -436,7 +510,6 @@ static const luaL_Reg notification_metalib[] = {                        // Notif
 // Functions for returned object when module loads
 static const luaL_Reg notificationLib[] = {
     {"_new",            notification_new},
-    {"defaultSound",    notification_defaultSound},
     {NULL,              NULL}
 };
 
@@ -459,8 +532,16 @@ int luaopen_mjolnir__asm_ui_notification_internal(lua_State* L) {
     luaL_newlib(L, notificationLib);
         notification_activationTypeTable(L) ;
         lua_setfield(L, -2, "activationType") ;
+/// mjolnir._asm.ui.notification.defaultNotificationSound
+/// Variable
+/// The string representation of the default notification sound.  Set `soundName` attribute to this if you want to use the default sound.
+        lua_pushstring(L, [NSUserNotificationDefaultSoundName UTF8String]) ;
+        lua_setfield(L, -2, "defaultNotificationSound") ;
+
         luaL_newlib(L, meta_gcLib);
         lua_setmetatable(L, -2);
 
     return 1;
 }
+
+// n = rq("ui.notification") ; f = function(obj) print(obj:presented(), obj:remote(), os.date("%c",obj:actualDeliveryDate()), n.activationType[obj:activationType()]) end ; a = n.new(f)
