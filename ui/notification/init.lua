@@ -30,21 +30,47 @@ local function wrap(fn)
   end
 end
 
+local protected_functions = {
+	_new = true,
+	show = true,
+	release = true,
+	withdraw = true,
+	__index = true,
+	__gc = true,
+}
 
 -- Public interface ------------------------------------------------------
 
---- mjolnir._asm.ui.notification.new(title, subtitle, information, fn) -> notification
+local actions = {}
+for i,v in pairs(module.activationType) do actions[v] = i end
+for i,v in pairs(actions) do module.activationType[i] = v end
+
+--- mjolnir._asm.ui.notification.new(fn[,attributes]) -> notification
 --- Constructor
---- Returns a new notification object with the specified information and the assigned callback function.
-module.new = function(title, subtitle, information, fn)
-    return module._new(title, subtitle, information, wrap(fn))
+--- Returns a new notification object with the assigned callback function after applying the attributes specified in the attributes argument.  The attribute table can contain one or key-value pairs where the key corrosponds to the short name of a notification attribute function.  The callback function receives as it's argument the notification object. Note that a notification without a title will not be delivered.
+module.new = function(fn, attributes)
+	attributes = attributes or { title="Notification" }
+    local note = module._new(wrap(fn))
+	for i,v in pairs(attributes) do
+		if getmetatable(note)[i] and not protected_functions[i] then
+			note[i](note, v)
+		end
+	end
+	return note
 end
 
 --- mjolnir._asm.ui.show(title, subtitle, information, tag) -> notfication
 --- Constructor
---- Convienence function to mimic Hydra's notify.show.
+--- Convienence function to mimic Hydra's notify.show. Shows an Apple notification. Tag is a unique string that identifies this notification; any functions registered for the given tag will be called if the notification is clicked. None of the strings are optional, though they may each be blank.
 module.show = function(title, subtitle, information, tag)
-    return module.new(title, subtitle, information, function() callback(tag) end):show()
+    return module.new(function(note)
+            callback(tag)
+            note:withdraw()
+        end, {
+	    	title = title,
+		    subtitle = subtitle,
+		    informativeText = information,
+	    }):send()
 end
 
 --- mjolnir._asm.ui.notification.registry[]
