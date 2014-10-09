@@ -27,9 +27,9 @@ notification = require("mjolnir._asm.ui.notification")
 
 ### Functions
 ~~~lua
-notification.new(fn[,attributes]) -> notification
+notification.new([fn,][attributes]) -> notification
 ~~~
-Returns a new notification object with the assigned callback function after applying the attributes specified in the attributes argument.  The attribute table can contain one or key-value pairs where the key corrosponds to the short name of a notification attribute function. Attribute functions can also be invoked individually as methods on the returned notification object as well.  The callback function receives as it's argument the notification object. Note that a notification without a title will not be delivered.
+Returns a new notification object with the assigned callback function after applying the attributes specified in the attributes argument.  The attribute table can contain one or key-value pairs where the key corrosponds to the short name of a notification attribute function.  The callback function receives as it's argument the notification object. Note that a notification without an empty title will not be delivered.
 
 ##### Notification Methods
 ~~~lua

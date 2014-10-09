@@ -471,6 +471,7 @@ static int notification_gc(lua_State* L) {
 static int meta_gc(lua_State* L) {
     [notificationHandlers release];
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:(id <NSUserNotificationCenterDelegate>)old_delegate];
+    [notification_delegate release];
     return 0;
 }
 

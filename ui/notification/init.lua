@@ -45,11 +45,17 @@ local actions = {}
 for i,v in pairs(module.activationType) do actions[v] = i end
 for i,v in pairs(actions) do module.activationType[i] = v end
 
---- mjolnir._asm.ui.notification.new(fn[,attributes]) -> notification
+--- mjolnir._asm.ui.notification.new([fn,][attributes]) -> notification
 --- Constructor
---- Returns a new notification object with the assigned callback function after applying the attributes specified in the attributes argument.  The attribute table can contain one or key-value pairs where the key corrosponds to the short name of a notification attribute function.  The callback function receives as it's argument the notification object. Note that a notification without a title will not be delivered.
+--- Returns a new notification object with the assigned callback function after applying the attributes specified in the attributes argument.  The attribute table can contain one or key-value pairs where the key corrosponds to the short name of a notification attribute function.  The callback function receives as it's argument the notification object. Note that a notification without an empty title will not be delivered.
 module.new = function(fn, attributes)
+    if type(fn) == "table" then
+        attributes = fn
+        fn = nil
+    end
+    fn = fn or function() end
 	attributes = attributes or { title="Notification" }
+
     local note = module._new(wrap(fn))
 	for i,v in pairs(attributes) do
 		if getmetatable(note)[i] and not protected_functions[i] then
