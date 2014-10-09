@@ -4,7 +4,7 @@
 ---
 --- Apple's built-in notifications system.
 ---
---- This module is based primarily on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
+--- This module is based in part on code from the previous incarnation of Mjolnir by [Steven Degutis](https://github.com/sdegutis/).
 
 local module = require("mjolnir._asm.ui.notification.internal")
 
