@@ -31,6 +31,11 @@ notification.new([fn,][attributes]) -> notification
 ~~~
 Returns a new notification object with the assigned callback function after applying the attributes specified in the attributes argument.  The attribute table can contain one or key-value pairs where the key corrosponds to the short name of a notification attribute function.  The callback function receives as it's argument the notification object. Note that a notification without an empty title will not be delivered.
 
+~~~lua
+notification.withdraw_all()
+~~~
+Withdraw all posted notifications for Mjolnir.  Note that this will withdraw all notifications for Mjolnir, including those not sent by us or that linger from previous loads of Mjolnir.
+
 ##### Notification Methods
 ~~~lua
 notification:send() -> self

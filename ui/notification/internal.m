@@ -188,10 +188,21 @@ static int notification_delegate_setup(lua_State* L) {
         old_delegate = [[NSUserNotificationCenter defaultUserNotificationCenter] delegate];
     }
     notification_delegate = [noteDelegate sharedManagerForLua:L];
+
+    if (!notificationHandlers) notificationHandlers = [[NSMutableIndexSet indexSet] retain];
+
     return 0;
 }
 
 // End of delegate definition
+
+/// mjolnir._asm.ui.notification.withdraw_all()
+/// Function
+/// Withdraw all posted notifications for Mjolnir.  Note that this will withdraw all notifications for Mjolnir, including those not sent by us or that linger from previous loads of Mjolnir.
+static int notification_withdraw_all(lua_State* L) {
+    [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+    return 0;
+}
 
 // mjolnir._asm.ui.notification.new(fn) -> notification
 // Constructor
@@ -470,6 +481,8 @@ static int notification_gc(lua_State* L) {
 
 static int meta_gc(lua_State* L) {
     [notificationHandlers release];
+    notificationHandlers = nil;
+
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:(id <NSUserNotificationCenterDelegate>)old_delegate];
     [notification_delegate release];
     return 0;
@@ -511,6 +524,7 @@ static const luaL_Reg notification_metalib[] = {                        // Notif
 // Functions for returned object when module loads
 static const luaL_Reg notificationLib[] = {
     {"_new",            notification_new},
+    {"withdraw_all",    notification_withdraw_all},
     {NULL,              NULL}
 };
 
