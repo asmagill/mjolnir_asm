@@ -65,7 +65,7 @@ module.new = function(fn, attributes)
 	return note
 end
 
---- mjolnir._asm.ui.show(title, subtitle, information, tag) -> notfication
+--- mjolnir._asm.ui.notification.show(title, subtitle, information, tag) -> notfication
 --- Constructor
 --- Convienence function to mimic Hydra's notify.show. Shows an Apple notification. Tag is a unique string that identifies this notification; any functions registered for the given tag will be called if the notification is clicked. None of the strings are optional, though they may each be blank.
 module.show = function(title, subtitle, information, tag)
@@ -85,7 +85,7 @@ end
 module.registry = {}
 module.registry.n = 0
 
---- mjolnir._asm.notify.register(tag, fn) -> id
+--- mjolnir._asm.ui.notification.register(tag, fn) -> id
 --- Function
 --- Registers a function to be called when an Apple notification with the given tag is clicked.
 module.register = function(tag, fn)
