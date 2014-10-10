@@ -1,18 +1,15 @@
-mjolnir._asm.sys
-================
+mjolnir._asm.ui
+===============
 
-Organizational repository for modules tweaking or affecting system components.
+Organizational repository for modules to manipulate the user interface (broadly interpreted, I admit).
 
 ### Sub Modules (See folder README.md)
 The following submodules are located in this repository for organizational purposes.  In most cases, they do not require this base or the other submodules.  Where this is not the case, the README in the repository folder will make this clear and if you install them via Luarocks, dependancies will be taken care of for you.
 
 |Module                        | Available | Description                                                 |
 |:-----------------------------|:---------:|:------------------------------------------------------------|
-|mjolnir._asm.sys.audiodevice  | Luarocks  | Manipulate the system's audio devices.                      |
-|mjolnir._asm.sys.battery      | Luarocks  | Functions for getting battery info.                         |
-|mjolnir._asm.sys.brightness   | Luarocks  | Functions for manipulating display brightness.              |
-|mjolnir._asm.mouse            | Luarocks  | Mouse position control as provided in Hydra.                |
-|mjolnir._asm.settings         | Luarocks  | Functions for persistent data in Mjolnir via User Defaults. |
+|mjolnir._asm.ui.notification  | Luarocks  | More complete access to User Notifications in Mjolnir.      |
+|mjolnir._asm.ui.sound         | Luarocks  | Direct access to NSSound for Mjolnir.                       |
 
 **NOTE: README's for in progress modules may mention luarocks, but may or may not actually be there.  Be patient, or check the README file for how to compile them yourself.**
 

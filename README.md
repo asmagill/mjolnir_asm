@@ -14,6 +14,7 @@ Development space for Mjolnir modules under mjolnir._asm
 |[mjolnir._asm.hydra](https://github.com/asmagill/mjolnir_asm.hydra)               | Backwards compatibility, modules which may move if they get more work. |
 |[mjolnir._asm.ipc](https://github.com/asmagill/mjolnir_asm.ipc)                   | Inter process communication, command line, etc.                        |
 |[mjolnir._asm.sys](https://github.com/asmagill/mjolnir_asm.sys)                   | Modify or retrieve system settings and devices.                        |
+|[mjolnir._asm.ui](https://github.com/asmagill/mjolnir_asm.ui)                     | User interface (broadly interpreted, I admit) modules.                 |
 |[mjolnir._asm.undocumented](https://github.com/asmagill/mjolnir_asm.undocumented) | Modules that knowingly use undocumented APIs or questionable code.     |
 |[mjolnir._asm.watcher](https://github.com/asmagill/mjolnir_asm.watcher)           | Modules that act on external events; some crossover with ipc.          |
 
