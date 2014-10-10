@@ -325,7 +325,7 @@ static int notification_actionButtonTitle(lua_State* L) {
 }
 
 /// mjolnir._asm.ui.notification:otherButtonTitle([string]) -> string
-/// Attribtue
+/// Attribute
 /// If a string argument is provided, first set the notification's cancel button's title to that value.  Returns current value for notification cancel button title.
 static int notification_otherButtonTitle(lua_State* L) {
     notification_t* notification = luaL_checkudata(L, 1, USERDATA_TAG);
