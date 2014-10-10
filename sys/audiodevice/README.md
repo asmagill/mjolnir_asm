@@ -30,6 +30,7 @@ mjolnir._asm.sys.audiodevice.current() -> table
 Convenience function which returns a table with the following keys and values:
     {
         name = defaultoutputdevice():name(),
+        uid = defaultoutputdevice():uid(),
         muted = defaultoutputdevice():muted(),
         volume = defaultoutputdevice():volume(),
         device = defaultoutputdevice(),
@@ -54,6 +55,11 @@ Sets the system's default audio device to this device. Returns true if the audio
 audiodevice:name() -> string or nil
 ~~~
 Returns the name of the audio device, or nil if it does not have a name.
+
+~~~lua
+audiodevice:uid() -> string or nil
+~~~
+Returns the Unique Identifier of the audio device, or nil if it does not have a uid.
 
 ~~~lua
 audiodevice:muted() -> bool or nil

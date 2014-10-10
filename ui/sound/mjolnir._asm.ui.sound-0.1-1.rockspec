@@ -1,7 +1,7 @@
 -- `package` is the require-path.
 --
 --    Note: this must match the filename also.
-package = "mjolnir._asm.sys.audiodevice"
+package = "mjolnir._asm.ui.sound"
 
 -- `version` has two parts, your module's version (0.1) and the
 --    rockspec's version (1) in case you change metadata without
@@ -12,10 +12,10 @@ version = "0.1-1"
 
 -- General metadata:
 
-local url = "github.com/asmagill/mjolnir_asm.sys"
-local desc = "Manipulate the system's audio devices."
+local url = "github.com/asmagill/mjolnir_asm.ui"
+local desc = "Mjolnir access to NSSound via lua."
 
-source = {url = "git://" .. url, dir = "mjolnir_asm.sys/audiodevice/"}
+source = {url = "git://" .. url, dir = "mjolnir_asm.ui/sound"}
 description = {
   summary = desc,
   detailed = desc,
@@ -28,6 +28,7 @@ description = {
 supported_platforms = {"macosx"}
 dependencies = {
   "lua >= 5.2",
+--  "mjolnir._asm",
 }
 
 -- Build rules:
@@ -35,7 +36,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["mjolnir._asm.sys.audiodevice"] = "init.lua",
-    ["mjolnir._asm.sys.audiodevice.internal"] = "internal.m",
+    ["mjolnir._asm.ui.sound"] = "init.lua",
+    ["mjolnir._asm.ui.sound.internal"] = "internal.m",
   },
 }

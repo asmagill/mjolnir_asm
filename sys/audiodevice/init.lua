@@ -18,6 +18,7 @@ local module = require("mjolnir._asm.sys.audiodevice.internal")
 --- ~~~lua
 ---     {
 ---         name = defaultoutputdevice():name(),
+---         uid = module.defaultoutputdevice():uid(),
 ---         muted = defaultoutputdevice():muted(),
 ---         volume = defaultoutputdevice():volume(),
 ---         device = defaultoutputdevice(),
@@ -26,6 +27,7 @@ local module = require("mjolnir._asm.sys.audiodevice.internal")
 module.current = function()
     return {
         name = module.defaultoutputdevice():name(),
+        uid = module.defaultoutputdevice():uid(),
         muted = module.defaultoutputdevice():muted(),
         volume = module.defaultoutputdevice():volume(),
         device = module.defaultoutputdevice(),

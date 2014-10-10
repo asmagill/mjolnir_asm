@@ -196,6 +196,42 @@ end:
 
 }
 
+/// mjolnir._asm.sys.audiodevice:uid() -> string or nil
+/// Method
+/// Returns the Unique Identifier of the audio device, or nil if it does not have a uid.
+static int audiodevice_uid(lua_State* L) {
+    AudioDeviceID deviceId = MJ_Audio_Device(L, 1);
+
+    AudioObjectPropertyAddress propertyAddress = {
+        kAudioDevicePropertyDeviceUID,
+        kAudioObjectPropertyScopeGlobal,
+        kAudioObjectPropertyElementMaster
+    };
+    CFStringRef deviceName;
+    UInt32 propertySize = sizeof(CFStringRef);
+
+    OSStatus result = noErr;
+
+    result = AudioObjectGetPropertyData(deviceId, &propertyAddress, 0, NULL, &propertySize, &deviceName);
+    if (result)
+        goto error;
+
+    CFIndex length = CFStringGetLength(deviceName);
+    const char* deviceNameBytes = CFStringGetCStringPtr(deviceName, kCFStringEncodingMacRoman);
+
+    lua_pushlstring(L, deviceNameBytes, length);
+    CFRelease(deviceName);
+
+    goto end;
+
+error:
+    lua_pushnil(L);
+
+end:
+    return 1;
+
+}
+
 /// mjolnir._asm.sys.audiodevice:muted() -> bool or nil
 /// Method
 /// Returns true/false if the audio device is muted, or nil if it does not support being muted.
@@ -352,6 +388,7 @@ static int audiodevice_eq(lua_State* L) {
 static const luaL_Reg audiodevice_metalib[] = {
     {"setdefaultoutputdevice",  audiodevice_setdefaultoutputdevice},
     {"name",                    audiodevice_name},
+    {"uid",                     audiodevice_uid},
     {"volume",                  audiodevice_volume},
     {"setvolume",               audiodevice_setvolume},
     {"muted",                   audiodevice_muted},
