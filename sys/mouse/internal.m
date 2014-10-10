@@ -15,7 +15,7 @@ static void mjolnir_pushpoint(lua_State* L, NSPoint point) {
     lua_pushnumber(L, point.y); lua_setfield(L, -2, "y");
 }
 
-/// mouse.get() -> point
+/// mjolnir._asm.sys.mouse.mouse.get() -> point
 ///Function
 /// Returns the current location of the mouse on the current screen as a point.
 static int mouse_get(lua_State* L) {
@@ -25,7 +25,7 @@ static int mouse_get(lua_State* L) {
     return 1;
 }
 
-/// mouse.set(point)
+/// mjolnir._asm.sys.mouse.mouse.set(point)
 /// Function
 /// Moves the mouse to the given location on the current screen.
 static int mouse_set(lua_State* L) {
