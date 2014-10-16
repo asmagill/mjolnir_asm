@@ -1,10 +1,8 @@
 #import <Cocoa/Cocoa.h>
 #import <lauxlib.h>
 
-#define _VERSION_TAG_   "0.1-1"
+#define _VERSION_TAG_   "0.2-1"
 
-//  Add Base64 encode/decode?
-//
 // Need to add options flags and try moving helper funcs out...
 //
 //  {options} table for lua_to_NSObject
