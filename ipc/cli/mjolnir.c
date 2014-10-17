@@ -151,6 +151,16 @@ int main(int argc, char * argv[]) {
             if (!input) exit(0);
             add_history(input);
 
+            if (!CFMessagePortIsValid(port)) {
+                fprintf(stderr, "%sMessage port has become invalid.  Attempting to re-establish.%s\n", COLOR_INITIAL, COLOR_RESET);
+                port = CFMessagePortCreateRemote(NULL, CFSTR("mjolnir"));
+                if (!port) {
+                    fprintf(stderr, "error: can't access Mjolnir; is it running?\n");
+                    exit(1);
+                }
+
+            }
+
             mjolnir_setprefix(str, israw);
             CFStringAppendCString(str, input, kCFStringEncodingUTF8);
             mjolnir_send(port, str);

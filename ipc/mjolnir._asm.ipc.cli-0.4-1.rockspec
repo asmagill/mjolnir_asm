@@ -8,7 +8,7 @@ package = "mjolnir._asm.ipc.cli"
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.3-1"
+version = "0.4-1"
 
 -- General metadata:
 
