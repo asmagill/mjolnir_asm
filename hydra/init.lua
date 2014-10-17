@@ -43,9 +43,11 @@ module.call = function(fn, ...)
     return table.unpack(results)
 end
 
---- mjolnir._asm.hydra.exec(command[, with_user_env]) -> string
+--- mjolnir._asm.hydra.exec(command[, with_user_env]) -> output, status, type, rc
 --- Function
---- Runs a shell command and returns stdout as a string (may include a trailing newline).  If `with_user_env` is `true`, then invoke the user's default shell as an interactive login shell in which to execute the provided command in order to make sure their setup files are properly evaluated so extra path and environment variables can be set.  This is not done, if `with_user_env` is `false` or not provided, as it does add some overhead and is not always strictly necessary.
+--- Runs a shell command and returns stdout as a string (may include a trailing newline), followed by true or nil indicating if the command completed successfully, the exit type ("exit" or "signal"), and the result code.
+---
+---  If `with_user_env` is `true`, then invoke the user's default shell as an interactive login shell in which to execute the provided command in order to make sure their setup files are properly evaluated so extra path and environment variables can be set.  This is not done, if `with_user_env` is `false` or not provided, as it does add some overhead and is not always strictly necessary.
 module.exec = function(command, user_env)
     local f
     if user_env then
@@ -54,8 +56,8 @@ module.exec = function(command, user_env)
         f = io.popen(command, 'r')
     end
     local s = f:read('*a')
-    f:close()
-    return s
+    local status, exit_type, rc = f:close()
+    return s, status, exit_type, rc
 end
 
 --- mjolnir._asm.hydra.hydra_namespace() -> table

@@ -8,7 +8,7 @@ package = "mjolnir._asm.hydra"
 --    changing the module's source code.
 --
 --    Note: the version must match the version in the filename.
-version = "0.2-1"
+version = "0.3-1"
 
 -- General metadata:
 
