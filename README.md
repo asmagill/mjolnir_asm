@@ -1,3 +1,9 @@
+**This repository is being archived**
+
+[Hammerspoon](https://github.com/Hammerspoon/hammerspoon) is a fork of Mjolnir that has long ago diverged beyond a reasonable ability to maintain compatibility with Mjolnir. All of my recent and future contributions will be to that project.
+
+- - -
+
 mjolnir_asm
 ===========
 
